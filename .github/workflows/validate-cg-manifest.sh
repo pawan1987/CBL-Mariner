@@ -162,6 +162,12 @@ do
     continue
   fi
 
+  # Skip specs with 'new' fields that our older rpm (which currently uses an Ubuntu 22.04 runner, with rpm 4.17) doesn't understand
+  if grep "%bcond " "$spec"; then
+    echo "    $spec is being ignored (reason: contains %bcond), skipping"
+    continue
+  fi
+
   # Pre-processing alternate sources (commented-out "Source" lines with full URLs), if present. Currently we only care about the first source.
   # First, we replace "%%" with "%" in the alternate source's line.
   sed -Ei "/^#\s*Source0?:.*%%.*/s/%%/%/g" "$spec"
