@@ -1,4 +1,10 @@
 
+# Temporary until azure-release-common is updated to carry macros.dist that defines %azure
+%if %{defined azure}
+%{error:Once azure macro is defined in macros.dist, please remove this}
+%endif
+%global azure 3
+
 # We ship a .pc file but don't want to have a dep on pkg-config. We
 # strip the automatically generated dep here and instead co-own the
 # directory.
@@ -40,7 +46,9 @@ Version:        %(tools/meson-vcs-tag.sh . error | sed -r 's/-([0-9])/.^\1/; s/-
 %endif
 Release:        2%{?dist}
 
-%global stable %(c="%version"; [ "$c" = "${c#*.*}" ]; echo $?)
+# FIXME - hardcode to 'stable' for now as that's what we have in our blobstore
+%global stable 1
+#global stable %(c="%version"; [ "$c" = "${c#*.*}" ]; echo $?)
 
 # For a breakdown of the licensing, see README
 License:        LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later
@@ -172,7 +180,7 @@ BuildRequires:  pkgconfig(tss2-esys)
 BuildRequires:  pkgconfig(tss2-rc)
 BuildRequires:  pkgconfig(tss2-mu)
 BuildRequires:  pkgconfig(libbpf)
-BuildRequires:  systemtap-sdt-devel
+#BuildRequires:  systemtap-sdt-devel
 BuildRequires:  libxslt
 BuildRequires:  docbook-style-xsl
 BuildRequires:  pkgconfig
@@ -414,7 +422,7 @@ Requires:       %{name} = %{version}-%{release}
 Requires:       python3dist(pefile)
 Requires:       python3dist(zstd)
 Requires:       python3dist(cryptography)
-Recommends:     python3dist(pillow)
+#Recommends:     python3dist(pillow)
 
 BuildArch:      noarch
 
@@ -611,6 +619,7 @@ CONFIGURE_OPTS=(
         -Dbzip2=%[%{with bzip2}?"enabled":"disabled"]
         -Dlz4=%[%{with lz4}?"enabled":"disabled"]
         -Dzstd=%[%{with zstd}?"enabled":"disabled"]
+        -Dremote=disabled # FIXME
         -Dpam=enabled
         -Dacl=enabled
         -Dsmack=true
