@@ -135,6 +135,8 @@ gtk-doc-1.33.2-1.azl3.noarch.rpm
 gzip-1.13-1.azl3.x86_64.rpm
 gzip-debuginfo-1.13-1.azl3.x86_64.rpm
 intltool-0.51.0-7.azl3.noarch.rpm
+iso-codes-4.15.0-3.azl3.noarch.rpm
+iso-codes-devel-4.15.0-3.azl3.noarch.rpm
 itstool-2.0.7-1.azl3.noarch.rpm
 kbd-2.2.0-1.azl3.x86_64.rpm
 kbd-debuginfo-2.2.0-1.azl3.x86_64.rpm
