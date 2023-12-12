@@ -1,0 +1,7 @@
+{
+ "Signatures": {
+  "iso_3166.sed": "669556e70033fa2cf00de6ceb385446f59d6d91c14490cbb5c21095747bc11c0",
+  "iso_639.sed": "6410116395fa8716934ce174e8c61910340938ab1c72af6da773b465f9cd83df",
+  "lang-exceptions": "593ff291ada1c1520d5f8bf87a6c15b3f45cf4730352cca5af680c2799c2ff28"
+ }
+}
