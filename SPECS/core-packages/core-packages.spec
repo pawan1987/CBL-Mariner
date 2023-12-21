@@ -1,7 +1,7 @@
 Summary:        Metapackage with core sets of packages
 Name:           core-packages
-Version:        2.0
-Release:        8%{?dist}
+Version:        3.0
+Release:        1%{?dist}
 License:        ASL 2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -87,6 +87,9 @@ Requires:       zlib
 %files container
 
 %changelog
+* Thu Dec 21 2023 Muhammad Falak <mwani@microsoft.com> - 3.0-1
+- Bump version to 3.0 for AzureLinux 3
+
 * Wed Jun 28 2023 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0-8
 - Moving 'curl' and 'grep' to the 'core-packages-container' package.
 
