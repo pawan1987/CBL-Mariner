@@ -2,7 +2,7 @@
 
 Summary:        A highly-available key value store for shared configuration
 Name:           etcd
-Version:        3.5.9
+Version:        3.5.11
 Release:        1%{?dist}
 License:        ASL 2.0
 Vendor:         Microsoft Corporation
@@ -145,6 +145,9 @@ install -vdm755 %{buildroot}%{_sharedstatedir}/etcd
 /%{_docdir}/%{name}-%{version}-tools/*
 
 %changelog
+* Wed Jan 03 2024 Nicolas Guibourge <nicolasg@microsoft.com> - 3.5.11-1
+- Upgrade to 3.5.11 to match version required by kubernetes
+
 * Tue Oct 18 2023 Nicolas Guibourge <nicolasg@microsoft.com> - 3.5.9-1
 - Upgrade to 3.5.9 to match version required by kubernetes
 
