@@ -14,6 +14,7 @@ import (
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/imagegen/installutils"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/file"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/safechroot"
+	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/logger"	
 )
 
 var (
@@ -26,36 +27,41 @@ var (
 		"ext3": {"-b", "4096", "-O", "none,sparse_super,large_file,filetype,resize_inode,dir_index,ext_attr,has_journal"},
 		"ext4": {"-b", "4096", "-O", "none,sparse_super,large_file,filetype,resize_inode,dir_index,ext_attr,has_journal,extent,huge_file,flex_bg,metadata_csum,64bit,dir_nlink,extra_isize"},
 	}
+	rootfsContainerSizeInMB int64
 )
 
 type installOSFunc func(imageChroot *safechroot.Chroot) error
 
-func connectToExistingImage(imageFilePath string, buildDir string, chrootDirName string) (*ImageConnection, error) {
+func connectToExistingImage(imageFilePath string, buildDir string, chrootDirName string) (*ImageConnection, []*safechroot.MountPoint, error) {
+
+	logger.Log.Infof("--imageutils.go - connectToExistingImage() - 1")
+
 	imageConnection := NewImageConnection()
 
-	err := connectToExistingImageHelper(imageConnection, imageFilePath, buildDir, chrootDirName)
+	mountPoints, err := connectToExistingImageHelper(imageConnection, imageFilePath, buildDir, chrootDirName)
 	if err != nil {
 		imageConnection.Close()
-		return nil, err
+		return nil, nil, err
 	}
 
-	return imageConnection, nil
-
+	return imageConnection, mountPoints, nil
 }
 
 func connectToExistingImageHelper(imageConnection *ImageConnection, imageFilePath string,
 	buildDir string, chrootDirName string,
-) error {
+) ([]*safechroot.MountPoint, error) {
+	logger.Log.Infof("--imageutils.go - connectToExistingImageHelper() - 1")
+
 	// Connect to image file using loopback device.
 	err := imageConnection.ConnectLoopback(imageFilePath)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// Look for all the partitions on the image.
 	newMountDirectories, mountPoints, err := findPartitions(buildDir, imageConnection.Loopback().DevicePath())
 	if err != nil {
-		return fmt.Errorf("failed to find disk partitions:\n%w", err)
+		return nil, fmt.Errorf("failed to find disk partitions:\n%w", err)
 	}
 
 	// Create chroot environment.
@@ -63,10 +69,10 @@ func connectToExistingImageHelper(imageConnection *ImageConnection, imageFilePat
 
 	err = imageConnection.ConnectChroot(imageChrootDir, false, newMountDirectories, mountPoints)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return mountPoints, nil
 }
 
 func createNewImage(filename string, diskConfig imagecustomizerapi.Disk,

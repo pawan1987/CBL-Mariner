@@ -49,6 +49,8 @@ func main() {
 	timestamp.BeginTiming("imagecustomizer", *timestampFile)
 	defer timestamp.CompleteTiming()
 
+	logger.Log.Infof("Hello from private build")
+
 	err = customizeImage()
 	if err != nil {
 		log.Fatalf("image customization failed: %v", err)
