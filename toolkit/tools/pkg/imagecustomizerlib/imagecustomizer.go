@@ -311,6 +311,21 @@ func customizeImageHelper(buildDir string, baseConfigPath string, config *imagec
 		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 4 - mount point.fstype: %s", mountPoint.GetFSType())
 		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 4 - mount point.data: %s", mountPoint.GetData())
 
+		if mountPoint.GetTarget() == "/boot/efi" {
+			err = extractIsoArtifactsFromBoot(mountPoint.GetSource(), mountPoint.GetFSType(), buildDir)
+			if err != nil {
+				return err
+			}
+			break
+		}
+	}
+
+	for _, mountPoint := range mountPoints {
+		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 5 - mount point.source: %s", mountPoint.GetSource())
+		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 5 - mount point.target: %s", mountPoint.GetTarget())
+		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 5 - mount point.fstype: %s", mountPoint.GetFSType())
+		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 5 - mount point.data: %s", mountPoint.GetData())
+
 		if mountPoint.GetTarget() == "/" {
 			err = extractIsoArtifactsFromRootfs(mountPoint.GetSource(), mountPoint.GetFSType(), buildDir)
 			if err != nil {
@@ -407,6 +422,65 @@ func copyFile(src, dst string) error {
 	}
 
 	return nil
+}
+
+func extractIsoArtifactsFromBoot(bootDevicePath string, bootfsType string, buildDir string) (error) {
+	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromBoot() - 1")	
+	tmpDir := filepath.Join(buildDir, tmpParitionDirName)
+
+	// Temporarily mount the rootfs partition so that the fstab file can be read.
+	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromBoot() - bootDevicePath = %s", bootDevicePath)	
+	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromBoot() - bootfsType = %s", bootfsType)
+	fullDiskBootMount, err := safemount.NewMount(bootDevicePath, tmpDir, bootfsType, 0, "", true)
+	if err != nil {
+		return fmt.Errorf("failed to mount boot partition (%s):\n%w", bootDevicePath, err)
+	}
+	defer fullDiskBootMount.Close()
+
+	sourceBootx64EfiPath := filepath.Join(tmpDir, "/EFI/BOOT/bootx64.efi")
+	sourceGrubx64EfiPath := filepath.Join(tmpDir, "/EFI/BOOT/grubx64.efi")
+
+	extractedRoot := "/home/george/temp/mic-iso/rootfs-extracted"
+	extractedBootx64EfiPath := filepath.Join(extractedRoot, "bootx64.efi")
+	extractedGrubx64EfiPath := filepath.Join(extractedRoot, "grubx64.efi")
+
+	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromBoot() - creating %s", extractedRoot)	
+	err = os.MkdirAll(extractedRoot, 0755)
+	if err != nil {
+		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromBoot() - failed to create folder %s", extractedRoot)
+		return err
+	}
+
+	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromBoot() - copying %s to %s", sourceBootx64EfiPath, extractedBootx64EfiPath)
+	err = copyFile(sourceBootx64EfiPath, extractedBootx64EfiPath)
+	if err != nil {
+		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromBoot() - failed to copy %v", sourceBootx64EfiPath)
+		return err
+	}
+
+	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromBoot() - copying %s to %s", sourceGrubx64EfiPath, extractedGrubx64EfiPath)
+	err = copyFile(sourceGrubx64EfiPath, extractedGrubx64EfiPath)
+	if err != nil {
+		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromBoot() - failed to copy %v", sourceGrubx64EfiPath)
+		return err
+	}
+
+	return nil
+}
+
+func fileExists(filePath string) (bool, error) {
+	_, err := os.Stat(filePath)
+
+	if err == nil {
+		// File exists
+		return true, nil
+	} else if os.IsNotExist(err) {
+		// File does not exist
+		return false, nil
+	} else {
+		// An error occurred (other than file not existing)
+		return false, err
+	}
 }
 
 // func extractIsoArtifactsFromRootfs(rootfsPartition *diskutils.PartitionInfo, buildDir string) (error) {
@@ -532,6 +606,48 @@ func extractIsoArtifactsFromRootfs(rootfsDevicePath string, rootfsType string, b
 		return err
 	}
 
+	chrootBootloadersRootDir:="/boot-staging"
+	chrootBootloadersDir:=filepath.Join(chrootBootloadersRootDir, "/efi/EFI/BOOT")
+	// targetBootRootDir:=filepath.Join(rwRootFSMountDir, chrootBootloadersRootDir)
+	targetVmlinuzDir := filepath.Join(rwRootFSMountDir, chrootBootloadersRootDir)
+	targetBootloaderDir := filepath.Join(rwRootFSMountDir, chrootBootloadersDir)
+	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - creating %v", targetBootloaderDir)
+	err = os.MkdirAll(targetBootloaderDir, 0755)
+	if err != nil {
+		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - failed to create %v", targetBootloaderDir)
+		return err
+	}
+
+	// /mnt/full/boot-p/EFI/BOOT/bootx64.efi
+	// /mnt/full/boot-p/EFI/BOOT/grubx64.efi
+
+	sourceBoot64EfiFile := filepath.Join(extractedRoot, "bootx64.efi")
+	targetBoot64EfiFile := filepath.Join(targetBootloaderDir, "bootx64.efi")
+	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - copying dracut config from %v to %v", sourceBoot64EfiFile, targetBoot64EfiFile)
+	err = copyFile(sourceBoot64EfiFile, targetBoot64EfiFile)
+	if err != nil {
+		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - failed to copy boot64.efi")
+		return err
+	}
+
+	sourceGrub64EfiFile := filepath.Join(extractedRoot, "grubx64.efi")
+	targetGrub64EfiFile := filepath.Join(targetBootloaderDir, "grubx64.efi")
+	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - copying dracut config from %v to %v", sourceGrub64EfiFile, targetGrub64EfiFile)
+	err = copyFile(sourceGrub64EfiFile, targetGrub64EfiFile)
+	if err != nil {
+		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - failed to copy grub64.efi")
+		return err
+	}
+
+	sourceVmlinuzFile := extractedVmlinuzPath
+	targetVmlinuzFile := filepath.Join(targetVmlinuzDir, "vmlinuz")
+	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - copying vmlinuz from %v to %v", sourceVmlinuzFile, targetVmlinuzFile)
+	err = copyFile(sourceVmlinuzFile, targetVmlinuzFile)
+	if err != nil {
+		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - failed to copy vmlinuz")
+		return err
+	}
+
 	kernelParentPath := filepath.Join(rwRootFSMountDir, "/usr/lib/modules")
 	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - enumerating kernels under %v", kernelParentPath)
 	kernelPaths, err := os.ReadDir(kernelParentPath)
@@ -555,6 +671,15 @@ func extractIsoArtifactsFromRootfs(rootfsDevicePath string, rootfsType string, b
 	if err != nil {
 		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - failed to patch %v", patchTargetFile)
 		return err
+	}
+
+	oldFileExists, err := fileExists(generatedSquashfsFile)
+	if err == nil && oldFileExists {
+		err = os.Remove(generatedSquashfsFile)
+		if err != nil {
+			logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - failed to delete squashfs")
+			return err
+		}
 	}
 
 	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - creating squashfs of %v", rwRootFSMountDir)
@@ -601,7 +726,8 @@ func extractIsoArtifactsFromRootfs(rootfsDevicePath string, rootfsType string, b
 		dracutParams := []string{
 			initrdFileWithinChroot,
 			"--kver", latestKernelVersion,
-			"--filesystems", "squashfs"}
+			"--filesystems", "squashfs",
+			"--include", chrootBootloadersRootDir, "/boot" }
 
 		return shell.ExecuteLiveWithCallback(onOutput, onOutput, false, "dracut", dracutParams...)
 	})

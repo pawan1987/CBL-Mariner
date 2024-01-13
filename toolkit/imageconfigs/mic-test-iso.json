@@ -1,0 +1,19 @@
+{
+    "SystemConfigs": [
+        {
+            "Name": "baremetal-iso",
+            "Hostname": "baremetal-iso-host-name",
+            "PackageLists": [
+                "packagelists/mic-test-iso.json"
+            ],
+            "KernelOptions": {
+                "default": "kernel",
+                "hyperv": "kernel"
+            },
+            "KernelCommandLine": {
+                "ExtraCommandLine": "overlay-size=70% selinux=0 console=tty0 apparmor=0",
+                "SELinux": "permissive"
+            }
+        }
+    ]
+}
