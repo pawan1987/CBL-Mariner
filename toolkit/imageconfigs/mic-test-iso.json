@@ -3,9 +3,6 @@
         {
             "Name": "baremetal-iso",
             "Hostname": "baremetal-iso-host-name",
-            "PackageLists": [
-                "packagelists/mic-test-iso.json"
-            ],
             "KernelOptions": {
                 "default": "kernel",
                 "hyperv": "kernel"
