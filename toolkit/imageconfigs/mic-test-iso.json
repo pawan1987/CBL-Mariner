@@ -13,6 +13,9 @@
             "KernelCommandLine": {
                 "ExtraCommandLine": "overlay-size=70% selinux=0 console=tty0 apparmor=0",
                 "SELinux": "permissive"
+            },
+            "AdditionalFiles": {
+                "files/rootfs.img": "/rootfs.img"
             }
         }
     ]

@@ -98,6 +98,8 @@ func (im *IsoMaker) buildIsoImage() {
 		// General mkisofs parameters.
 		"-R", "-l", "-D", "-o", isoImageFilePath,
 
+		"-V", "baremetal-iso",
+
 		// BIOS bootloader, params suggested by https://wiki.syslinux.org/wiki/index.php?title=ISOLINUX.
 		"-b", "isolinux/isolinux.bin", "-c", "isolinux/boot.cat", "-no-emul-boot", "-boot-load-size", "4", "-boot-info-table",
 
@@ -318,6 +320,7 @@ func (im *IsoMaker) copyAndRenameConfigFiles() {
 // the config gets updated with the new ISO paths.
 func (im *IsoMaker) copyAndRenameAdditionalFiles(configFilesAbsDirPath string) {
 	const additionalFilesSubDirName = "additionalfiles"
+	// const additionalFilesSubDirName = "../LiveOS"
 
 	for i := range im.config.SystemConfigs {
 		systemConfig := &im.config.SystemConfigs[i]
@@ -434,6 +437,7 @@ func (im *IsoMaker) saveConfigJSON(configFilesAbsDirPath string) {
 func (im *IsoMaker) copyFileToConfigRoot(configFilesAbsDirPath, configFilesSubDirName, localAbsFilePath string) string {
 	fileName := filepath.Base(localAbsFilePath)
 	configFileSubDirRelativePath := fmt.Sprintf("%s/%d", configFilesSubDirName, im.configSubDirNumber)
+	// configFileSubDirRelativePath := configFilesSubDirName
 	configFileSubDirAbsPath := filepath.Join(configFilesAbsDirPath, configFileSubDirRelativePath)
 
 	logger.PanicOnError(os.MkdirAll(configFileSubDirAbsPath, os.ModePerm), "Failed to create ISO's config subdirectory '%s'.", configFileSubDirAbsPath)
