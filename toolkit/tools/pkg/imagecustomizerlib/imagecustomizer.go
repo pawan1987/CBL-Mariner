@@ -10,12 +10,14 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/imagecustomizerapi"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/file"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/logger"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/safemount"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/shell"
+	"github.com/microsoft/CBL-Mariner/toolkit/tools/pkg/isomakerlib"
 )
 
 const (
@@ -333,6 +335,11 @@ func customizeImageHelper(buildDir string, baseConfigPath string, config *imagec
 			}
 			break
 		}
+	}
+
+	err = createIso()
+	if err != nil {
+		return err
 	}
 
 	logger.Log.Infof("--imagecustomizer.go - imageConnection.CleanClose()")
@@ -799,3 +806,37 @@ func processDuOutputCallback(args ...interface{}) {
 	rootfsContainerSizeInMB = maxSize
 }
 
+func createIso() error {
+
+	unattendedInstall := false
+	baseDirPath := "/home/george/git/CBL-Mariner-POC/toolkit/imageconfigs"
+	buildDirPath := "/home/george/git/CBL-Mariner-POC/build/imagegen/mic-test-iso/workspace"
+	releaseVersion := "2.0.20240112.1740"
+	resourcesDirPath := "/home/george/git/CBL-Mariner-POC/toolkit/resources"
+    configFilePath := "/home/george/git/CBL-Mariner-POC/toolkit/imageconfigs/mic-test-iso.json"
+	initrdPath := "/home/george/temp/mic-iso/rootfs-extracted/initrd.img"
+	isoRepoDirPath := "dummy"
+	imageTag := time.Now().Format("20060102-150405")
+    outputDir := "/home/george/temp/iso-build-poc/iso-out/iso/"
+
+	err := os.MkdirAll(outputDir, os.ModePerm)
+	if err != nil {
+		return err
+	}
+
+	isoMaker := isomakerlib.NewIsoMaker(
+		unattendedInstall,
+		baseDirPath,
+		buildDirPath,
+		releaseVersion,
+		resourcesDirPath,
+		configFilePath,
+		initrdPath,
+		isoRepoDirPath,
+		outputDir,
+		imageTag)
+
+	isoMaker.Make()
+
+	return nil
+}
