@@ -339,10 +339,11 @@ func customizeImageHelper(buildDir string, baseConfigPath string, config *imagec
 
 	isoBuildDir := filepath.Join(buildDir, "iso")
 	isoResourcesDir := "/home/george/git/CBL-Mariner-POC/toolkit/resources"
-	isoConfigFile := "/home/george/git/CBL-Mariner-POC/toolkit/imageconfigs/mic-test-iso.json"
-	isoInitrdFile := "/home/george/temp/mic-iso/rootfs-extracted/initrd.img"
-	isoOutputDir := "/home/george/temp/iso-build-poc/iso-out/iso/"
+	isoConfigFile   := "/home/george/git/CBL-Mariner-POC/toolkit/imageconfigs/mic-test-iso.json"
+	isoInitrdFile   := "/home/george/temp/mic-iso/rootfs-extracted/initrd.img"
 	isoGrubFile := filepath.Join(isoResourcesDir, "assets/isomaker/iso_root_static_files_liveos/boot/grub2/grub.cfg")
+
+	isoOutputDir    := "/home/george/temp/iso-build-poc/iso-out/iso/"
 
 	err = createIso(isoBuildDir, isoResourcesDir, isoConfigFile, isoGrubFile, isoInitrdFile, isoOutputDir)
 	if err != nil {
@@ -378,40 +379,6 @@ func extractPartitionsHelper(buildDir string, buildImageFile string, outputImage
 
 	return nil
 }
-
-// func extractIsoArtifacts(buildDir string, buildImageFile string) error {
-
-// 	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifacts() - 1 - %s", buildImageFile)
-
-// 	imageConnection, mountPoints, err := connectToExistingImage(buildImageFile, buildDir, "imageroot")
-// 	if err != nil {
-// 		return err
-// 	}
-// 	defer imageConnection.Close()
-
-// 	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifacts() - 3 - printing mount points...")
-// 	for _, mountPoint := range mountPoints {
-// 		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifacts() - 4 - mount point.source: %s", mountPoint.GetSource())
-// 		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifacts() - 4 - mount point.target: %s", mountPoint.GetTarget())
-// 		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifacts() - 4 - mount point.fstype: %s", mountPoint.GetFSType())
-// 		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifacts() - 4 - mount point.data: %s", mountPoint.GetData())
-
-// 		if mountPoint.GetTarget() == "/" {
-// 			err = extractIsoArtifactsFromRootfs(mountPoint.GetSource(), mountPoint.GetFSType(), buildDir)
-// 			if err != nil {
-// 				return err
-// 			}
-// 			break
-// 		}
-// 	}
-
-// 	err = imageConnection.CleanClose()
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	return nil
-// }
 
 func copyFile(src, dst string) error {
 
@@ -515,13 +482,14 @@ func extractIsoArtifactsFromRootfs(rootfsDevicePath string, rootfsType string, b
 	// /boot/grub2/grub.cfg
 	// /usr/lib/modules/5.15.138.1-1.cm2/vmlinuz
 	// <everything>
-	sourceGrubCfgPath := filepath.Join(tmpDir, "/boot/grub2/grub.cfg")
 	sourceVmlinuzPath := filepath.Join(tmpDir, "/boot/vmlinuz-5.15.138.1-1.cm2")
 	sourceRootPath := tmpDir
 
 	extractedRoot := "/home/george/temp/mic-iso/rootfs-extracted"
 	rwRootFSMountDir := filepath.Join(extractedRoot, "rootfs-mount")
+	/* enable when we can merge extracted grub.cfg with extracted one.	
 	extractedGrubCfgPath := filepath.Join(extractedRoot, "grub.cfg")
+	*/
 	extractedVmlinuzPath := filepath.Join(extractedRoot, "vmlinuz")
 	generatedSquashfsFile := filepath.Join(extractedRoot, "rootfs.squashfs")
 	generatedInitrdPath := filepath.Join(extractedRoot, "initrd.img")
@@ -534,8 +502,8 @@ func extractIsoArtifactsFromRootfs(rootfsDevicePath string, rootfsType string, b
 		return err
 	}
 
-	// logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - pausing for 30 seconds. Mount folder: %s", tmpDir)
-	// time.Sleep(30 * time.Second)
+	/* enable when we can merge extracted grub.cfg with extracted one.
+	sourceGrubCfgPath := filepath.Join(tmpDir, "/boot/grub2/grub.cfg")
 
 	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - copying %s to %s", sourceGrubCfgPath, extractedGrubCfgPath)
 	err = copyFile(sourceGrubCfgPath, extractedGrubCfgPath)
@@ -543,6 +511,7 @@ func extractIsoArtifactsFromRootfs(rootfsDevicePath string, rootfsType string, b
 		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - failed to copy grub.cfg")
 		return err
 	}
+	*/
 	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - copying %s to %s", sourceVmlinuzPath, extractedVmlinuzPath)
 	err = copyFile(sourceVmlinuzPath, extractedVmlinuzPath)
 	if err != nil {
@@ -721,55 +690,20 @@ func extractIsoArtifactsFromRootfs(rootfsDevicePath string, rootfsType string, b
 		return err
 	}
 
-	// --- chroot start -----------------------------------------------------------------
-	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - running dracut under chroot...")
-
-	rwImageBuildDir := buildDir + "-rw"
-	rwImageChrootDir := "imageroot-rw"
-	rwImageChrootFullDir := filepath.Join(rwImageBuildDir, rwImageChrootDir)
-	initrdFileWithinChroot := "/initrd.img"
-	initrdFile := filepath.Join(rwImageChrootFullDir, initrdFileWithinChroot)
-	rwImageConnection, _, err := connectToExistingImage(rwRootfsImage, rwImageBuildDir, rwImageChrootDir)
+	err = generateInitrd(buildDir, rwRootfsImage, latestKernelVersion, chrootBootloadersRootDir, generatedInitrdPath)
 	if err != nil {
-		return err
-	}
-	defer rwImageConnection.Close()
-
-	err = rwImageConnection.Chroot().UnsafeRun(func() error {
-
-		dracutParams := []string{
-			initrdFileWithinChroot,
-			"--kver", latestKernelVersion,
-			"--filesystems", "squashfs",
-			"--include", chrootBootloadersRootDir, "/boot" }
-
-		return shell.ExecuteLiveWithCallback(onOutput, onOutput, false, "dracut", dracutParams...)
-	})
-	if err != nil {
-		return fmt.Errorf("failed to run dracut (%v)", err)
-	}	
-
-	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - copying initrd from %v to %v", initrdFile, generatedInitrdPath)
-	err = copyFile(initrdFile, generatedInitrdPath)
-	if err != nil {
-		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - failed to copy generated initrd.")
+		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - failed to generate initrd.")
 		return err
 	}
 
-
-
-	err = rwImageConnection.CleanClose()
-	if err != nil {
-		return err
-	}
-	// --- chroot end -------------------------------------------------------------------
-
+	/* enable when we can merge extracted grub.cfg with extracted one.
 	logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - updating grub.cfg.")
 	err = updateGrubCfg(extractedGrubCfgPath, "/home/george/git/CBL-Mariner-POC/toolkit/mic-iso-gen-0/grub.cfg")
 	if err != nil {
 		logger.Log.Infof("--imagecustomizer.go - extractIsoArtifactsFromRootfs() - failed to upgrade grub.cfg.")
 		return err
 	}
+	*/
 
 	// Close the rootfs partition mount.
 	err = fullDiskRootfsMount.CleanClose()
@@ -780,10 +714,12 @@ func extractIsoArtifactsFromRootfs(rootfsDevicePath string, rootfsType string, b
 	return nil
 }
 
+/* enable when we can merge extracted grub.cfg with extracted one.
 func updateGrubCfg(extractedGrubCfgPath string, templateGrubCfg string) error {
 	// temporary: just overwrite the extracted grub.cfg
 	return copyFile(templateGrubCfg, extractedGrubCfgPath)
 }
+*/
 
 func onOutput(args ...interface{}) {
 	logger.Log.Infof(args[0].(string))
@@ -811,6 +747,50 @@ func processDuOutputCallback(args ...interface{}) {
 	logger.Log.Infof("Need %d in %c", maxSize, unit)
 
 	rootfsContainerSizeInMB = maxSize
+}
+
+func generateInitrd(buildDir string, rwRootfsImage string, latestKernelVersion string, chrootBootloadersRootDir string, generatedInitrdPath string) error {
+	// --- chroot start -----------------------------------------------------------------
+	logger.Log.Infof("--imagecustomizer.go - generateInitrd() - running dracut under chroot...")
+
+	rwImageBuildDir := buildDir + "-rw"
+	rwImageChrootDir := "imageroot-rw"
+	rwImageChrootFullDir := filepath.Join(rwImageBuildDir, rwImageChrootDir)
+	initrdFileWithinChroot := "/initrd.img"
+	initrdFile := filepath.Join(rwImageChrootFullDir, initrdFileWithinChroot)
+	rwImageConnection, _, err := connectToExistingImage(rwRootfsImage, rwImageBuildDir, rwImageChrootDir)
+	if err != nil {
+		return err
+	}
+	defer rwImageConnection.Close()
+
+	err = rwImageConnection.Chroot().UnsafeRun(func() error {
+
+		dracutParams := []string{
+			initrdFileWithinChroot,
+			"--kver", latestKernelVersion,
+			"--filesystems", "squashfs",
+			"--include", chrootBootloadersRootDir, "/boot" }
+
+		return shell.ExecuteLiveWithCallback(onOutput, onOutput, false, "dracut", dracutParams...)
+	})
+	if err != nil {
+		return fmt.Errorf("failed to run dracut (%v)", err)
+	}	
+
+	logger.Log.Infof("--imagecustomizer.go - generateInitrd() - copying initrd from %v to %v", initrdFile, generatedInitrdPath)
+	err = copyFile(initrdFile, generatedInitrdPath)
+	if err != nil {
+		logger.Log.Infof("--imagecustomizer.go - generateInitrd() - failed to copy generated initrd.")
+		return err
+	}
+
+	err = rwImageConnection.CleanClose()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func createIso(buildDir string, isoResourcesDir string, isoConfigFile string, isoGrubFile string, isoInitrdFile string, isoOutputDir string) error {
