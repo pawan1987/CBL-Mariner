@@ -30,17 +30,17 @@ func findPartitions(buildDir string, diskDevice string) ([]string, []*safechroot
 		return nil, nil, err
 	}
 
-	for _, diskPartition := range diskPartitions {
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - -------------------------------------------")
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.Name = %s", diskPartition.Name)
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.Path = %s", diskPartition.Path)
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.FileSystemType = %s", diskPartition.FileSystemType)
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.Mountpoint = %s", diskPartition.Mountpoint)
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.PartLabel = %s", diskPartition.PartLabel)
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.PartitionTypeUuid = %s", diskPartition.PartitionTypeUuid)
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.Uuid = %s", diskPartition.Uuid)
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.PartUuid = %s", diskPartition.PartUuid)
-	}
+	// for _, diskPartition := range diskPartitions {
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - -------------------------------------------")
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.Name = %s", diskPartition.Name)
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.Path = %s", diskPartition.Path)
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.FileSystemType = %s", diskPartition.FileSystemType)
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.Mountpoint = %s", diskPartition.Mountpoint)
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.PartLabel = %s", diskPartition.PartLabel)
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.PartitionTypeUuid = %s", diskPartition.PartitionTypeUuid)
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.Uuid = %s", diskPartition.Uuid)
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.PartUuid = %s", diskPartition.PartUuid)
+	// }
 
 	var rootfsPartition *diskutils.PartitionInfo
 	var mountPoints []*safechroot.MountPoint
@@ -75,13 +75,13 @@ func findPartitions(buildDir string, diskDevice string) ([]string, []*safechroot
 		mountPoints = append(mountPoints, mountPoint)
 	}
 
-	for _, mountPoint := range mountPoints {
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - -------------------------------------------")
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - mountPoint.Source = %s", mountPoint.GetSource())
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - mountPoint.Target = %s", mountPoint.GetTarget())
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - mountPoint.FSType = %s", mountPoint.GetFSType())
-		logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - mountPoint.Data = %s", mountPoint.GetData())
-	}
+	// for _, mountPoint := range mountPoints {
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - -------------------------------------------")
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - mountPoint.Source = %s", mountPoint.GetSource())
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - mountPoint.Target = %s", mountPoint.GetTarget())
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - mountPoint.FSType = %s", mountPoint.GetFSType())
+	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - mountPoint.Data = %s", mountPoint.GetData())
+	// }
 
 	return nil, mountPoints, nil
 }

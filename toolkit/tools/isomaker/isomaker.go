@@ -37,6 +37,8 @@ func main() {
 
 	logger.InitBestEffort(*logFilePath, *logLevel)
 
+	isoGrubFile := ""
+
 	isoMaker := isomakerlib.NewIsoMaker(
 		*unattendedInstall,
 		*baseDirPath,
@@ -44,6 +46,7 @@ func main() {
 		*releaseVersion,
 		*resourcesDirPath,
 		*configFilePath,
+		isoGrubFile,
 		*initrdPath,
 		*isoRepoDirPath,
 		*outputDir,

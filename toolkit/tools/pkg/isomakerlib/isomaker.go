@@ -39,6 +39,7 @@ type IsoMaker struct {
 	efiBootImgPath     string               // Path to the efiboot.img file needed to boot the ISO installer.
 	fetchedRepoDirPath string               // Path to the directory containing an RPM repository with all packages required by the ISO installer.
 	initrdPath         string               // Path to ISO's initrd file.
+	grubCfgPath        string               // Path to ISO's grub.cfg file.
 	outputDirPath      string               // Path to the output ISO directory.
 	releaseVersion     string               // Current Mariner release version.
 	resourcesDirPath   string               // Path to the 'resources' directory.
@@ -48,7 +49,7 @@ type IsoMaker struct {
 }
 
 // NewIsoMaker returns a new ISO maker.
-func NewIsoMaker(unattendedInstall bool, baseDirPath, buildDirPath, releaseVersion, resourcesDirPath, configFilePath, initrdPath, isoRepoDirPath, outputDir, imageNameTag string) *IsoMaker {
+func NewIsoMaker(unattendedInstall bool, baseDirPath, buildDirPath, releaseVersion, resourcesDirPath, configFilePath, initrdPath, grubCfgPath, isoRepoDirPath, outputDir, imageNameTag string) *IsoMaker {
 	if baseDirPath == "" {
 		baseDirPath = filepath.Dir(configFilePath)
 	}
@@ -61,6 +62,7 @@ func NewIsoMaker(unattendedInstall bool, baseDirPath, buildDirPath, releaseVersi
 		baseDirPath:        baseDirPath,
 		buildDirPath:       buildDirPath,
 		initrdPath:         initrdPath,
+		grubCfgPath:        grubCfgPath,
 		releaseVersion:     releaseVersion,
 		resourcesDirPath:   resourcesDirPath,
 		configFilePath:     configFilePath,
@@ -278,9 +280,15 @@ func (im *IsoMaker) prepareWorkDirectory() {
 func (im *IsoMaker) copyStaticIsoRootFiles() {
 	staticIsoRootFilesPath := filepath.Join(im.resourcesDirPath, "assets/isomaker/iso_root_static_files/*")
 
-	logger.Log.Debugf("Copying static ISO root files from '%s'.", staticIsoRootFilesPath)
+	logger.Log.Infof("Copying static ISO root files from '%s' to '%s'.", staticIsoRootFilesPath, im.buildDirPath)
 
 	recursiveCopyDereferencingLinks(staticIsoRootFilesPath, im.buildDirPath)
+
+	if im.grubCfgPath != "" {
+		targetGrubCfgPath := filepath.Join(im.buildDirPath, "boot/grub2/grub.cfg")
+		logger.Log.Infof("Copying '%s' to '%s'.", im.grubCfgPath, targetGrubCfgPath)
+		shell.MustExecuteLive("cp", im.grubCfgPath, targetGrubCfgPath)
+	}
 }
 
 // copyArchitectureDependentIsoRootFiles copies the pre-built UEFI modules required

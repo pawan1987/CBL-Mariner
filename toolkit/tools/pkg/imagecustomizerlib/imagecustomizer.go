@@ -308,10 +308,10 @@ func customizeImageHelper(buildDir string, baseConfigPath string, config *imagec
 
 	logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 3 - printing mount points...")
 	for _, mountPoint := range mountPoints {
-		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 4 - mount point.source: %s", mountPoint.GetSource())
-		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 4 - mount point.target: %s", mountPoint.GetTarget())
-		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 4 - mount point.fstype: %s", mountPoint.GetFSType())
-		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 4 - mount point.data: %s", mountPoint.GetData())
+		// logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 4 - mount point.source: %s", mountPoint.GetSource())
+		// logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 4 - mount point.target: %s", mountPoint.GetTarget())
+		// logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 4 - mount point.fstype: %s", mountPoint.GetFSType())
+		// logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 4 - mount point.data: %s", mountPoint.GetData())
 
 		if mountPoint.GetTarget() == "/boot/efi" {
 			err = extractIsoArtifactsFromBoot(mountPoint.GetSource(), mountPoint.GetFSType(), buildDir)
@@ -323,10 +323,10 @@ func customizeImageHelper(buildDir string, baseConfigPath string, config *imagec
 	}
 
 	for _, mountPoint := range mountPoints {
-		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 5 - mount point.source: %s", mountPoint.GetSource())
-		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 5 - mount point.target: %s", mountPoint.GetTarget())
-		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 5 - mount point.fstype: %s", mountPoint.GetFSType())
-		logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 5 - mount point.data: %s", mountPoint.GetData())
+		// logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 5 - mount point.source: %s", mountPoint.GetSource())
+		// logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 5 - mount point.target: %s", mountPoint.GetTarget())
+		// logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 5 - mount point.fstype: %s", mountPoint.GetFSType())
+		// logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 5 - mount point.data: %s", mountPoint.GetData())
 
 		if mountPoint.GetTarget() == "/" {
 			err = extractIsoArtifactsFromRootfs(mountPoint.GetSource(), mountPoint.GetFSType(), buildDir)
@@ -337,7 +337,14 @@ func customizeImageHelper(buildDir string, baseConfigPath string, config *imagec
 		}
 	}
 
-	err = createIso()
+	isoBuildDir := filepath.Join(buildDir, "iso")
+	isoResourcesDir := "/home/george/git/CBL-Mariner-POC/toolkit/resources"
+	isoConfigFile := "/home/george/git/CBL-Mariner-POC/toolkit/imageconfigs/mic-test-iso.json"
+	isoInitrdFile := "/home/george/temp/mic-iso/rootfs-extracted/initrd.img"
+	isoOutputDir := "/home/george/temp/iso-build-poc/iso-out/iso/"
+	isoGrubFile := filepath.Join(isoResourcesDir, "assets/isomaker/iso_root_static_files_liveos/boot/grub2/grub.cfg")
+
+	err = createIso(isoBuildDir, isoResourcesDir, isoConfigFile, isoGrubFile, isoInitrdFile, isoOutputDir)
 	if err != nil {
 		return err
 	}
@@ -806,20 +813,15 @@ func processDuOutputCallback(args ...interface{}) {
 	rootfsContainerSizeInMB = maxSize
 }
 
-func createIso() error {
+func createIso(buildDir string, isoResourcesDir string, isoConfigFile string, isoGrubFile string, isoInitrdFile string, isoOutputDir string) error {
 
 	unattendedInstall := false
-	baseDirPath := "/home/george/git/CBL-Mariner-POC/toolkit/imageconfigs"
-	buildDirPath := "/home/george/git/CBL-Mariner-POC/build/imagegen/mic-test-iso/workspace"
-	releaseVersion := "2.0.20240112.1740"
-	resourcesDirPath := "/home/george/git/CBL-Mariner-POC/toolkit/resources"
-    configFilePath := "/home/george/git/CBL-Mariner-POC/toolkit/imageconfigs/mic-test-iso.json"
-	initrdPath := "/home/george/temp/mic-iso/rootfs-extracted/initrd.img"
+	baseDirPath := ""
+	releaseVersion := "2.0." + time.Now().Format("20060102-1504")
 	isoRepoDirPath := "dummy"
-	imageTag := time.Now().Format("20060102-150405")
-    outputDir := "/home/george/temp/iso-build-poc/iso-out/iso/"
+	imageTag := ""
 
-	err := os.MkdirAll(outputDir, os.ModePerm)
+	err := os.MkdirAll(isoOutputDir, os.ModePerm)
 	if err != nil {
 		return err
 	}
@@ -827,13 +829,14 @@ func createIso() error {
 	isoMaker := isomakerlib.NewIsoMaker(
 		unattendedInstall,
 		baseDirPath,
-		buildDirPath,
+		buildDir,
 		releaseVersion,
-		resourcesDirPath,
-		configFilePath,
-		initrdPath,
+		isoResourcesDir,
+		isoConfigFile,
+		isoInitrdFile,
+		isoGrubFile,
 		isoRepoDirPath,
-		outputDir,
+		isoOutputDir,
 		imageTag)
 
 	isoMaker.Make()
