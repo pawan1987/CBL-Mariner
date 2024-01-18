@@ -26,19 +26,26 @@ var (
 // IsoMaker builds ISO images and populates them with packages and files required by the installer.
 type IsoArtifactExtractor struct {
 	buildDir       string
+	tmpDir         string
 	outDir 	       string
 	bootx64EfiPath string
 	grubx64EfiPath string
 	grubCfgPath    string
 	vmlinuzPath    string
+	kernelVersion  string
+	initrdPath     string
+	squashfsPath   string
 }
 
 // runs dracut against a modified rootfs to create the initrd file.
-func generateInitrd(buildDir string, rwRootfsImage string, latestKernelVersion string, isoMakerArtifactsStagingDirWithinRWImage string, generatedInitrdPath string) error {
-	// --- chroot start -----------------------------------------------------------------
-	logger.Log.Infof("--isohelpers.go - generateInitrd() - running dracut under chroot...")
+func (iae* IsoArtifactExtractor) generateInitrd(writeableRootfsImage string, isoMakerArtifactsStagingDirWithinRWImage string) error {
 
-	rwImageBuildDir := filepath.Join(buildDir, "initrd-generated")
+	generatedInitrdPath := filepath.Join(iae.outDir, "initrd.img")
+
+	// --- chroot start -----------------------------------------------------------------
+	logger.Log.Infof("--isohelpers.go - running dracut under chroot...")
+
+	rwImageBuildDir := filepath.Join(iae.tmpDir, "initrd-generated")
 
 	// image mount folder
 	rwImageMountDir := "customized-rootfs-image-mount"
@@ -49,7 +56,7 @@ func generateInitrd(buildDir string, rwRootfsImage string, latestKernelVersion s
 	initrdFileWithinBuildMachine := filepath.Join(rwImageMountFullDir, initrdFileWithinChroot)
 
 	// connect
-	rwImageConnection, _, err := connectToExistingImage(rwRootfsImage, rwImageBuildDir, rwImageMountDir)
+	rwImageConnection, _, err := connectToExistingImage(writeableRootfsImage, rwImageBuildDir, rwImageMountDir)
 	if err != nil {
 		return err
 	}
@@ -59,7 +66,7 @@ func generateInitrd(buildDir string, rwRootfsImage string, latestKernelVersion s
 
 		dracutParams := []string{
 			initrdFileWithinChroot,
-			"--kver", latestKernelVersion,
+			"--kver", iae.kernelVersion,
 			"--filesystems", "squashfs",
 			"--include", isoMakerArtifactsStagingDirWithinRWImage, "/boot" }
 
@@ -80,6 +87,8 @@ func generateInitrd(buildDir string, rwRootfsImage string, latestKernelVersion s
 	if err != nil {
 		return err
 	}
+
+	iae.initrdPath = generatedInitrdPath
 
 	return nil
 }
@@ -184,6 +193,11 @@ func (iae* IsoArtifactExtractor) createWriteableRootfs(rootfsDevicePath, rootfsT
 	logger.Log.Infof("--isohelpers.go - rootfs size = %v", rootfsContainerSizeInMB)
 	logger.Log.Infof("--isohelpers.go - creating new image file at %v", dstRootfsImage)
 
+	err = os.MkdirAll(filepath.Dir(dstRootfsImage), os.ModePerm)
+	if err != nil {
+		return err
+	}
+
 	ddOutputParam := "of=" + dstRootfsImage
 	ddBlockCountParam := "count=" + strconv.FormatInt(rootfsContainerSizeInMB, 10)
 	ddParams := []string{"if=/dev/zero", ddOutputParam, "bs=1M", ddBlockCountParam}
@@ -246,7 +260,7 @@ func (iae* IsoArtifactExtractor) createWriteableRootfs(rootfsDevicePath, rootfsT
 	return nil
 }
 
-func (iae* IsoArtifactExtractor) embedIsoMakerArtifacts(writeableRootfsMountFullDir, isoMakerArtifactsStagingDirWithinRWImage string) (error) {
+func (iae* IsoArtifactExtractor) stageIsoMakerInitrdArtifacts(writeableRootfsMountFullDir, isoMakerArtifactsStagingDirWithinRWImage string) (error) {
 
 	targetBootloadersRWImageDir:=filepath.Join(isoMakerArtifactsStagingDirWithinRWImage, "/efi/EFI/BOOT")
 	targetBootloadersLocalDir := filepath.Join(writeableRootfsMountFullDir, targetBootloadersRWImageDir)
@@ -323,8 +337,34 @@ func (iae* IsoArtifactExtractor) prepareImageForDracut(writeableRootfsMountFullD
 	return nil
 }
 
+func (iae* IsoArtifactExtractor) createSquashfs(writeableRootfsMountFullDir string) (error) {
 
-func (iae* IsoArtifactExtractor) extractIsoArtifactsFromRootfs(buildDir, writeableRootfsImagePath string) (error) {
+	logger.Log.Infof("--isohelpers.go - creating squashfs of %v", writeableRootfsMountFullDir)
+
+	generatedSquashfsFile := filepath.Join(iae.outDir, "rootfs.img")
+
+	oldFileExists, err := fileExists(generatedSquashfsFile)
+	if err == nil && oldFileExists {
+		err = os.Remove(generatedSquashfsFile)
+		if err != nil {
+			logger.Log.Infof("--isohelpers.go - failed to delete squashfs")
+			return err
+		}
+	}
+
+	mksquashfsParams := []string{writeableRootfsMountFullDir, generatedSquashfsFile}
+	err = shell.ExecuteLiveWithCallback(onOutput, onOutput, false, "mksquashfs", mksquashfsParams...)
+	if err != nil {
+		logger.Log.Infof("--isohelpers.go - failed to create squashfs")
+		return err
+	}
+
+	iae.squashfsPath = generatedSquashfsFile
+
+	return nil
+}
+
+func (iae* IsoArtifactExtractor) convertToLiveOSImage(writeableRootfsImagePath, dracutPatchFile, dracutConfigFile, isoMakerArtifactsStagingDirWithinRWImage string) (error) {
 
 	// -- mount writeable image -----------------------------------------------
 	logger.Log.Infof("--isohelpers.go - connecting %v to loop device.", writeableRootfsImagePath)
@@ -358,8 +398,8 @@ func (iae* IsoArtifactExtractor) extractIsoArtifactsFromRootfs(buildDir, writeab
 		return fmt.Errorf("found 0 kernels!")
 	}
 	// do we need to sort this?
-	latestKernelVersion := kernelPaths[len(kernelPaths)-1].Name()
-	logger.Log.Infof("--isohelpers.go - found kernel version (%s)", latestKernelVersion)	
+	iae.kernelVersion = kernelPaths[len(kernelPaths)-1].Name()
+	logger.Log.Infof("--isohelpers.go - found kernel version (%s)", iae.kernelVersion)	
 
 	// -- extract grub.cfg and vmlinuz ----------------------------------------
 
@@ -371,7 +411,7 @@ func (iae* IsoArtifactExtractor) extractIsoArtifactsFromRootfs(buildDir, writeab
 		return err
 	}
 
-	sourceVmlinuzPath := filepath.Join(writeableRootfsMountFullDir, "/boot/vmlinuz-" + latestKernelVersion)
+	sourceVmlinuzPath := filepath.Join(writeableRootfsMountFullDir, "/boot/vmlinuz-" + iae.kernelVersion)
 	iae.vmlinuzPath = filepath.Join(iae.outDir, "vmlinuz")
 	err = copyFile(sourceVmlinuzPath, iae.vmlinuzPath)
 	if err != nil {
@@ -381,18 +421,13 @@ func (iae* IsoArtifactExtractor) extractIsoArtifactsFromRootfs(buildDir, writeab
 
 	// -- upload bootloaders and vmlinuz to make isomaker happy ---------------
 
-	isoMakerArtifactsStagingDirWithinRWImage := "/boot-staging"
-
-	err = iae.embedIsoMakerArtifacts(writeableRootfsMountFullDir, isoMakerArtifactsStagingDirWithinRWImage)
+	err = iae.stageIsoMakerInitrdArtifacts(writeableRootfsMountFullDir, isoMakerArtifactsStagingDirWithinRWImage)
 	if err != nil {
 		logger.Log.Infof("--isohelpers.go - failed to embed iso maker artifacts.")
 		return err
 	}
 
 	// -- configure dracut ----------------------------------------------------
-
-	dracutPatchFile := "/home/george/git/CBL-Mariner-POC/toolkit/mic-iso-gen-0/initrd-build-artifacts/no_user_prompt.patch"
-	dracutConfigFile := "/home/george/git/CBL-Mariner-POC/toolkit/mic-iso-gen-0/initrd-build-artifacts/20-live-cd.conf"
 
 	err = iae.prepareImageForDracut(writeableRootfsMountFullDir, dracutPatchFile, dracutConfigFile)
 	if err != nil {
@@ -401,22 +436,9 @@ func (iae* IsoArtifactExtractor) extractIsoArtifactsFromRootfs(buildDir, writeab
 	}
 	// -- generate squashfs ---------------------------------------------------
 
-	generatedSquashfsFile := filepath.Join(iae.outDir, "rootfs.img")
-
-	oldFileExists, err := fileExists(generatedSquashfsFile)
-	if err == nil && oldFileExists {
-		err = os.Remove(generatedSquashfsFile)
-		if err != nil {
-			logger.Log.Infof("--isohelpers.go - failed to delete squashfs")
-			return err
-		}
-	}
-
-	logger.Log.Infof("--isohelpers.go - creating squashfs of %v", writeableRootfsMountFullDir)
-	mksquashfsParams := []string{writeableRootfsMountFullDir, generatedSquashfsFile}
-	err = shell.ExecuteLiveWithCallback(onOutput, onOutput, false, "mksquashfs", mksquashfsParams...)
+	err = iae.createSquashfs(writeableRootfsMountFullDir)
 	if err != nil {
-		logger.Log.Infof("--isohelpers.go - failed to create squashfs")
+		logger.Log.Infof("--isohelpers.go - failed to squashfs.")
 		return err
 	}
 
@@ -439,12 +461,6 @@ func (iae* IsoArtifactExtractor) extractIsoArtifactsFromRootfs(buildDir, writeab
 
 	// ---- generate initrd ---------------------------------------------------
 
-	generatedInitrdPath := filepath.Join(iae.outDir, "initrd.img")
-	err = generateInitrd(buildDir, writeableRootfsImagePath, latestKernelVersion, isoMakerArtifactsStagingDirWithinRWImage, generatedInitrdPath)
-	if err != nil {
-		logger.Log.Infof("--isohelpers.go - failed to generate initrd.")
-		return err
-	}
 
 	/* enable when we can merge extracted grub.cfg with extracted one.
 	logger.Log.Infof("--isohelpers.go - updating grub.cfg.")

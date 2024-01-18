@@ -340,24 +340,22 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 	//   - isolinux.bin
 	//   - isolinux.cfg
 	//   - idlinux.c32
-	isoResourcesDir := "/home/george/git/CBL-Mariner-POC/toolkit/resources"
-	isoGrubFile := filepath.Join(isoResourcesDir, "assets/isomaker/iso_root_static_files_liveos/boot/grub2/grub.cfg")
+	srcRoot := "/home/george/git/CBL-Mariner-POC/toolkit"
+	isoResourcesDir  := filepath.Join(srcRoot, "resources")
+	isoGrubFile      := filepath.Join(srcRoot, "resources/assets/isomaker/iso_root_static_files_liveos/boot/grub2/grub.cfg")
+	dracutPatchFile  := filepath.Join(srcRoot, "mic-iso-gen-0/initrd-build-artifacts/no_user_prompt.patch")
+	dracutConfigFile := filepath.Join(srcRoot, "mic-iso-gen-0/initrd-build-artifacts/20-live-cd.conf")
 
 	// Configuration
-	isoMakerTmpDir := filepath.Join(buildDir, "isomaker-tmp")
-	isoExtractedArtifactsDir := filepath.Join(buildDir, "extracted")
-	isoOutputDir := filepath.Join(buildDir, "out")
 	isoOutputBaseName := "mic-iso"
-
-	isoInitrdFile := filepath.Join(isoExtractedArtifactsDir, "initrd.img")
-	isoRootfsFile := filepath.Join(isoExtractedArtifactsDir, "rootfs.img")
 
 	iae := &IsoArtifactExtractor{
 		buildDir: buildDir,
-		outDir: isoExtractedArtifactsDir,	
+		tmpDir: filepath.Join(buildDir, "tmp"),
+		outDir: filepath.Join(buildDir, "out"),	
 	}
 
-	// extract boot artifacts...
+	// extract boot artifacts (before rootfs artifacts)...
 	for _, mountPoint := range mountPoints {
 		if mountPoint.GetTarget() == "/boot/efi" {
 			err := iae.extractIsoArtifactsFromBoot(mountPoint.GetSource(), mountPoint.GetFSType())
@@ -372,18 +370,29 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 	for _, mountPoint := range mountPoints {
 		if mountPoint.GetTarget() == "/" {
 
-			dstRootfsImage := filepath.Join(isoExtractedArtifactsDir, "rootfs-rw.img")
-			iae.createWriteableRootfs(mountPoint.GetSource(), mountPoint.GetFSType(), dstRootfsImage)
+			writeableRootfsImage := filepath.Join(iae.tmpDir, "rootfs-rw.img")
 
-			err := iae.extractIsoArtifactsFromRootfs(isoMakerTmpDir, dstRootfsImage)
+			err := iae.createWriteableRootfs(mountPoint.GetSource(), mountPoint.GetFSType(), writeableRootfsImage)
 			if err != nil {
 				return err
 			}
+
+			isoMakerArtifactsStagingDirWithinRWImage := "/boot-staging"
+			err = iae.convertToLiveOSImage(writeableRootfsImage, dracutPatchFile, dracutConfigFile, isoMakerArtifactsStagingDirWithinRWImage)
+			if err != nil {
+				return err
+			}
+
+			err = iae.generateInitrd(writeableRootfsImage, isoMakerArtifactsStagingDirWithinRWImage)
+			if err != nil {
+				return err
+			}
+		
 			break
 		}
 	}
 
-	err := createIso(isoMakerTmpDir, isoResourcesDir, isoGrubFile, isoInitrdFile, isoRootfsFile, isoOutputDir, isoOutputBaseName)
+	err := createIso(iae.tmpDir, isoResourcesDir, isoGrubFile, iae.initrdPath, iae.squashfsPath, iae.outDir, isoOutputBaseName)
 	if err != nil {
 		return err
 	}
