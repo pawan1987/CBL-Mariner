@@ -52,16 +52,22 @@ func processDuOutputCallback(args ...interface{}) {
 }
 
 // runs dracut against a modified rootfs to create the initrd file.
-func generateInitrd(buildDir string, rwRootfsImage string, latestKernelVersion string, chrootBootloadersRootDir string, generatedInitrdPath string) error {
+func generateInitrd(buildDir string, rwRootfsImage string, latestKernelVersion string, bootloadersRootDirWithinChroot string, generatedInitrdPath string) error {
 	// --- chroot start -----------------------------------------------------------------
 	logger.Log.Infof("--isohelpers.go - generateInitrd() - running dracut under chroot...")
 
-	rwImageBuildDir := buildDir + "-rw"
-	rwImageChrootDir := "imageroot-rw"
-	rwImageChrootFullDir := filepath.Join(rwImageBuildDir, rwImageChrootDir)
+	rwImageBuildDir := filepath.Join(buildDir, "initrd-generated")
+
+	// image mount folder
+	rwImageMountDir := "customized-rootfs-image-mount"
+	rwImageMountFullDir := filepath.Join(rwImageBuildDir, rwImageMountDir)
+
+	// initrd paths
 	initrdFileWithinChroot := "/initrd.img"
-	initrdFile := filepath.Join(rwImageChrootFullDir, initrdFileWithinChroot)
-	rwImageConnection, _, err := connectToExistingImage(rwRootfsImage, rwImageBuildDir, rwImageChrootDir)
+	initrdFileWithinBuildMachine := filepath.Join(rwImageMountFullDir, initrdFileWithinChroot)
+
+	// connect
+	rwImageConnection, _, err := connectToExistingImage(rwRootfsImage, rwImageBuildDir, rwImageMountDir)
 	if err != nil {
 		return err
 	}
@@ -73,7 +79,7 @@ func generateInitrd(buildDir string, rwRootfsImage string, latestKernelVersion s
 			initrdFileWithinChroot,
 			"--kver", latestKernelVersion,
 			"--filesystems", "squashfs",
-			"--include", chrootBootloadersRootDir, "/boot" }
+			"--include", bootloadersRootDirWithinChroot, "/boot" }
 
 		return shell.ExecuteLiveWithCallback(onOutput, onOutput, false, "dracut", dracutParams...)
 	})
@@ -81,8 +87,8 @@ func generateInitrd(buildDir string, rwRootfsImage string, latestKernelVersion s
 		return fmt.Errorf("failed to run dracut (%v)", err)
 	}	
 
-	logger.Log.Infof("--isohelpers.go - generateInitrd() - copying initrd from %v to %v", initrdFile, generatedInitrdPath)
-	err = copyFile(initrdFile, generatedInitrdPath)
+	logger.Log.Infof("--isohelpers.go - generateInitrd() - copying initrd from %v to %v", initrdFileWithinBuildMachine, generatedInitrdPath)
+	err = copyFile(initrdFileWithinBuildMachine, generatedInitrdPath)
 	if err != nil {
 		logger.Log.Infof("--isohelpers.go - generateInitrd() - failed to copy generated initrd.")
 		return err
@@ -346,10 +352,10 @@ func extractIsoArtifactsFromRootfs(rootfsDevicePath string, rootfsType string, b
 		return err
 	}
 
-	chrootBootloadersRootDir:="/boot-staging"
-	chrootBootloadersDir:=filepath.Join(chrootBootloadersRootDir, "/efi/EFI/BOOT")
-	// targetBootRootDir:=filepath.Join(rwRootFSMountDir, chrootBootloadersRootDir)
-	targetVmlinuzDir := filepath.Join(rwRootFSMountDir, chrootBootloadersRootDir)
+	bootloadersRootDirWithinChroot:="/boot-staging"
+	chrootBootloadersDir:=filepath.Join(bootloadersRootDirWithinChroot, "/efi/EFI/BOOT")
+	// targetBootRootDir:=filepath.Join(rwRootFSMountDir, bootloadersRootDirWithinChroot)
+	targetVmlinuzDir := filepath.Join(rwRootFSMountDir, bootloadersRootDirWithinChroot)
 	targetBootloaderDir := filepath.Join(rwRootFSMountDir, chrootBootloadersDir)
 	logger.Log.Infof("--isohelpers.go - extractIsoArtifactsFromRootfs() - creating %v", targetBootloaderDir)
 	err = os.MkdirAll(targetBootloaderDir, 0755)
@@ -447,7 +453,7 @@ func extractIsoArtifactsFromRootfs(rootfsDevicePath string, rootfsType string, b
 		return err
 	}
 
-	err = generateInitrd(buildDir, rwRootfsImage, latestKernelVersion, chrootBootloadersRootDir, generatedInitrdPath)
+	err = generateInitrd(buildDir, rwRootfsImage, latestKernelVersion, bootloadersRootDirWithinChroot, generatedInitrdPath)
 	if err != nil {
 		logger.Log.Infof("--isohelpers.go - extractIsoArtifactsFromRootfs() - failed to generate initrd.")
 		return err

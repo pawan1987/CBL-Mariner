@@ -11,6 +11,7 @@ import (
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/imagecustomizerapi"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/file"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/logger"
+	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/safechroot"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/shell"
 )
 
@@ -282,7 +283,7 @@ func customizeImageHelper(buildDir string, baseConfigPath string, config *imagec
 	buildImageFile string, rpmsSources []string, useBaseImageRpmRepos bool, partitionsCustomized bool,
 ) error {
 
-	logger.Log.Infof("--imagecustomizer.go - customizeImageHelper() - 1 - %s", buildImageFile)
+	logger.Log.Infof("--imagecustomizer.go - connecting to vhdx (%s)", buildImageFile)
 
 	imageConnection, mountPoints, err := connectToExistingImage(buildImageFile, buildDir, "imageroot")
 	if err != nil {
@@ -297,45 +298,12 @@ func customizeImageHelper(buildDir string, baseConfigPath string, config *imagec
 		return err
 	}
 
-	// extract boot artifacts...
-	extractedRoot := "/home/george/temp/mic-iso/rootfs-extracted"
-
-	for _, mountPoint := range mountPoints {
-		if mountPoint.GetTarget() == "/boot/efi" {
-			err = extractIsoArtifactsFromBoot(mountPoint.GetSource(), mountPoint.GetFSType(), buildDir, extractedRoot)
-			if err != nil {
-				return err
-			}
-			break
-		}
-	}
-
-	// extract rootfs artifacts...
-	for _, mountPoint := range mountPoints {
-		if mountPoint.GetTarget() == "/" {
-			err = extractIsoArtifactsFromRootfs(mountPoint.GetSource(), mountPoint.GetFSType(), buildDir, extractedRoot)
-			if err != nil {
-				return err
-			}
-			break
-		}
-	}
-
-	// create the iso image...
-	isoBuildDir       := filepath.Join(buildDir, "iso")
-	isoResourcesDir   := "/home/george/git/CBL-Mariner-POC/toolkit/resources"
-	isoInitrdFile     := filepath.Join(extractedRoot, "initrd.img")
-	isoRootfsFile     := filepath.Join(extractedRoot, "rootfs.img")
-	isoGrubFile       := filepath.Join(isoResourcesDir, "assets/isomaker/iso_root_static_files_liveos/boot/grub2/grub.cfg")
-	isoOutputDir      := "/home/george/temp/iso-build-poc/iso-out/iso/"
-	isoOutputBaseName := "mic-iso"
-
-	err = createIso(isoBuildDir, isoResourcesDir, isoGrubFile, isoInitrdFile, isoRootfsFile, isoOutputDir, isoOutputBaseName)
+	err = createIsoImage(buildDir, mountPoints)
 	if err != nil {
 		return err
 	}
 
-	logger.Log.Infof("--imagecustomizer.go - imageConnection.CleanClose()")
+	logger.Log.Infof("--imagecustomizer.go - disconnecting vhdx (%s)", buildImageFile)
 	err = imageConnection.CleanClose()
 	if err != nil {
 		return err
@@ -343,7 +311,6 @@ func customizeImageHelper(buildDir string, baseConfigPath string, config *imagec
 
 	return nil
 }
-
 
 func extractPartitionsHelper(buildDir string, buildImageFile string, outputImageFile string, outputSplitPartitionsFormat string) error {
 	imageConnection, _, err := connectToExistingImage(buildImageFile, buildDir, "imageroot")
@@ -359,6 +326,55 @@ func extractPartitionsHelper(buildDir string, buildImageFile string, outputImage
 	}
 
 	err = imageConnection.CleanClose()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error {
+
+	// ToDo: how do we redistribute this with mic?
+	// - resources/assets/isomakes/iso_root_arch-dependent_files/<arch>/isolinux
+	//   - isolinux.bin
+	//   - isolinux.cfg
+	//   - idlinux.c32
+	isoResourcesDir := "/home/george/git/CBL-Mariner-POC/toolkit/resources"
+	isoGrubFile := filepath.Join(isoResourcesDir, "assets/isomaker/iso_root_static_files_liveos/boot/grub2/grub.cfg")
+
+	// Configuration
+	isoBuildDir := filepath.Join(buildDir, "isomaker-tmp")
+	isoExtractedArtifactsDir := filepath.Join(buildDir, "extracted")
+	isoOutputDir := filepath.Join(buildDir, "out")
+	isoOutputBaseName := "mic-iso"
+
+	isoInitrdFile := filepath.Join(isoExtractedArtifactsDir, "initrd.img")
+	isoRootfsFile := filepath.Join(isoExtractedArtifactsDir, "rootfs.img")
+
+	// extract boot artifacts...
+	for _, mountPoint := range mountPoints {
+		if mountPoint.GetTarget() == "/boot/efi" {
+			err := extractIsoArtifactsFromBoot(mountPoint.GetSource(), mountPoint.GetFSType(), buildDir, isoExtractedArtifactsDir)
+			if err != nil {
+				return err
+			}
+			break
+		}
+	}
+
+	// extract rootfs artifacts...
+	for _, mountPoint := range mountPoints {
+		if mountPoint.GetTarget() == "/" {
+			err := extractIsoArtifactsFromRootfs(mountPoint.GetSource(), mountPoint.GetFSType(), buildDir, isoExtractedArtifactsDir)
+			if err != nil {
+				return err
+			}
+			break
+		}
+	}
+
+	err := createIso(isoBuildDir, isoResourcesDir, isoGrubFile, isoInitrdFile, isoRootfsFile, isoOutputDir, isoOutputBaseName)
 	if err != nil {
 		return err
 	}
