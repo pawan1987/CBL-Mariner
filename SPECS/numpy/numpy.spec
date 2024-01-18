@@ -1,20 +1,44 @@
+#uncomment next line for a release candidate or a beta
+#%%global relc rc1
+
+# Simple way to disable tests
+%if 0%{?flatpak} || 0%{?rhel}
+%bcond_with tests
+%else
+%bcond_without tests
+%endif
+
+%if 0%{?fedora} >= 33 || 0%{?rhel} >= 9
+%global blaslib flexiblas
+%global blasvar %{nil}
+%else
 %global blaslib openblas
 %global blasvar p
-%define majmin %(echo %{version} | cut -d. -f1-2)
+%endif
 
-Summary:        A fast multidimensional array facility for Python
+%global modname numpy
+
 Name:           numpy
-Version:        1.23.4
+Version:        1.26.2
 Release:        3%{?dist}
-# Everything is BSD except for class SafeEval in numpy/lib/utils.py which is Python
-License:        BSD AND Python AND ASL 2.0
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
+Epoch:          1
+Summary:        A fast multidimensional array facility for Python
+
+# Everything is BSD-3-Clause except...
+# numpy/core/include/numpy/libdivide: Zlib
+# numpy/core/src/multiarray/dragon4.*: MIT
+# numpy/random/src/mt19937/randomkit.h: MIT
+# numpy/random/src/pcg64: MIT AND Apache-2.0
+# numpy/random/src/sfc64: MIT
+License:        BSD-3-Clause AND MIT AND Apache-2.0 AND Zlib
 URL:            http://www.numpy.org/
 Source0:        https://github.com/%{name}/%{name}/releases/download/v%{version}/%{name}-%{version}.tar.gz
-Source1:        https://numpy.org/doc/%{majmin}/numpy-html.zip#/numpy-html-%{version}.zip
+Source1:        https://numpy.org/doc/%(echo %{version} | cut -d. -f1-2)/numpy-html.zip
+Patch0:         f2py_test.patch
+# Python 3.13: Replace deprecated ctypes.ARRAY(item_type, size) with item_type * size
+# Upstream PR: https://github.com/numpy/numpy/pull/25198
+Patch4:         replace-deprecated-ctypes.ARRAY.patch
 
-Patch0:         test_fix.patch
 
 %description
 NumPy is a general-purpose array-processing package designed to
@@ -28,26 +52,30 @@ There are also basic facilities for discrete fourier transform,
 basic linear algebra and random number generation. Also included in
 this package is a version of f2py that works properly with NumPy.
 
+
 %package -n python3-numpy
-%{?python_provide:%python_provide python3-numpy}
 Summary:        A fast multidimensional array facility for Python
-License:        BSD
-BuildRequires:  %{blaslib}-devel
-BuildRequires:  chrpath
-BuildRequires:  gcc
-BuildRequires:  gcc-c++
-BuildRequires:  gcc-gfortran
-BuildRequires:  lapack-devel
-BuildRequires:  python3-Cython
+
+%{?python_provide:%python_provide python3-numpy}
+Provides:       libnpymath-static = %{epoch}:%{version}-%{release}
+Provides:       libnpymath-static%{?_isa} = %{epoch}:%{version}-%{release}
+Provides:       numpy = %{epoch}:%{version}-%{release}
+Provides:       numpy%{?_isa} = %{epoch}:%{version}-%{release}
+Obsoletes:      numpy < 1:1.10.1-3
+
 BuildRequires:  python3-devel
-BuildRequires:  python3-setuptools < 60
-Provides:       libnpymath-static = %{version}-%{release}
-Provides:       libnpymath-static%{?_isa} = %{version}-%{release}
-Provides:       numpy = %{version}-%{release}
-Provides:       numpy%{?_isa} = %{version}-%{release}
-%if %{with_check}
-BuildRequires:  python3-pip
+BuildRequires:  gcc-gfortran gcc gcc-c++
+BuildRequires:  lapack-devel
+BuildRequires:  ninja-build
+BuildRequires:  patchelf
+%if %{with tests}
+BuildRequires:  python3-hypothesis
+BuildRequires:  python3-pytest
+BuildRequires:  python3-test
+BuildRequires:  python3-typing-extensions
 %endif
+BuildRequires: %{blaslib}-devel
+BuildRequires: chrpath
 
 %description -n python3-numpy
 NumPy is a general-purpose array-processing package designed to
@@ -62,32 +90,34 @@ basic linear algebra and random number generation. Also included in
 this package is a version of f2py that works properly with NumPy.
 
 %package -n python3-numpy-f2py
-%{?python_provide:%python_provide python3-numpy-f2py}
 Summary:        f2py for numpy
-License:        BSD AND Python AND ASL 2.0
+Requires:       python3-numpy%{?_isa} = %{epoch}:%{version}-%{release}
 Requires:       python3-devel
-Requires:       python3-numpy%{?_isa} = %{version}-%{release}
 Provides:       python3-f2py = %{version}-%{release}
-Provides:       f2py = %{version}-%{release}
-Provides:       numpy-f2py = %{version}-%{release}
+Obsoletes:      python3-f2py <= 2.45.241_1927
+%{?python_provide:%python_provide python3-numpy-f2py}
+Provides:       f2py = %{epoch}:%{version}-%{release}
+Provides:       numpy-f2py = %{epoch}:%{version}-%{release}
+Obsoletes:      numpy-f2py < 1:1.10.1-3
 
 %description -n python3-numpy-f2py
 This package includes a version of f2py that works properly with NumPy.
 
 %package -n python3-numpy-doc
-Summary:        Documentation for numpy
-License:        BSD AND Python AND ASL 2.0
-Requires:       python3-numpy = %{version}-%{release}
-BuildArch:      noarch
+Summary:	Documentation for numpy
+Requires:	python3-numpy = %{epoch}:%{version}-%{release}
+BuildArch:	noarch
 
 %description -n python3-numpy-doc
 This package provides the complete documentation for NumPy.
 
-%prep
-%autosetup -p1
 
-# Force re-cythonization (ifed for PKG-INFO presence in setup.py)
-# rm PKG-INFO
+%prep
+%autosetup -n %{name}-%{version} -p1
+
+# Enable build with Python 3.13
+# See: https://github.com/numpy/numpy/commit/82d7657ce39c97fcfd86e1a5acee8b5d00682169
+sed -i 's/requires-python = ">=3.9,<3.13"/requires-python = ">=3.9"/' pyproject.toml
 
 # openblas is provided by flexiblas by default; otherwise,
 # Use openblas pthreads as recommended by upstream (see comment in site.cfg.example)
@@ -97,13 +127,13 @@ libraries = %{blaslib}%{blasvar}
 library_dirs = %{_libdir}
 EOF
 
+%generate_buildrequires
+%pyproject_buildrequires -R -Csetup-args=-Dblas=flexiblas -Csetup-args=-Dlapack=lapack
+
 %build
 %set_build_flags
 
-env OPENBLAS=%{_libdir} \
-    BLAS=%{_libdir} \
-    LAPACK=%{_libdir} CFLAGS="%{optflags}" \
-    %{__python3} setup.py build
+%pyproject_wheel -Csetup-args=-Dblas=flexiblas -Csetup-args=-Dlapack=lapack
 
 %install
 mkdir docs
@@ -111,35 +141,39 @@ pushd docs
 unzip %{SOURCE1}
 popd
 
-#%%{__python3} setup.py install -O1 --skip-build --root %%{buildroot}
-# skip-build currently broken, this works around it for now
-env OPENBLAS=%{_libdir} \
-    FFTW=%{_libdir} BLAS=%{_libdir} \
-    LAPACK=%{_libdir} CFLAGS="%{optflags}" \
-    %{__python3} setup.py install --root %{buildroot} --prefix=%{_prefix}
-ln -s f2py3 %{buildroot}%{_bindir}/f2py.numpy
+%pyproject_install
+pushd %{buildroot}%{_bindir} &> /dev/null
+ln -s f2py f2py3
+ln -s f2py f2py%{python3_version}
+ln -s f2py3 f2py.numpy
+popd &> /dev/null
 
 #symlink for includes, BZ 185079
 mkdir -p %{buildroot}%{_includedir}
 ln -s %{python3_sitearch}/%{name}/core/include/numpy/ %{buildroot}%{_includedir}/numpy
 
-# distutils from setuptools don't have the patch that was created to avoid standard runpath here
-# we strip it manually instead
-# ERROR   0001: file '...' contains a standard runpath '/usr/lib64' in [/usr/lib64]
-chrpath --delete %{buildroot}%{python3_sitearch}/%{name}/core/_multiarray_umath.*.so
-chrpath --delete %{buildroot}%{python3_sitearch}/%{name}/linalg/lapack_lite.*.so
-chrpath --delete %{buildroot}%{python3_sitearch}/%{name}/linalg/_umath_linalg.*.so
-
 
 %check
+%if %{with tests}
 export PYTHONPATH=%{buildroot}%{python3_sitearch}
-
-# Hypothesis 6.72.0 introduced a deprecation error for "Healthcheck.all()" which fails the test run
-pip install 'pytest==7.2' 'hypothesis<6.72.0' typing-extensions
-
 # test_ppc64_ibm_double_double128 is unnecessary now that ppc64le has switched long doubles to IEEE format.
 # https://github.com/numpy/numpy/issues/21094
-python3 runtests.py --no-build -- -ra -k 'not test_ppc64_ibm_double_double128'
+%ifarch %{ix86}
+# Weird RuntimeWarnings on i686, similar to https://github.com/numpy/numpy/issues/13173
+# Some tests also overflow on 32bit
+%global ix86_k and not test_vector_matrix_values and not test_matrix_vector_values and not test_identityless_reduction_huge_array and not (TestKind and test_all)
+%endif
+# test_deprecate_... fail on Python 3.13+ due to docstrings being dedented
+# Upstream has removed the tests in git HEAD.
+%if v"0%{python3_version}" >= v"3.13"
+%global py313_k and not test_deprecate_help_indentation and not test_deprecate_preserve_whitespace
+%endif
+%ifnarch %{ix86}
+python3 runtests.py --no-build -- -ra -k 'not test_ppc64_ibm_double_double128 %{?ix86_k} %{?py313_k}' \
+                                  -W "ignore:pkg_resources is deprecated as an API::pkg_resources"
+%endif
+
+%endif
 
 
 %files -n python3-numpy
@@ -149,7 +183,6 @@ python3 runtests.py --no-build -- -ra -k 'not test_ppc64_ibm_double_double128'
 %dir %{python3_sitearch}/%{name}
 %{python3_sitearch}/%{name}/*.py*
 %{python3_sitearch}/%{name}/core
-%{python3_sitearch}/%{name}/distutils
 %{python3_sitearch}/%{name}/doc
 %{python3_sitearch}/%{name}/fft
 %{python3_sitearch}/%{name}/lib
@@ -161,16 +194,17 @@ python3 runtests.py --no-build -- -ra -k 'not test_ppc64_ibm_double_double128'
 %{python3_sitearch}/%{name}/compat
 %{python3_sitearch}/%{name}/matrixlib
 %{python3_sitearch}/%{name}/polynomial
-%{python3_sitearch}/%{name}-*.egg-info
-%exclude %{python3_sitearch}/%{name}/LICENSE.txt
+%{python3_sitearch}/%{name}-*.dist-info
 %{_includedir}/numpy
 %{python3_sitearch}/%{name}/__init__.pxd
 %{python3_sitearch}/%{name}/__init__.cython-30.pxd
 %{python3_sitearch}/%{name}/py.typed
 %{python3_sitearch}/%{name}/typing/
 %{python3_sitearch}/%{name}/array_api/
+%{python3_sitearch}/%{name}/_core/
 %{python3_sitearch}/%{name}/_pyinstaller/
 %{python3_sitearch}/%{name}/_typing/
+%{python3_sitearch}/%{name}/_utils/
 
 %files -n python3-numpy-f2py
 %{_bindir}/f2py
@@ -182,7 +216,57 @@ python3 runtests.py --no-build -- -ra -k 'not test_ppc64_ibm_double_double128'
 %files -n python3-numpy-doc
 %doc docs/*
 
+
 %changelog
+* Thu Jan 18 17:55:19 EST 2024 Dan Streetman <ddstreet@ieee.org> - 1:1.26.2-3
+- Update to latest numpy from Fedora
+
+* Mon Jan 15 2024 Miro Hrončok <mhroncok@redhat.com> - 1:1.26.2-2
+- Add missing licenses to the License tag
+
+* Tue Dec 26 2023 Yaakov Selkowitz <yselkowi@redhat.com> - 1:1.26.2-1
+- 1.26.2
+
+* Mon Nov 20 2023 Gwyn Ciesla <gwync@protonmail.com> - 1:1.26.0-2
+- Fix FTBFS with Python 3.13.
+
+* Tue Sep 19 2023 Gwyn Ciesla <gwync@protonmail.com> - 1:1.26.0-1
+- 1.26.0
+
+* Mon Jul 31 2023 Miro Hrončok <mhroncok@redhat.com> - 1:1.24.4-2
+- Backport support for Cython 3
+
+* Tue Jul 18 2023 Gwyn Ciesla <gwync@protonmail.com> - 1:1.24.4-1
+- 1.24.4
+
+* Wed Jul 05 2023 Scott Talbert <swt@techie.net> - 1:1.24.3-4
+- Fix FTBFS with Python 3.12
+
+* Fri Jun 16 2023 Python Maint <python-maint@redhat.com> - 1:1.24.3-3
+- Rebuilt for Python 3.12
+
+* Tue Jun 13 2023 Python Maint <python-maint@redhat.com> - 1:1.24.3-2
+- Bootstrap for Python 3.12
+
+* Mon Apr 24 2023 Gwyn Ciesla <gwync@protonmail.com> - 1:1.24.3-1
+- 1.24.3
+
+* Wed Mar 08 2023 Gwyn Ciesla <gwync@protonmail.com> - 1:1.24.1-3
+- migrated to SPDX license
+
+* Fri Jan 27 2023 Pavel Simovec <psimovec@redhat.com> - 1:1.24.1-2
+- Generalize documentation Source link
+- Add forgotten documentation file
+
+* Thu Jan 26 2023 Pavel Simovec <psimovec@redhat.com> - 1:1.24.1-1
+- Update to 1.24.1
+
+* Thu Jan 19 2023 Fedora Release Engineering <releng@fedoraproject.org> - 1:1.23.5-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_38_Mass_Rebuild
+
+* Fri Dec 02 2022 Charalampos Stratakis <cstratak@redhat.com> - 1:1.23.5-1
+- Update to 1.23.5
+
 * Mon May 22 2023 Olivia Crain <oliviacrain@microsoft.com> - 1.23.4-3
 - Pin version of hypothesis used to avoid deprecation errors
 

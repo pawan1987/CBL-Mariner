@@ -1,0 +1,28 @@
+From d9155244ea06705ebd9194cc7a621e82316b61ba Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Miro=20Hron=C4=8Dok?= <miro@hroncok.cz>
+Date: Mon, 20 Nov 2023 11:36:36 +0100
+Subject: [PATCH] MAINT: Replace deprecated ctypes.ARRAY(item_type, size) with
+ item_type * size
+
+See https://github.com/python/cpython/issues/105733
+---
+ numpy/core/tests/test_ufunc.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/numpy/core/tests/test_ufunc.py b/numpy/core/tests/test_ufunc.py
+index a7401ff616f..fc1fd5af169 100644
+--- a/numpy/core/tests/test_ufunc.py
++++ b/numpy/core/tests/test_ufunc.py
+@@ -2985,9 +2985,9 @@ def test_resolve_dtypes_reduction_errors(self):
+             reason="`ctypes.pythonapi` required for capsule unpacking.")
+     def test_loop_access(self):
+         # This is a basic test for the full strided loop access
+-        data_t = ct.ARRAY(ct.c_char_p, 2)
+-        dim_t = ct.ARRAY(ct.c_ssize_t, 1)
+-        strides_t = ct.ARRAY(ct.c_ssize_t, 2)
++        data_t = ct.c_char_p * 2
++        dim_t = ct.c_ssize_t * 1
++        strides_t = ct.c_ssize_t * 2
+         strided_loop_t = ct.CFUNCTYPE(
+                 ct.c_int, ct.c_void_p, data_t, dim_t, strides_t, ct.c_void_p)
+ 

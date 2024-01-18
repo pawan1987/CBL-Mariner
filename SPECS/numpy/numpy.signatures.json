@@ -1,6 +1,10 @@
 {
  "Signatures": {
-  "numpy-1.23.4.tar.gz": "bea2502214a5d5992008f1eb28719d12bc10f1166d2f31baffaf8be8d8cfe032",
-  "numpy-html-1.23.4.zip": "14a82b5a8561f7027872141278009b99a92d11af6bc8908b7ae9a10b8cb721bd"
+  "f2py_test.patch": "f19fc8549bbfb290e04b29369e5f757087ecea700a577b544fe8e67b96196724",
+  "generate_source_tarball.sh": "50a3803e1689c54ae2efc056825ed8f4106b38fb1191792139faac52cd20ebb1",
+  "numpy-1.26.2.tar.gz": "f65738447676ab5777f11e6bbbdb8ce11b785e105f690bc45966574816b6d3ea",
+  "numpy-html.zip": "1dc88fc45a7709143b7b917e8e807e4985c41fe3fb7ee5fc55c3aeec5f369fdd",
+  "replace-deprecated-ctypes.ARRAY.patch": "eb650b1980706f1484488d12b5dbe00743c2b39040590759731db021979a4960",
+  "test_fix.patch": "f22fdac304111d06cd34c1bbc0bcadc0fcdb1fd41711906b1ee18727a0bc7dec"
  }
 }
