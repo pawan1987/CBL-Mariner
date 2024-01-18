@@ -43,6 +43,7 @@ type IsoMaker struct {
 	outputDirPath      string               // Path to the output ISO directory.
 	releaseVersion     string               // Current Mariner release version.
 	resourcesDirPath   string               // Path to the 'resources' directory.
+	imageNameBase      string               // Base name of the ISO to generate
 	imageNameTag       string               // Optional user-supplied tag appended to the generated ISO's name.
 
 	isoMakerCleanUpTasks []func() // List of clean-up tasks to perform at the end of the ISO generation process.
@@ -53,12 +54,20 @@ func NewIsoMaker(unattendedInstall bool, baseDirPath, buildDirPath, releaseVersi
 	if baseDirPath == "" {
 		baseDirPath = filepath.Dir(configFilePath)
 	}
+
+	imageNameBase := strings.TrimSuffix(filepath.Base(configFilePath), ".json")
+
 	if imageNameTag != "" {
 		imageNameTag = "-" + imageNameTag
 	}
 
+	// ToDo: should we return errors?
+	config := readConfigFile(configFilePath, baseDirPath)
+	verifyConfig(config, unattendedInstall)
+
 	return &IsoMaker{
 		unattendedInstall:  unattendedInstall,
+		config:				config,
 		baseDirPath:        baseDirPath,
 		buildDirPath:       buildDirPath,
 		initrdPath:         initrdPath,
@@ -68,6 +77,37 @@ func NewIsoMaker(unattendedInstall bool, baseDirPath, buildDirPath, releaseVersi
 		configFilePath:     configFilePath,
 		fetchedRepoDirPath: isoRepoDirPath,
 		outputDirPath:      outputDir,
+		imageNameBase:      imageNameBase,
+		imageNameTag:       imageNameTag,
+	}
+}
+
+func NewIsoMakerWithConfig(unattendedInstall bool, baseDirPath, buildDirPath, releaseVersion, resourcesDirPath string, config configuration.Config, initrdPath, grubCfgPath, isoRepoDirPath, outputDir, imageNameBase, imageNameTag string) *IsoMaker {
+
+	if imageNameBase == "" {
+		// ToDo: this should be an error
+		imageNameBase = "mariner"
+	}
+
+	if imageNameTag != "" {
+		imageNameTag = "-" + imageNameTag
+	}
+
+	verifyConfig(config, unattendedInstall)
+
+	return &IsoMaker{
+		unattendedInstall:  unattendedInstall,
+		config:             config,
+		baseDirPath:        baseDirPath,
+		buildDirPath:       buildDirPath,
+		initrdPath:         initrdPath,
+		grubCfgPath:        grubCfgPath,
+		releaseVersion:     releaseVersion,
+		resourcesDirPath:   resourcesDirPath,
+		configFilePath:     "",
+		fetchedRepoDirPath: isoRepoDirPath,
+		outputDirPath:      outputDir,
+		imageNameBase:      imageNameBase,		
 		imageNameTag:       imageNameTag,
 	}
 }
@@ -75,8 +115,6 @@ func NewIsoMaker(unattendedInstall bool, baseDirPath, buildDirPath, releaseVersi
 // Make builds the ISO image to 'buildDirPath' with the packages included in the config JSON.
 func (im *IsoMaker) Make() {
 	defer im.isoMakerCleanUp()
-
-	im.readAndVerifyConfig()
 
 	im.initializePaths()
 
@@ -470,8 +508,7 @@ func (im *IsoMaker) initializePaths() {
 // buildIsoImageFilePath gets the output ISO file path from the config JSON file name
 // and the image build environment.
 func (im *IsoMaker) buildIsoImageFilePath() string {
-	imageBaseName := strings.TrimSuffix(filepath.Base(im.configFilePath), ".json")
-	isoImageFileName := fmt.Sprintf("%v-%v%v.iso", imageBaseName, im.releaseVersion, im.imageNameTag)
+	isoImageFileName := fmt.Sprintf("%v-%v%v.iso", im.imageNameBase, im.releaseVersion, im.imageNameTag)
 
 	return filepath.Join(im.outputDirPath, isoImageFileName)
 }
@@ -492,20 +529,22 @@ func (im *IsoMaker) isoMakerCleanUp() {
 	}
 }
 
-func (im *IsoMaker) readAndVerifyConfig() {
-	config, err := configuration.LoadWithAbsolutePaths(im.configFilePath, im.baseDirPath)
-	logger.PanicOnError(err, "Failed while reading config file from '%s' with base directory '%s'.", im.configFilePath, im.baseDirPath)
+func readConfigFile(configFilePath, baseDirPath string) configuration.Config {
+	config, err := configuration.LoadWithAbsolutePaths(configFilePath, baseDirPath)
+	logger.PanicOnError(err, "Failed while reading config file from '%s' with base directory '%s'.", configFilePath, baseDirPath)
+	return config
+}
+
+func verifyConfig(config configuration.Config, unattendedInstall bool) {
 
 	// Set IsIsoInstall to true
 	for id := range config.SystemConfigs {
 		config.SystemConfigs[id].IsIsoInstall = true
 	}
 
-	if im.unattendedInstall && (len(config.SystemConfigs) > 1) && !config.DefaultSystemConfig.IsDefault {
+	if unattendedInstall && (len(config.SystemConfigs) > 1) && !config.DefaultSystemConfig.IsDefault {
 		logger.Log.Panic("For unattended installation with more than one system configuration present you must select a default one with the [IsDefault] field.")
 	}
-
-	im.config = config
 }
 
 // recursiveCopyDereferencingLinks simulates the behavior of "cp -r -L".

@@ -16,6 +16,7 @@ import (
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/safemount"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/shell"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/pkg/isomakerlib"
+	"github.com/microsoft/CBL-Mariner/toolkit/tools/imagegen/configuration"
 )
 
 var (
@@ -96,31 +97,42 @@ func generateInitrd(buildDir string, rwRootfsImage string, latestKernelVersion s
 }
 
 // invokes the iso maker library to create an iso image.
-func createIso(buildDir string, isoResourcesDir string, isoConfigFile string, isoGrubFile string, isoInitrdFile string, isoOutputDir string) error {
+func createIso(buildDir, isoResourcesDir, isoGrubFile, isoInitrdFile, isoRootfsFile, isoOutputDir, isoOutputBaseName string) error {
 
 	unattendedInstall := false
 	baseDirPath := ""
 	releaseVersion := "2.0." + time.Now().Format("20060102-1504")
 	isoRepoDirPath := "dummy"
-	imageTag := ""
+	imageNameTag := ""
 
 	err := os.MkdirAll(isoOutputDir, os.ModePerm)
 	if err != nil {
 		return err
 	}
 
-	isoMaker := isomakerlib.NewIsoMaker(
+	var config configuration.Config = configuration.Config{
+		SystemConfigs: []configuration.SystemConfig{
+			{
+				AdditionalFiles: map[string]configuration.FileConfigList{
+					isoRootfsFile: {{Path: "/dummy-name"}},
+				},
+			},
+		},
+	}
+
+	isoMaker := isomakerlib.NewIsoMakerWithConfig(
 		unattendedInstall,
 		baseDirPath,
 		buildDir,
 		releaseVersion,
 		isoResourcesDir,
-		isoConfigFile,
+		config,
 		isoInitrdFile,
 		isoGrubFile,
 		isoRepoDirPath,
 		isoOutputDir,
-		imageTag)
+		isoOutputBaseName,
+		imageNameTag)
 
 	isoMaker.Make()
 
@@ -236,9 +248,9 @@ func extractIsoArtifactsFromRootfs(rootfsDevicePath string, rootfsType string, b
 	extractedGrubCfgPath := filepath.Join(extractedRoot, "grub.cfg")
 	*/
 	extractedVmlinuzPath := filepath.Join(extractedRoot, "vmlinuz")
-	generatedSquashfsFile := filepath.Join(extractedRoot, "rootfs.squashfs")
+	generatedSquashfsFile := filepath.Join(extractedRoot, "rootfs.img")
 	generatedInitrdPath := filepath.Join(extractedRoot, "initrd.img")
-	rwRootfsImage := filepath.Join(extractedRoot, "rootfs.img")
+	rwRootfsImage := filepath.Join(extractedRoot, "rootfs-rw.img")
 
 	logger.Log.Infof("--isohelpers.go - extractIsoArtifactsFromRootfs() - creating %s", rwRootFSMountDir)	
 	err = os.MkdirAll(rwRootFSMountDir, 0755)

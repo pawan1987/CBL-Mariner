@@ -5,6 +5,10 @@ set -e
 
 pushd ~/git/CBL-Mariner-POC/toolkit/tools/imagecustomizer
 go build
+sudo rm -rf /home/george/git/CBL-Mariner-POC/mic-build
+sudo rm -rf /home/george/temp/iso-build-poc
+sudo rm -rf /home/george/temp/mic-iso
+
 sudo ./imagecustomizer \
     --build-dir /home/george/git/CBL-Mariner-POC/mic-build \
     --image-file /home/george/git/CBL-Mariner-POC/baremetal-2.0.20231220.2000.vhdx \

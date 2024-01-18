@@ -322,14 +322,15 @@ func customizeImageHelper(buildDir string, baseConfigPath string, config *imagec
 	}
 
 	// create the iso image...
-	isoBuildDir := filepath.Join(buildDir, "iso")
-	isoResourcesDir := "/home/george/git/CBL-Mariner-POC/toolkit/resources"
-	isoConfigFile   := "/home/george/git/CBL-Mariner-POC/toolkit/imageconfigs/mic-test-iso.json"
-	isoInitrdFile   := filepath.Join(extractedRoot, "initrd.img")
-	isoGrubFile     := filepath.Join(isoResourcesDir, "assets/isomaker/iso_root_static_files_liveos/boot/grub2/grub.cfg")
-	isoOutputDir    := "/home/george/temp/iso-build-poc/iso-out/iso/"
+	isoBuildDir       := filepath.Join(buildDir, "iso")
+	isoResourcesDir   := "/home/george/git/CBL-Mariner-POC/toolkit/resources"
+	isoInitrdFile     := filepath.Join(extractedRoot, "initrd.img")
+	isoRootfsFile     := filepath.Join(extractedRoot, "rootfs.img")
+	isoGrubFile       := filepath.Join(isoResourcesDir, "assets/isomaker/iso_root_static_files_liveos/boot/grub2/grub.cfg")
+	isoOutputDir      := "/home/george/temp/iso-build-poc/iso-out/iso/"
+	isoOutputBaseName := "mic-iso"
 
-	err = createIso(isoBuildDir, isoResourcesDir, isoConfigFile, isoGrubFile, isoInitrdFile, isoOutputDir)
+	err = createIso(isoBuildDir, isoResourcesDir, isoGrubFile, isoInitrdFile, isoRootfsFile, isoOutputDir, isoOutputBaseName)
 	if err != nil {
 		return err
 	}
