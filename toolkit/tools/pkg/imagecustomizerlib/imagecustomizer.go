@@ -344,7 +344,7 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 	isoGrubFile := filepath.Join(isoResourcesDir, "assets/isomaker/iso_root_static_files_liveos/boot/grub2/grub.cfg")
 
 	// Configuration
-	isoBuildDir := filepath.Join(buildDir, "isomaker-tmp")
+	isoMakerTmpDir := filepath.Join(buildDir, "isomaker-tmp")
 	isoExtractedArtifactsDir := filepath.Join(buildDir, "extracted")
 	isoOutputDir := filepath.Join(buildDir, "out")
 	isoOutputBaseName := "mic-iso"
@@ -352,10 +352,15 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 	isoInitrdFile := filepath.Join(isoExtractedArtifactsDir, "initrd.img")
 	isoRootfsFile := filepath.Join(isoExtractedArtifactsDir, "rootfs.img")
 
+	iae := &IsoArtifactExtractor{
+		buildDir: buildDir,
+		outDir: isoExtractedArtifactsDir,	
+	}
+
 	// extract boot artifacts...
 	for _, mountPoint := range mountPoints {
 		if mountPoint.GetTarget() == "/boot/efi" {
-			err := extractIsoArtifactsFromBoot(mountPoint.GetSource(), mountPoint.GetFSType(), buildDir, isoExtractedArtifactsDir)
+			err := iae.extractIsoArtifactsFromBoot(mountPoint.GetSource(), mountPoint.GetFSType())
 			if err != nil {
 				return err
 			}
@@ -366,7 +371,11 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 	// extract rootfs artifacts...
 	for _, mountPoint := range mountPoints {
 		if mountPoint.GetTarget() == "/" {
-			err := extractIsoArtifactsFromRootfs(mountPoint.GetSource(), mountPoint.GetFSType(), buildDir, isoExtractedArtifactsDir)
+
+			dstRootfsImage := filepath.Join(isoExtractedArtifactsDir, "rootfs-rw.img")
+			iae.createWriteableRootfs(mountPoint.GetSource(), mountPoint.GetFSType(), dstRootfsImage)
+
+			err := iae.extractIsoArtifactsFromRootfs(isoMakerTmpDir, dstRootfsImage)
 			if err != nil {
 				return err
 			}
@@ -374,7 +383,7 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 		}
 	}
 
-	err := createIso(isoBuildDir, isoResourcesDir, isoGrubFile, isoInitrdFile, isoRootfsFile, isoOutputDir, isoOutputBaseName)
+	err := createIso(isoMakerTmpDir, isoResourcesDir, isoGrubFile, isoInitrdFile, isoRootfsFile, isoOutputDir, isoOutputBaseName)
 	if err != nil {
 		return err
 	}
