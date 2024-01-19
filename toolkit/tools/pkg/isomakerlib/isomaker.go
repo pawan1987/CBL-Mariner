@@ -30,6 +30,7 @@ const (
 
 // IsoMaker builds ISO images and populates them with packages and files required by the installer.
 type IsoMaker struct {
+	enableBiosBoot     bool                 // Flag deciding whether to enable BIOS bootloaders or not.
 	unattendedInstall  bool                 // Flag deciding if the installer should run in unattended mode.
 	config             configuration.Config // Configuration for the built ISO image and its installer.
 	configSubDirNumber int                  // Current number for the subdirectories storing files mentioned in the config.
@@ -66,6 +67,7 @@ func NewIsoMaker(unattendedInstall bool, baseDirPath, buildDirPath, releaseVersi
 	verifyConfig(config, unattendedInstall)
 
 	return &IsoMaker{
+		enableBiosBoot:     true,
 		unattendedInstall:  unattendedInstall,
 		config:				config,
 		baseDirPath:        baseDirPath,
@@ -82,7 +84,7 @@ func NewIsoMaker(unattendedInstall bool, baseDirPath, buildDirPath, releaseVersi
 	}
 }
 
-func NewIsoMakerWithConfig(unattendedInstall bool, baseDirPath, buildDirPath, releaseVersion, resourcesDirPath string, config configuration.Config, initrdPath, grubCfgPath, isoRepoDirPath, outputDir, imageNameBase, imageNameTag string) *IsoMaker {
+func NewIsoMakerWithConfig(unattendedInstall, enableBiosBoot bool, baseDirPath, buildDirPath, releaseVersion, resourcesDirPath string, config configuration.Config, initrdPath, grubCfgPath, isoRepoDirPath, outputDir, imageNameBase, imageNameTag string) *IsoMaker {
 
 	if imageNameBase == "" {
 		// ToDo: this should be an error
@@ -96,6 +98,7 @@ func NewIsoMakerWithConfig(unattendedInstall bool, baseDirPath, buildDirPath, re
 	verifyConfig(config, unattendedInstall)
 
 	return &IsoMaker{
+		enableBiosBoot:     enableBiosBoot,
 		unattendedInstall:  unattendedInstall,
 		config:             config,
 		baseDirPath:        baseDirPath,
@@ -134,19 +137,24 @@ func (im *IsoMaker) buildIsoImage() {
 
 	// For detailed parameter explanation see: https://linux.die.net/man/8/mkisofs.
 	// Mkisofs requires all argument paths to be relative to the input directory.
-	mkisofsArgs := []string{
+	mkisofsArgs := []string{}
+
+	mkisofsArgs = append(mkisofsArgs,
 		// General mkisofs parameters.
-		"-R", "-l", "-D", "-o", isoImageFilePath,
+		"-R", "-l", "-D", "-o", isoImageFilePath)
 
-		// BIOS bootloader, params suggested by https://wiki.syslinux.org/wiki/index.php?title=ISOLINUX.
-		"-b", "isolinux/isolinux.bin", "-c", "isolinux/boot.cat", "-no-emul-boot", "-boot-load-size", "4", "-boot-info-table",
-
-		// UEFI bootloader.
-		"-eltorito-alt-boot", "-e", efiBootImgPathRelativeToIsoRoot, "-no-emul-boot",
-
-		// Directory to convert to an ISO.
-		im.buildDirPath,
+	if im.enableBiosBoot {
+		mkisofsArgs = append(mkisofsArgs,
+			// BIOS bootloader, params suggested by https://wiki.syslinux.org/wiki/index.php?title=ISOLINUX.
+				"-b", "isolinux/isolinux.bin", "-c", "isolinux/boot.cat", "-no-emul-boot", "-boot-load-size", "4", "-boot-info-table")
 	}
+
+	mkisofsArgs = append(mkisofsArgs,
+			// UEFI bootloader.
+			"-eltorito-alt-boot", "-e", efiBootImgPathRelativeToIsoRoot, "-no-emul-boot",
+
+			// Directory to convert to an ISO.
+			im.buildDirPath)
 
 	shell.MustExecuteLive("mkisofs", mkisofsArgs...)
 }
@@ -308,7 +316,9 @@ func (im *IsoMaker) prepareWorkDirectory() {
 
 	im.copyStaticIsoRootFiles()
 
-	im.copyArchitectureDependentIsoRootFiles()
+	if im.enableBiosBoot {
+		im.copyArchitectureDependentIsoRootFiles()
+	}
 
 	im.copyAndRenameConfigFiles()
 }

@@ -92,6 +92,7 @@ func (iae* IsoArtifactExtractor) generateInitrd(writeableRootfsImage string, iso
 func createIso(buildDir, isoResourcesDir, isoGrubFile, isoInitrdFile, isoRootfsFile, isoOutputDir, isoOutputBaseName string) error {
 
 	unattendedInstall := false
+	enableBiosBoot := false // if true, the bios bootloaders needs to be downloaded.
 	baseDirPath := ""
 	releaseVersion := "2.0." + time.Now().Format("20060102-1504")
 	isoRepoDirPath := "dummy"
@@ -114,6 +115,7 @@ func createIso(buildDir, isoResourcesDir, isoGrubFile, isoInitrdFile, isoRootfsF
 
 	isoMaker := isomakerlib.NewIsoMakerWithConfig(
 		unattendedInstall,
+		enableBiosBoot,
 		baseDirPath,
 		buildDir,
 		releaseVersion,
