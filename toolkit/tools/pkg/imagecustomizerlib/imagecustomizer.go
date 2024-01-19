@@ -342,8 +342,6 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 	//   - idlinux.c32
 	srcRoot := "/home/george/git/CBL-Mariner-POC/toolkit"
 	isoResourcesDir  := filepath.Join(srcRoot, "resources")
-	dracutPatchFile  := filepath.Join(srcRoot, "mic-iso-gen-0/initrd-build-artifacts/no_user_prompt.patch")
-	dracutConfigFile := filepath.Join(srcRoot, "mic-iso-gen-0/initrd-build-artifacts/20-live-cd.conf")
 
 	// Configuration
 	isoOutputBaseName := "mic-iso"
@@ -378,7 +376,7 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 			}
 
 			isoMakerArtifactsStagingDirWithinRWImage := "/boot-staging"
-			err = iae.convertToLiveOSImage(writeableRootfsImage, dracutPatchFile, dracutConfigFile, isoMakerArtifactsStagingDirWithinRWImage)
+			err = iae.convertToLiveOSImage(writeableRootfsImage, isoMakerArtifactsStagingDirWithinRWImage)
 			if err != nil {
 				return err
 			}

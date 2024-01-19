@@ -44,7 +44,29 @@ menuentry "Mariner Baremetal Iso" {
 	initrd /isolinux/initrd.img
 }	
 `
-
+	dracutConfig = `add_dracutmodules+=" dmsquash-live "
+add_drivers+=" overlay "
+`
+	dracutNoPromptPatch = `--- dmsquash-live-root.sh-ori	2023-12-19 16:24:38.973303242 -0800
++++ dmsquash-live-root.sh	2023-12-19 16:28:45.053140504 -0800
+@@ -25,6 +25,7 @@
+ getargbool 0 rd.live.ram -d -y live_ram && live_ram="yes"
+ getargbool 0 rd.live.overlay.reset -d -y reset_overlay && reset_overlay="yes"
+ getargbool 0 rd.live.overlay.readonly -d -y readonly_overlay && readonly_overlay="--readonly" || readonly_overlay=""
++getargbool 0 rd.live.overlay.noprompt -d -y no_tmp_overlay_prompt && no_tmp_overlay_prompt="--noprompt" || no_tmp_overlay_prompt=""
+ overlay=$(getarg rd.live.overlay -d overlay)
+ getargbool 0 rd.writable.fsimg -d -y writable_fsimg && writable_fsimg="yes"
+ overlay_size=$(getarg rd.live.overlay.size=)
+@@ -185,7 +186,7 @@
+     fi
+ 
+     if [ -z "$setup" -o -n "$readonly_overlay" ]; then
+-        if [ -n "$setup" ]; then
++        if [ -n "$setup" -o -n "$no_tmp_overlay_prompt" ]; then
+             warn "Using temporary overlay."
+         elif [ -n "$devspec" -a -n "$pathspec" ]; then
+             [ -z "$m" ] \
+`
 )
 
 // IsoMaker builds ISO images and populates them with packages and files required by the installer.
@@ -90,7 +112,8 @@ func (iae* IsoArtifactExtractor) generateInitrd(writeableRootfsImage string, iso
 			"--filesystems", "squashfs",
 			"--include", isoMakerArtifactsStagingDirWithinRWImage, "/boot" }
 
-		return shell.ExecuteLiveWithCallback(onSilentOutput, onSilentOutput, false, "dracut", dracutParams...)
+		// `dracut` emits output to stderr even if there are no errors.
+		return shell.ExecuteLiveWithCallback(onStdOutSilent, onStdErrSilent, false, "dracut", dracutParams...)
 	})
 	if err != nil {
 		return fmt.Errorf("failed to run dracut (%v)", err)
@@ -217,7 +240,7 @@ func (iae* IsoArtifactExtractor) createWriteableRootfs(rootfsDevicePath, rootfsT
 
 	logger.Log.Infof("--isohelpers.go - determining the size of new rootfs")
 	duParams := []string{"-sh", srcLoopDevMountFullDir}
-	err = shell.ExecuteLiveWithCallback(processDuOutputCallback, onSilentOutput, false, "du", duParams...)
+	err = shell.ExecuteLiveWithCallback(processDuOutputCallback, onStdOutSilent, false, "du", duParams...)
 	if err != nil {
 		logger.Log.Infof("--isohelpers.go - failed to determine the size of the rootfs")
 		return err
@@ -233,7 +256,8 @@ func (iae* IsoArtifactExtractor) createWriteableRootfs(rootfsDevicePath, rootfsT
 	ddOutputParam := "of=" + dstRootfsImage
 	ddBlockCountParam := "count=" + strconv.FormatInt(rootfsContainerSizeInMB, 10)
 	ddParams := []string{"if=/dev/zero", ddOutputParam, "bs=1M", ddBlockCountParam}
-	err = shell.ExecuteLiveWithCallback(onSilentOutput, onSilentOutput, false, "dd", ddParams...)
+	// `dd` emits output to stderr even if there are no errors.
+	err = shell.ExecuteLiveWithCallback(onStdOutSilent, onStdErrSilent, false, "dd", ddParams...)
 	if err != nil {
 		logger.Log.Infof("--isohelpers.go - failed to create writeable rootfs image.")
 		return err
@@ -241,7 +265,8 @@ func (iae* IsoArtifactExtractor) createWriteableRootfs(rootfsDevicePath, rootfsT
 
 	logger.Log.Infof("--isohelpers.go - formatting new image file")
 	mkfsExt4Params := []string{"-b", "4096", dstRootfsImage}
-	err = shell.ExecuteLiveWithCallback(onSilentOutput, onSilentOutput, false, "mkfs.ext4", mkfsExt4Params...)
+	// `mkfs.ext4` emits output to stderr even if there are no errors.
+	err = shell.ExecuteLiveWithCallback(onStdOutSilent, onStdErrSilent, false, "mkfs.ext4", mkfsExt4Params...)
 	if err != nil {
 		logger.Log.Infof("--isohelpers.go - failed to format new writeable rootfs image.")
 		return err
@@ -273,7 +298,7 @@ func (iae* IsoArtifactExtractor) createWriteableRootfs(rootfsDevicePath, rootfsT
 	defer dstLoopDevMount.Close()
 
 	// mountParams := []string{dstRootFSImageConnection.Loopback().DevicePath(), dstLoopDdevMountFullDir}
-	// err = shell.ExecuteLiveWithCallback(onOutput, onOutput, false, "mount", mountParams...)
+	// err = shell.ExecuteLiveWithCallback(onStdOut, onStdErr, false, "mount", mountParams...)
 	// if err != nil {
 	// 	logger.Log.Infof("--isohelpers.go - failed to mount writeable rootfs image loopback device.")
 	// 	return err
@@ -283,7 +308,7 @@ func (iae* IsoArtifactExtractor) createWriteableRootfs(rootfsDevicePath, rootfsT
 
 	logger.Log.Infof("--isohelpers.go - copying from %v to %v", srcLoopDevMountFullDir, dstLoopDdevMountFullDir)
 	cpParams := []string{"-aT", srcLoopDevMountFullDir, dstLoopDdevMountFullDir}
-	err = shell.ExecuteLiveWithCallback(onOutput, onOutput, false, "cp", cpParams...)
+	err = shell.ExecuteLiveWithCallback(onStdOut, onStdErr, false, "cp", cpParams...)
 	if err != nil {
 		logger.Log.Infof("--isohelpers.go - failed to copy rootfs contents to the writeable image.")
 		return err
@@ -335,17 +360,26 @@ func (iae* IsoArtifactExtractor) stageIsoMakerInitrdArtifacts(writeableRootfsMou
 	return nil
 }
 
-func (iae* IsoArtifactExtractor) prepareImageForDracut(writeableRootfsMountFullDir, dracutPatchFile, dracutConfigFile string) (error) {
+func (iae* IsoArtifactExtractor) prepareImageForDracut(writeableRootfsMountFullDir string) (error) {
 
 	logger.Log.Infof("preparing writeable image for dracut...")
 
 	// -- patch dracut dmsquash-live-root modules -----------------------------
 
-	patchTargetFile := filepath.Join(writeableRootfsMountFullDir, "/usr/lib/dracut/modules.d/90dmsquash-live/dmsquash-live-root.sh")
-	patchParams := []string{"-p1", "-i", dracutPatchFile, patchTargetFile}
-	err := shell.ExecuteLiveWithCallback(onSilentOutput, onSilentOutput, false, "patch", patchParams...)
+	sourcePatchFile := filepath.Join(iae.tmpDir, "no_user_prompt.patch")
+
+	logger.Log.Infof("--isohelpers.go - creating %s", sourcePatchFile)
+	err := ioutil.WriteFile(sourcePatchFile, []byte(dracutNoPromptPatch), 0644)
 	if err != nil {
-		logger.Log.Infof("--isohelpers.go - failed to patch %v", patchTargetFile)
+		logger.Log.Infof("--isohelpers.go - failed to create %s. Error:\n%v", sourcePatchFile, err)
+		return err
+	}
+
+	targetPatchFile := filepath.Join(writeableRootfsMountFullDir, "/usr/lib/dracut/modules.d/90dmsquash-live/dmsquash-live-root.sh")
+	patchParams := []string{"-p1", "-i", sourcePatchFile, targetPatchFile}
+	err = shell.ExecuteLiveWithCallback(onStdOut, onStdErr, false, "patch", patchParams...)
+	if err != nil {
+		logger.Log.Infof("--isohelpers.go - failed to patch %v. Error:\n%v", targetPatchFile, err)
 		return err
 	}
 
@@ -361,8 +395,17 @@ func (iae* IsoArtifactExtractor) prepareImageForDracut(writeableRootfsMountFullD
 
 	// -- upload dracut config ------------------------------------------------
 
-	targetDracutConfigFile := filepath.Join(writeableRootfsMountFullDir, "/etc/dracut.conf.d/20-live-cd.conf")
-	err = copyFile(dracutConfigFile, targetDracutConfigFile)
+	sourceConfigFile := filepath.Join(iae.tmpDir, "20-live-cd.conf")
+
+	logger.Log.Infof("--isohelpers.go - creating %s", sourceConfigFile)
+	err = ioutil.WriteFile(sourceConfigFile, []byte(dracutConfig), 0644)
+	if err != nil {
+		logger.Log.Infof("--isohelpers.go - failed to create %s. Error:\n%v", sourceConfigFile, err)
+		return err
+	}
+
+	targetConfigFile := filepath.Join(writeableRootfsMountFullDir, "/etc/dracut.conf.d/20-live-cd.conf")
+	err = copyFile(sourceConfigFile, targetConfigFile)
 	if err != nil {
 		logger.Log.Infof("--isohelpers.go - failed to copy dracut config")
 		return err
@@ -387,7 +430,7 @@ func (iae* IsoArtifactExtractor) createSquashfs(writeableRootfsMountFullDir stri
 	}
 
 	mksquashfsParams := []string{writeableRootfsMountFullDir, generatedSquashfsFile}
-	err = shell.ExecuteLiveWithCallback(onSilentOutput, onSilentOutput, false, "mksquashfs", mksquashfsParams...)
+	err = shell.ExecuteLiveWithCallback(onStdOutSilent, onStdErr, false, "mksquashfs", mksquashfsParams...)
 	if err != nil {
 		logger.Log.Infof("--isohelpers.go - failed to create squashfs")
 		return err
@@ -398,7 +441,7 @@ func (iae* IsoArtifactExtractor) createSquashfs(writeableRootfsMountFullDir stri
 	return nil
 }
 
-func (iae* IsoArtifactExtractor) convertToLiveOSImage(writeableRootfsImagePath, dracutPatchFile, dracutConfigFile, isoMakerArtifactsStagingDirWithinRWImage string) (error) {
+func (iae* IsoArtifactExtractor) convertToLiveOSImage(writeableRootfsImagePath, isoMakerArtifactsStagingDirWithinRWImage string) (error) {
 
 	logger.Log.Infof("converting writeable image to be a LiveOS file system...")
 
@@ -468,7 +511,7 @@ func (iae* IsoArtifactExtractor) convertToLiveOSImage(writeableRootfsImagePath, 
 
 	// -- configure dracut ----------------------------------------------------
 
-	err = iae.prepareImageForDracut(writeableRootfsMountFullDir, dracutPatchFile, dracutConfigFile)
+	err = iae.prepareImageForDracut(writeableRootfsMountFullDir)
 	if err != nil {
 		logger.Log.Infof("--isohelpers.go - failed to embed iso maker artifacts.")
 		return err
@@ -578,11 +621,18 @@ func fileExists(filePath string) (bool, error) {
 	}
 }
 
-func onOutput(args ...interface{}) {
+func onStdOut(args ...interface{}) {
 	logger.Log.Infof(args[0].(string))
 }
 
-func onSilentOutput(args ...interface{}) {
+func onStdErr(args ...interface{}) {
+	logger.Log.Errorf(args[0].(string))
+}
+
+func onStdOutSilent(args ...interface{}) {
+}
+
+func onStdErrSilent(args ...interface{}) {
 }
 
 // 421M   /home/george/git/CBL-Mariner-POC/build/tmppartition
