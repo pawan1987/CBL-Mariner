@@ -6,6 +6,7 @@ package imagecustomizerlib
 import (
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -21,6 +22,29 @@ import (
 
 var (
 	rootfsContainerSizeInMB int64
+	grubCfgTemplate = `set default="0"
+set timeout=0
+
+menuentry "Mariner Baremetal Iso" {
+
+	search --label CDROM --set root
+	linux /isolinux/vmlinuz \
+			overlay-size=70% \
+			selinux=0 \
+			console=tty0 \
+			apparmor=0 \
+			root=live:LABEL=CDROM \
+			rd.shell \
+			rd.live.image \
+			rd.live.dir=config/additionalfiles/0 \
+			rd.live.squashimg=rootfs.img \
+			rd.live.overlay=1 \
+			rd.live.overlay.noprompt=1
+
+	initrd /isolinux/initrd.img
+}	
+`
+
 )
 
 // IsoMaker builds ISO images and populates them with packages and files required by the installer.
@@ -90,6 +114,15 @@ func (iae* IsoArtifactExtractor) generateInitrd(writeableRootfsImage string, iso
 
 // invokes the iso maker library to create an iso image.
 func createIso(buildDir, isoResourcesDir, isoGrubFile, isoInitrdFile, isoRootfsFile, isoOutputDir, isoOutputBaseName string) error {
+
+	logger.Log.Infof("--isohelpers.go - creating iso...")
+	logger.Log.Infof("--isohelpers.go - - buildDir          = %s", buildDir)
+	logger.Log.Infof("--isohelpers.go - - isoResourcesDir   = %s", isoResourcesDir)
+	logger.Log.Infof("--isohelpers.go - - isoGrubFile       = %s", isoGrubFile)
+	logger.Log.Infof("--isohelpers.go - - isoInitrdFile     = %s", isoInitrdFile)
+	logger.Log.Infof("--isohelpers.go - - isoRootfsFile     = %s", isoRootfsFile)
+	logger.Log.Infof("--isohelpers.go - - isoOutputDir      = %s", isoOutputDir)
+	logger.Log.Infof("--isohelpers.go - - isoOutputBaseName = %s", isoOutputBaseName)
 
 	unattendedInstall := false
 	enableBiosBoot := false // if true, the bios bootloaders needs to be downloaded.
@@ -407,12 +440,15 @@ func (iae* IsoArtifactExtractor) convertToLiveOSImage(writeableRootfsImagePath, 
 	// -- extract grub.cfg and vmlinuz ----------------------------------------
 
 	sourceGrubCfgPath := filepath.Join(writeableRootfsMountFullDir, "/boot/grub2/grub.cfg")
-	iae.grubCfgPath = filepath.Join(iae.outDir, "grub.cfg")
-	err = copyFile(sourceGrubCfgPath, iae.grubCfgPath)
+	targetGrubCfgPath := filepath.Join(iae.outDir, "grub.cfg")
+
+	err = createGrubCfg(sourceGrubCfgPath, grubCfgTemplate, targetGrubCfgPath)
 	if err != nil {
-		logger.Log.Infof("--isohelpers.go - failed to copy grub.cfg")
+		logger.Log.Infof("--isohelpers.go - failed to create grub.cfg")
 		return err
 	}
+
+	iae.grubCfgPath = targetGrubCfgPath
 
 	sourceVmlinuzPath := filepath.Join(writeableRootfsMountFullDir, "/boot/vmlinuz-" + iae.kernelVersion)
 	iae.vmlinuzPath = filepath.Join(iae.outDir, "vmlinuz")
@@ -482,6 +518,20 @@ func updateGrubCfg(extractedGrubCfgPath string, templateGrubCfg string) error {
 	return copyFile(templateGrubCfg, extractedGrubCfgPath)
 }
 */
+
+func createGrubCfg(sourceGrubCfgPath, grubCfgTemplate, targetGrubCfgPath string) error {
+
+	logger.Log.Infof("--isohelpers.go - using %s to create %s", sourceGrubCfgPath, targetGrubCfgPath)
+
+	// ToDo: we should merge sourceGrubCfgPath with grubCfgTemplate
+	//
+	err := ioutil.WriteFile(targetGrubCfgPath, []byte(grubCfgTemplate), 0644)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
 
 func copyFile(src, dst string) error {
 

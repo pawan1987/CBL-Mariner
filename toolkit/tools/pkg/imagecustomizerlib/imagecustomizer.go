@@ -34,7 +34,7 @@ func CustomizeImageWithConfigFile(buildDir string, configFile string, imageFile 
 ) error {
 	var err error
 
-	logger.Log.Infof("--imagecustomizer.go - CustomizeImageWithConfigFile() - 1")
+	logger.Log.Infof("--imagecustomizer.go - starting...")
 
 	var config imagecustomizerapi.Config
 	err = imagecustomizerapi.UnmarshalYamlFile(configFile, &config)
@@ -63,7 +63,7 @@ func CustomizeImage(buildDir string, baseConfigPath string, config *imagecustomi
 ) error {
 	var err error
 
-	logger.Log.Infof("--imagecustomizer.go - started...")
+	logger.Log.Infof("--imagecustomizer.go - validating config...")
 
 	// Validate 'outputImageFormat' value.
 	qemuOutputImageFormat, err := toQemuImageFormat(outputImageFormat)
@@ -342,7 +342,6 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 	//   - idlinux.c32
 	srcRoot := "/home/george/git/CBL-Mariner-POC/toolkit"
 	isoResourcesDir  := filepath.Join(srcRoot, "resources")
-	isoGrubFile      := filepath.Join(srcRoot, "resources/assets/isomaker/iso_root_static_files_liveos/boot/grub2/grub.cfg")
 	dracutPatchFile  := filepath.Join(srcRoot, "mic-iso-gen-0/initrd-build-artifacts/no_user_prompt.patch")
 	dracutConfigFile := filepath.Join(srcRoot, "mic-iso-gen-0/initrd-build-artifacts/20-live-cd.conf")
 
@@ -393,7 +392,7 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 		}
 	}
 
-	err := createIso(iae.isomakerTmpDir, isoResourcesDir, isoGrubFile, iae.initrdPath, iae.squashfsPath, iae.outDir, isoOutputBaseName)
+	err := createIso(iae.isomakerTmpDir, isoResourcesDir, iae.grubCfgPath, iae.initrdPath, iae.squashfsPath, iae.outDir, isoOutputBaseName)
 	if err != nil {
 		return err
 	}
