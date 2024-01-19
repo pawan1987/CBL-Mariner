@@ -136,11 +136,10 @@ func (iae* IsoArtifactExtractor) generateInitrd(writeableRootfsImage string, iso
 }
 
 // invokes the iso maker library to create an iso image.
-func createIso(buildDir, isoResourcesDir, isoGrubFile, isoInitrdFile, isoRootfsFile, isoOutputDir, isoOutputBaseName string) error {
+func createIso(buildDir, isoGrubFile, isoInitrdFile, isoRootfsFile, isoOutputDir, isoOutputBaseName string) error {
 
 	logger.Log.Infof("--isohelpers.go - creating iso...")
 	logger.Log.Infof("--isohelpers.go - - buildDir          = %s", buildDir)
-	logger.Log.Infof("--isohelpers.go - - isoResourcesDir   = %s", isoResourcesDir)
 	logger.Log.Infof("--isohelpers.go - - isoGrubFile       = %s", isoGrubFile)
 	logger.Log.Infof("--isohelpers.go - - isoInitrdFile     = %s", isoInitrdFile)
 	logger.Log.Infof("--isohelpers.go - - isoRootfsFile     = %s", isoRootfsFile)
@@ -151,7 +150,8 @@ func createIso(buildDir, isoResourcesDir, isoGrubFile, isoInitrdFile, isoRootfsF
 	enableBiosBoot := false // if true, the bios bootloaders needs to be downloaded.
 	baseDirPath := ""
 	releaseVersion := "2.0." + time.Now().Format("20060102-1504")
-	isoRepoDirPath := "dummy"
+	isoResourcesDir := ""
+	isoRepoDirPath := ""
 	imageNameTag := ""
 
 	err := os.MkdirAll(isoOutputDir, os.ModePerm)

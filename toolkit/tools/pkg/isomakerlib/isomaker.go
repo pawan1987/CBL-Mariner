@@ -316,9 +316,7 @@ func (im *IsoMaker) prepareWorkDirectory() {
 
 	im.copyStaticIsoRootFiles()
 
-	if im.enableBiosBoot {
-		im.copyArchitectureDependentIsoRootFiles()
-	}
+	im.copyArchitectureDependentIsoRootFiles()
 
 	im.copyAndRenameConfigFiles()
 }
@@ -326,22 +324,31 @@ func (im *IsoMaker) prepareWorkDirectory() {
 // copyStaticIsoRootFiles copies architecture-independent files from the
 // Mariner repo directories.
 func (im *IsoMaker) copyStaticIsoRootFiles() {
-	staticIsoRootFilesPath := filepath.Join(im.resourcesDirPath, "assets/isomaker/iso_root_static_files/*")
+	if im.resourcesDirPath != "" {
+		staticIsoRootFilesPath := filepath.Join(im.resourcesDirPath, "assets/isomaker/iso_root_static_files/*")
 
-	logger.Log.Infof("Copying static ISO root files from '%s' to '%s'.", staticIsoRootFilesPath, im.buildDirPath)
+		logger.Log.Infof("Copying static ISO root files from '%s' to '%s'.", staticIsoRootFilesPath, im.buildDirPath)
 
-	recursiveCopyDereferencingLinks(staticIsoRootFilesPath, im.buildDirPath)
+		recursiveCopyDereferencingLinks(staticIsoRootFilesPath, im.buildDirPath)
+	}
 
 	if im.grubCfgPath != "" {
-		targetGrubCfgPath := filepath.Join(im.buildDirPath, "boot/grub2/grub.cfg")
-		logger.Log.Infof("Copying '%s' to '%s'.", im.grubCfgPath, targetGrubCfgPath)
-		shell.MustExecuteLive("cp", im.grubCfgPath, targetGrubCfgPath)
+		targetGrubCfg := filepath.Join(im.buildDirPath, "boot/grub2/grub.cfg")
+		targetGrubCfgDir := filepath.Dir(targetGrubCfg)
+		logger.PanicOnError(os.MkdirAll(targetGrubCfgDir, os.ModePerm), "Failed while creating directory '%s'.", targetGrubCfgDir)
+
+		logger.Log.Infof("Copying '%s' to '%s'.", im.grubCfgPath, targetGrubCfg)
+		shell.MustExecuteLive("cp", im.grubCfgPath, targetGrubCfg)
 	}
 }
 
 // copyArchitectureDependentIsoRootFiles copies the pre-built UEFI modules required
 // to boot the ISO image.
 func (im *IsoMaker) copyArchitectureDependentIsoRootFiles() {
+	if !im.enableBiosBoot || im.resourcesDirPath == "" {
+		return
+	}
+
 	architectureDependentFilesDirectory := filepath.Join(im.resourcesDirPath, isoRootArchDependentDirPath, runtime.GOARCH, "*")
 
 	logger.Log.Debugf("Copying architecture-dependent (%s) ISO root files from '%s'.", runtime.GOARCH, architectureDependentFilesDirectory)

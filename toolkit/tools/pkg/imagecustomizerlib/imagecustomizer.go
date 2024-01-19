@@ -335,14 +335,6 @@ func extractPartitionsHelper(buildDir string, buildImageFile string, outputImage
 
 func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error {
 
-	// ToDo: how do we redistribute this with mic?
-	// - resources/assets/isomakes/iso_root_arch-dependent_files/<arch>/isolinux
-	//   - isolinux.bin
-	//   - isolinux.cfg
-	//   - idlinux.c32
-	srcRoot := "/home/george/git/CBL-Mariner-POC/toolkit"
-	isoResourcesDir  := filepath.Join(srcRoot, "resources")
-
 	// Configuration
 	isoOutputBaseName := "mic-iso"
 
@@ -390,7 +382,7 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 		}
 	}
 
-	err := createIso(iae.isomakerTmpDir, isoResourcesDir, iae.grubCfgPath, iae.initrdPath, iae.squashfsPath, iae.outDir, isoOutputBaseName)
+	err := createIso(iae.isomakerTmpDir, iae.grubCfgPath, iae.initrdPath, iae.squashfsPath, iae.outDir, isoOutputBaseName)
 	if err != nil {
 		return err
 	}
