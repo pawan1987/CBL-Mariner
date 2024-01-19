@@ -14,7 +14,6 @@ import (
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/file"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/safechroot"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/safemount"
-	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/logger"
 )
 
 var (
@@ -24,23 +23,10 @@ var (
 
 func findPartitions(buildDir string, diskDevice string) ([]string, []*safechroot.MountPoint, error) {
 	var err error
-	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskDevice = %s", diskDevice)
 	diskPartitions, err := diskutils.GetDiskPartitions(diskDevice)
 	if err != nil {
 		return nil, nil, err
 	}
-
-	// for _, diskPartition := range diskPartitions {
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - -------------------------------------------")
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.Name = %s", diskPartition.Name)
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.Path = %s", diskPartition.Path)
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.FileSystemType = %s", diskPartition.FileSystemType)
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.Mountpoint = %s", diskPartition.Mountpoint)
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.PartLabel = %s", diskPartition.PartLabel)
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.PartitionTypeUuid = %s", diskPartition.PartitionTypeUuid)
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.Uuid = %s", diskPartition.Uuid)
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - diskPartition.PartUuid = %s", diskPartition.PartUuid)
-	// }
 
 	var rootfsPartition *diskutils.PartitionInfo
 	var mountPoints []*safechroot.MountPoint
@@ -74,14 +60,6 @@ func findPartitions(buildDir string, diskDevice string) ([]string, []*safechroot
 		mountPoint = safechroot.NewPreDefaultsMountPoint(diskDevice, "/", "ext4", 0, "")
 		mountPoints = append(mountPoints, mountPoint)
 	}
-
-	// for _, mountPoint := range mountPoints {
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - -------------------------------------------")
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - mountPoint.Source = %s", mountPoint.GetSource())
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - mountPoint.Target = %s", mountPoint.GetTarget())
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - mountPoint.FSType = %s", mountPoint.GetFSType())
-	// 	logger.Log.Infof("--partitionutils.go - findPartitions() - 1 - mountPoint.Data = %s", mountPoint.GetData())
-	// }
 
 	return nil, mountPoints, nil
 }

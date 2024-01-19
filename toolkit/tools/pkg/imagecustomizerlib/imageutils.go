@@ -14,7 +14,6 @@ import (
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/imagegen/installutils"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/file"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/safechroot"
-	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/logger"	
 )
 
 var (
@@ -33,8 +32,6 @@ type installOSFunc func(imageChroot *safechroot.Chroot) error
 
 func connectToExistingImage(imageFilePath string, buildDir string, chrootDirName string) (*ImageConnection, []*safechroot.MountPoint, error) {
 
-	logger.Log.Infof("--imageutils.go - connectToExistingImage() - 1")
-
 	imageConnection := NewImageConnection()
 
 	mountPoints, err := connectToExistingImageHelper(imageConnection, imageFilePath, buildDir, chrootDirName)
@@ -49,7 +46,6 @@ func connectToExistingImage(imageFilePath string, buildDir string, chrootDirName
 func connectToExistingImageHelper(imageConnection *ImageConnection, imageFilePath string,
 	buildDir string, chrootDirName string,
 ) ([]*safechroot.MountPoint, error) {
-	logger.Log.Infof("--imageutils.go - connectToExistingImageHelper() - 1")
 
 	// Connect to image file using loopback device.
 	err := imageConnection.ConnectLoopback(imageFilePath)

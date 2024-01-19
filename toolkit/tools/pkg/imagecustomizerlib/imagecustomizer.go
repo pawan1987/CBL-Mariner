@@ -63,7 +63,7 @@ func CustomizeImage(buildDir string, baseConfigPath string, config *imagecustomi
 ) error {
 	var err error
 
-	logger.Log.Infof("--imagecustomizer.go - CustomizeImage() - 1")
+	logger.Log.Infof("--imagecustomizer.go - started...")
 
 	// Validate 'outputImageFormat' value.
 	qemuOutputImageFormat, err := toQemuImageFormat(outputImageFormat)
@@ -89,7 +89,7 @@ func CustomizeImage(buildDir string, baseConfigPath string, config *imagecustomi
 		return err
 	}
 
-	logger.Log.Infof("--imagecustomizer.go - CustomizeImage() - 2 - converting to raw format...")
+	logger.Log.Infof("--imagecustomizer.go - converting input image to raw format...")
 	// Convert image file to raw format, so that a kernel loop device can be used to make changes to the image.
 	buildImageFile := filepath.Join(buildDirAbs, BaseImageName)
 
@@ -99,14 +99,14 @@ func CustomizeImage(buildDir string, baseConfigPath string, config *imagecustomi
 	}
 
 	// Customize the partitions.
-	logger.Log.Infof("--imagecustomizer.go - CustomizeImage() - 3 - customize partitions...")
+	logger.Log.Infof("--imagecustomizer.go - customizing partitions...")
 	partitionsCustomized, buildImageFile, err := customizePartitions(buildDirAbs, baseConfigPath, config, buildImageFile)
 	if err != nil {
 		return err
 	}
 
 	// Customize the raw image file.
-	logger.Log.Infof("--imagecustomizer.go - CustomizeImage() - 4 - customize raw image...")
+	logger.Log.Infof("--imagecustomizer.go - customizing raw image...")
 	err = customizeImageHelper(buildDirAbs, baseConfigPath, config, buildImageFile, rpmsSources, useBaseImageRpmRepos,
 		partitionsCustomized)
 	if err != nil {
@@ -350,9 +350,10 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 	isoOutputBaseName := "mic-iso"
 
 	iae := &IsoArtifactExtractor{
-		buildDir: buildDir,
-		tmpDir: filepath.Join(buildDir, "tmp"),
-		outDir: filepath.Join(buildDir, "out"),	
+		buildDir      : buildDir,
+		tmpDir        : filepath.Join(buildDir, "tmp"),
+		isomakerTmpDir: filepath.Join(buildDir, "isomaker-tmp"),
+		outDir        : filepath.Join(buildDir, "out"),	
 	}
 
 	// extract boot artifacts (before rootfs artifacts)...
@@ -370,7 +371,7 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 	for _, mountPoint := range mountPoints {
 		if mountPoint.GetTarget() == "/" {
 
-			writeableRootfsImage := filepath.Join(iae.tmpDir, "rootfs-rw.img")
+			writeableRootfsImage := filepath.Join(iae.tmpDir, "writeable-rootfs.img")
 
 			err := iae.createWriteableRootfs(mountPoint.GetSource(), mountPoint.GetFSType(), writeableRootfsImage)
 			if err != nil {
@@ -392,7 +393,7 @@ func createIsoImage(buildDir string, mountPoints []*safechroot.MountPoint) error
 		}
 	}
 
-	err := createIso(iae.tmpDir, isoResourcesDir, isoGrubFile, iae.initrdPath, iae.squashfsPath, iae.outDir, isoOutputBaseName)
+	err := createIso(iae.isomakerTmpDir, isoResourcesDir, isoGrubFile, iae.initrdPath, iae.squashfsPath, iae.outDir, isoOutputBaseName)
 	if err != nil {
 		return err
 	}
