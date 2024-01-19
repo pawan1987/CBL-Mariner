@@ -1,5 +1,7 @@
 {
-  "Signatures": {
-    "pytest-7.4.0.tar.gz": "b4bf8c45bd59934ed84001ad51e11b4ee40d40a1229d2c79f9c592b0a3f6bd8a"
-  }
+ "Signatures": {
+  "11611.patch": "63d192a03fd1df1c3c9ebff3415146c092bda20debf5502f5c7597870789b311",
+  "pytest-7.1.3-fix-xfails.patch": "a7d27692e8552f33e15e41741d8f940d19e8ac18bd549854ec9d3d90737700ec",
+  "pytest.spec": "c186b05a8ff161d19e9624526c3fee45e0e8d2ed50ac7a7f43dbb6aef87880c8"
+ }
 }

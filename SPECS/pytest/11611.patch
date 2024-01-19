@@ -1,0 +1,58 @@
+From 052d1453544511c72674c20b47723e401fd0f8f3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Miro=20Hron=C4=8Dok?= <miro@hroncok.cz>
+Date: Mon, 13 Nov 2023 09:45:05 +0100
+Subject: [PATCH] XFAIL TestLocalPath.test_make_numbered_dir_multiprocess_safe
+
+The tested py.path.local.make_numbered_dir function is *not*
+multiprocess safe, because is uses os.listdir which itself is not.
+
+The os.listdir documentation explicitly states that:
+
+> If a file is removed from or added to the directory during the call
+> of this function, whether a name for that file be included is unspecified.
+
+This can lead to a race when:
+
+ 1. process A attempts to create directory N
+ 2. the creation fails, as another process already created it in the meantime
+ 3. process A calls listdir to determine a more recent maxnum
+ 4. processes B+ repeatedly create newer directories and they delete directory N
+ 5. process A doesn't have directory N or any newer directory in listdir result
+ 6. process A attempts to create directory N again and raises
+
+For details, see https://github.com/pytest-dev/pytest/issues/11603#issuecomment-1805708144
+and bellow.
+
+Additionally, the test itself has a race in batch_make_numbered_dirs.
+When this functions attempts to write to repro-N/foo,
+repro-N may have already been removed by another process.
+
+For details, see https://github.com/pytest-dev/pytest/issues/11603#issuecomment-1804714313
+and bellow.
+
+---
+
+The tested py.path.local.make_numbered_dir function is not used in pytest.
+There is a different implementation in _pytest.pathlib.
+
+We plan to remove this module eventually anyway.
+
+Closes https://github.com/pytest-dev/pytest/issues/11603
+---
+ testing/_py/test_local.py | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/testing/_py/test_local.py b/testing/_py/test_local.py
+index aebee380cb..77a9838cf1 100644
+--- a/testing/_py/test_local.py
++++ b/testing/_py/test_local.py
+@@ -868,6 +868,9 @@ def test_fspath_protocol_other_class(self, fake_fspath_obj):
+             py_path.strpath, str_path
+         )
+ 
++    @pytest.mark.xfail(
++        reason="#11603", raises=(error.EEXIST, error.ENOENT), strict=False
++    )
+     def test_make_numbered_dir_multiprocess_safe(self, tmpdir):
+         # https://github.com/pytest-dev/py/issues/30
+         with multiprocessing.Pool() as pool:
