@@ -1,3 +1,7 @@
 SystemConfig:
   PackagesInstall:
   - squashfs-tools
+  Users:
+  - Name: test
+    Password: testpassword
+    PrimaryGroup: sudo  
