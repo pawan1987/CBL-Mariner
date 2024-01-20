@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	"time"
+	// "time"
 
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/logger"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/safemount"
@@ -149,10 +149,14 @@ func createIso(buildDir, isoGrubFile, isoInitrdFile, isoRootfsFile, isoOutputDir
 	unattendedInstall := false
 	enableBiosBoot := false // if true, the bios bootloaders needs to be downloaded.
 	baseDirPath := ""
-	releaseVersion := "2.0." + time.Now().Format("20060102-1504")
+	// releaseVersion := "2.0." + time.Now().Format("20060102-1504")
+	releaseVersion := ""
 	isoResourcesDir := ""
 	isoRepoDirPath := ""
 	imageNameTag := ""
+
+	// isoMaker constructs the final image name as follows:
+	// {isoOutputDir}/{isoOutputBaseName}{releaseVersion}{imageNameTag}.iso
 
 	err := os.MkdirAll(isoOutputDir, os.ModePerm)
 	if err != nil {

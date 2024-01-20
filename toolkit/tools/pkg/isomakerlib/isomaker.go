@@ -525,7 +525,12 @@ func (im *IsoMaker) initializePaths() {
 // buildIsoImageFilePath gets the output ISO file path from the config JSON file name
 // and the image build environment.
 func (im *IsoMaker) buildIsoImageFilePath() string {
-	isoImageFileName := fmt.Sprintf("%v-%v%v.iso", im.imageNameBase, im.releaseVersion, im.imageNameTag)
+	isoImageFileName := ""
+	if im.releaseVersion != "" || im.imageNameTag != "" {
+		isoImageFileName = fmt.Sprintf("%v-%v%v.iso", im.imageNameBase, im.releaseVersion, im.imageNameTag)
+	} else {
+		isoImageFileName = fmt.Sprintf("%v.iso", im.imageNameBase)
+	}
 
 	return filepath.Join(im.outputDirPath, isoImageFileName)
 }

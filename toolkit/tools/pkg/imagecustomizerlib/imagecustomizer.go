@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/imagecustomizerapi"
 	"github.com/microsoft/CBL-Mariner/toolkit/tools/internal/file"
@@ -63,6 +64,27 @@ func CustomizeImage(buildDir string, baseConfigPath string, config *imagecustomi
 	var err error
 
 	logger.Log.Infof("--imagecustomizer.go - validating config...")
+
+	outputImageBase := strings.TrimSuffix(filepath.Base(outputImageFile), filepath.Ext(outputImageFile))
+	outputImageDir := filepath.Dir(outputImageFile)
+
+	enableIsoCreation := false
+	outputIsoImageFile := ""
+	if outputImageFormat == "iso" {
+		enableIsoCreation = true
+		inputImageExt := filepath.Ext(imageFile)
+
+		outputIsoImageFile = outputImageFile
+		outputImageFile = filepath.Join(outputImageDir, outputImageBase + inputImageExt)
+
+		outputImageFormat = inputImageExt[1:]
+	}
+
+	logger.Log.Infof("--imagecustomizer.go - outputImageFormat  = %s", outputImageFormat)
+	logger.Log.Infof("--imagecustomizer.go - outputImageBase    = %s", outputImageBase)
+	logger.Log.Infof("--imagecustomizer.go - outputImageDir     = %s", outputImageDir)
+	logger.Log.Infof("--imagecustomizer.go - outputImageFile    = %s", outputImageFile)
+	logger.Log.Infof("--imagecustomizer.go - outputIsoImageFile = %s", outputIsoImageFile)
 
 	// Validate 'outputImageFormat' value.
 	qemuOutputImageFormat, err := toQemuImageFormat(outputImageFormat)
@@ -123,9 +145,12 @@ func CustomizeImage(buildDir string, baseConfigPath string, config *imagecustomi
 		return fmt.Errorf("failed to convert image file to format: %s:\n%w", outputImageFormat, err)
 	}
 
-	err = createIsoImage(buildDir, rawImageFile)
-	if err != nil {
-		return err
+	if enableIsoCreation {
+		logger.Log.Infof("--imagecustomizer.go - creating a live os iso from the customized image...")
+		err = createIsoImage(buildDir, rawImageFile, outputImageDir, outputImageBase)
+		if err != nil {
+			return err
+		}
 	}
 
 	// If outputSplitPartitionsFormat is specified, extract the partition files.
@@ -328,7 +353,7 @@ func extractPartitionsHelper(buildDir string, rawImageFile string, outputImageFi
 	return nil
 }
 
-func createIsoImage(buildDir, sourceImageFile string) error {
+func createIsoImage(buildDir, sourceImageFile, outputImageDir, outputImageBase string) error {
 
 	logger.Log.Infof("--imagecustomizer.go - connecting to customized raw image (%s)", sourceImageFile)
 
@@ -337,9 +362,6 @@ func createIsoImage(buildDir, sourceImageFile string) error {
 		return err
 	}
 	defer imageConnection.Close()
-
-	// Configuration
-	isoOutputBaseName := "mic-iso"
 
 	iae := &IsoArtifactExtractor{
 		buildDir      : buildDir,
@@ -386,7 +408,7 @@ func createIsoImage(buildDir, sourceImageFile string) error {
 		}
 	}
 
-	err = createIso(iae.isomakerTmpDir, iae.grubCfgPath, iae.initrdPath, iae.squashfsPath, iae.outDir, isoOutputBaseName)
+	err = createIso(iae.isomakerTmpDir, iae.grubCfgPath, iae.initrdPath, iae.squashfsPath, outputImageDir, outputImageBase)
 	if err != nil {
 		return err
 	}
