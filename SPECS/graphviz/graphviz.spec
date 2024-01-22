@@ -44,17 +44,14 @@
 %endif
 Summary:        Graph Visualization Tools
 Name:           graphviz
-Version:        2.42.4
-Release:        9%{?dist}
+Version:        9.0.0
+Release:        1%{?dist}
 License:        EPL-1.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://www.graphviz.org/
 Source0:        https://gitlab.com/%{name}/%{name}/-/archive/%{version}/%{name}-%{version}.tar.bz2
 # rhbz#1505230
-Patch0:         graphviz-2.42.2-dotty-menu-fix.patch
-Patch1:         graphviz-2.42.2-coverity-scan-fixes.patch
-Patch2:         CVE-2020-18032.patch
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  bison
@@ -149,9 +146,7 @@ Provides some additional PDF and HTML documentation for graphviz.
 Summary:        Graphviz plugin for renderers based on gd
 Requires:       %{name} = %{version}-%{release}
 Requires:       freefont
-Requires(post): %{_bindir}/dot
 Requires(post): /sbin/ldconfig
-Requires(postun): %{_bindir}/dot
 Requires(postun): /sbin/ldconfig
 
 %description gd
@@ -251,8 +246,6 @@ Various tcl packages (extensions) for the graphviz tools.
 
 %prep
 %setup -q
-%patch0 -p1 -b .dotty-menu-fix
-%patch1 -p1 -b .coverity-scan-fixes
 
 # Attempt to fix rpmlint warnings about executable sources
 find -type f -regex '.*\.\(c\|h\)$' -exec chmod a-x {} ';'
