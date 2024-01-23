@@ -1,12 +1,12 @@
 Summary:        GLib wrapper around libusb1
 Name:           libgusb
-Version:        0.3.5
-Release:        3%{?dist}
+Version:        0.4.8
+Release:        1%{?dist}
 License:        LGPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://github.com/hughsie/libgusb
-Source0:        https://people.freedesktop.org/~hughsient/releases/%{name}-%{version}.tar.xz
+Source0:        https://github.com/hughsie/libgusb/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 BuildRequires:  glib2-devel >= 2.38.0
 BuildRequires:  gobject-introspection-devel
 BuildRequires:  gtk-doc
@@ -57,6 +57,9 @@ GLib headers and libraries for gusb.
 %{_datadir}/vala/vapi/gusb.vapi
 
 %changelog
+* Mon Jan 22 2024 Betty Lakes <bettylakes@microsoft.com> - 0.4.8-1
+- Version updated to 0.4.8
+
 * Wed Dec 08 2021 Thomas Crain <thcrain@microsoft.com> - 0.3.5-3
 - License verified
 - Lint spec
