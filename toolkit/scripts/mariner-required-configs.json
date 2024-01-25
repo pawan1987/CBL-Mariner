@@ -91,7 +91,7 @@
             },
             "CONFIG_BINFMT_MISC": {
                 "value": [
-                    "y"
+                    "m"
                 ],
                 "arch": [
                     "AMD64",
@@ -99,6 +99,7 @@
                 ],
                 "comment": "Needed for customer",
                 "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
                     "https://github.com/microsoft/CBL-Mariner/pull/3300"
                 ]
             },
@@ -459,8 +460,10 @@
                 "arch": [
                     "AMD64"
                 ],
-                "comment": "Needed for customer",
+                "comment": "Needed for customer and HCI scenarios",
                 "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480",
                     "https://github.com/microsoft/CBL-Mariner/pull/5170"
                 ]
             },
@@ -575,8 +578,10 @@
                 "arch": [
                     "AMD64"
                 ],
-                "comment": "Needed for the iptables TRACE target",
+                "comment": "Needed for the iptables TRACE target and HCI scenarios",
                 "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480",
                     "https://github.com/microsoft/CBL-Mariner/pull/3783"
                 ]
             },
@@ -983,7 +988,7 @@
                     "https://github.com/microsoft/CBL-Mariner/pull/5896"
                 ]
             },
-	    "CONFIG_EDAC_BLUEFIELD": {
+            "CONFIG_EDAC_BLUEFIELD": {
                 "value": [
                     "is not set"
                 ],
@@ -1386,6 +1391,425 @@
                 "comment": "Needed for customer to avoid segfault with AMBIOS",
                 "PR": [
                     "https://github.com/microsoft/CBL-Mariner/pull/7180"
+                ]
+            },
+            "CONFIG_BRIDGE": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468"
+                ]
+            },
+            "CONFIG_INET_UDP_DIAG": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468"
+                ]
+            },
+            "CONFIG_LLC": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468"
+                ]
+            },
+            "CONFIG_MACVLAN": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468"
+                ]
+            },
+            "CONFIG_NETFILTER_XT_MARK": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468"
+                ]
+            },
+            "CONFIG_NETLINK_DIAG": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468"
+                ]
+            },
+            "CONFIG_PACKET_DIAG": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468"
+                ]
+            },
+            "CONFIG_STP": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468"
+                ]
+            },
+            "CONFIG_TUN": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468"
+                ]
+            },
+            "CONFIG_UNIX_DIAG": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468"
+                ]
+            },
+            "CONFIG_DM_MULTIPATH_HST": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/5951"
+                ]
+            },
+            "CONFIG_DM_MULTIPATH_IOA": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/5951"
+                ]
+            },
+            "CONFIG_DM_MULTIPATH_QL": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/5951"
+                ]
+            },
+            "CONFIG_DM_MULTIPATH_ST": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/5951"
+                ]
+            },
+            "CONFIG_INET_DIAG": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_INET_SCTP_DIAG": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_INET_TCP_DIAG": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_IP_VS_DEBUG": {
+                "value": [
+                    "y"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_IPV6_FOU_TUNNEL": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_IPV6_FOU": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_NET_FOU_IP_TUNNELS": {
+                "value": [
+                    "y"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_NET_FOU": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_NETFILTER_NETLINK_GLUE_CT": {
+                "value": [
+                    "y"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_NETFILTER_XT_MATCH_IPCOMP": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_NETFILTER_XT_TARGET_AUDIT": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_NETFILTER_XT_TARGET_NOTRACK": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_NF_LOG_ARP": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_NF_TABLES_ARP": {
+                "value": [
+                    "y"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_NF_TABLES_NETDEV": {
+                "value": [
+                    "y"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_NFT_CONNLIMIT": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_NFT_FIB_IPV4": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_NFT_FIB": {
+                "value": [
+                    "m"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
+                ]
+            },
+            "CONFIG_SECURITY_SELINUX_BOOTPARAM": {
+                "value": [
+                    "y"
+                ],
+                "arch": [
+                    "AMD64"
+                ],
+                "comment": "Needed for HCI scenarios",
+                "PR": [
+                    "https://github.com/microsoft/CBL-Mariner/pull/7468",
+                    "https://github.com/microsoft/CBL-Mariner/pull/3480"
                 ]
             }
         }
