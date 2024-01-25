@@ -29,7 +29,7 @@
 Summary:        Linux Kernel
 Name:           kernel
 Version:        6.6.2.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        GPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -430,6 +430,9 @@ ln -sf linux-%{uname_r}.cfg /boot/mariner.cfg
 %{_sysconfdir}/bash_completion.d/bpftool
 
 %changelog
+* Thu Jan 25 2024 Vince Perri <viperri@microsoft.com> - 6.6.2.1-4
+- Remove no-vmw-sta kernel argument inherited from Photon OS
+
 * Wed Jan 17 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 6.6.2.1-3
 - Bump release to match kernel-headers.
 

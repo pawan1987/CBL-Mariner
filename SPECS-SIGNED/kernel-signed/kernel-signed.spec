@@ -10,7 +10,7 @@
 Summary:        Signed Linux Kernel for %{buildarch} systems
 Name:           kernel-signed-%{buildarch}
 Version:        6.6.2.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        GPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -153,6 +153,9 @@ ln -sf linux-%{uname_r}.cfg /boot/mariner.cfg
 %exclude /module_info.ld
 
 %changelog
+* Thu Jan 25 2024 Vince Perri <viperri@microsoft.com> - 6.6.2.1-4
+- Bump release to match kernel
+
 * Wed Jan 17 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 6.6.2.1-3
 - Bump release to match kernel-headers.
 
