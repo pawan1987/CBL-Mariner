@@ -5,8 +5,8 @@
 %global gnulibversion d271f868a8df9bbec29049d01e056481b7a1a263
 Summary:        GRand Unified Bootloader
 Name:           grub2
-Version:        2.06
-Release:        13%{?dist}
+Version:        2.12
+Release:        1%{?dist}
 License:        GPLv3+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -51,8 +51,6 @@ Patch0166:      0166-grub-install-disable-support-for-EFI-platforms.patch
 Patch0167:      0167-restore-umask-for-grub-config.patch 
 # Fix to reset the global errno to success upon success.
 Patch0170:      0170-fix-memory-alloc-errno-reset.patch
-Patch0171:      CVE-2022-2601.patch
-Patch0172:      CVE-2022-3775.patch
 # CVE-2021-3695 CVE-2021-3696 CVE-2021-3697 CVE-2022-28733 CVE-2022-28734
 # CVE-2022-28735 CVE-2022-28736
 Patch0173:      0173-loader-efi-chainloader-Simplify-the-loader-state.patch
@@ -388,6 +386,9 @@ cp $GRUB_PXE_MODULE_SOURCE $EFI_BOOT_DIR/$GRUB_PXE_MODULE_NAME
 %config(noreplace) %{_sysconfdir}/grub.d/41_custom
 
 %changelog
+* Thu Jan 25 2024 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 2.12-1
+- Auto-upgrade to 2.12 - fixes and features in latest full release, 2.06 is outdated
+
 * Mon Nov 27 2023 Cameron Baird <cameronbaird@microsoft.com> - 2.06-13
 - Move /etc/grub.d to the configuration subpackage
 
