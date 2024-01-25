@@ -47,7 +47,7 @@ type IsoMaker struct {
 	imageNameBase      string               // Base name of the ISO to generate (no path, and no file extension).
 	imageNameTag       string               // Optional user-supplied tag appended to the generated ISO's name.
 
-	isoMakerCleanUpTasks []func() // List of clean-up tasks to perform at the end of the ISO generation process.
+	isoMakerCleanUpTasks []func()(error) // List of clean-up tasks to perform at the end of the ISO generation process.
 }
 
 // NewIsoMaker returns a new ISO maker.
@@ -120,8 +120,17 @@ func NewIsoMakerWithConfig(unattendedInstall, enableBiosBoot bool, baseDirPath, 
 }
 
 // Make builds the ISO image to 'buildDirPath' with the packages included in the config JSON.
-func (im *IsoMaker) Make() error {
-	defer im.isoMakerCleanUp()
+func (im *IsoMaker) Make() (error err) {
+	defer func() {
+		tmpErr := im.isoMakerCleanUp()
+		if tmpErr != nil {
+			if err != nil {
+				err = fmt.Errorf("Error:%v\nError:%v\n", err, tmpErr)
+			} else {
+				err = fmt.Errorf("Error:%v\n", tmpErr)
+			}
+		}
+	}
 
 	err := im.initializePaths()
 	if err != nil {
@@ -221,7 +230,7 @@ func (im *IsoMaker) copyInitrd() error {
 
 // setUpIsoGrub2BootLoader prepares an efiboot.img containing Grub2,
 // which is booted in case of an UEFI boot of the ISO image.
-func (im *IsoMaker) setUpIsoGrub2Bootloader() error {
+func (im *IsoMaker) setUpIsoGrub2Bootloader() (error err) {
 	const (
 		blockSizeInBytes     = 1024 * 1024
 		numberOfBlocksToCopy = 3
@@ -256,7 +265,14 @@ func (im *IsoMaker) setUpIsoGrub2Bootloader() error {
 
 	defer func() {
 		logger.Log.Debugf("Removing '%s'.", efiBootImgTempMountDir)
-		logger.PanicOnError(os.RemoveAll(efiBootImgTempMountDir), "Failed to remove temporary mount directory '%s'.", efiBootImgTempMountDir)
+		tmpErr := os.RemoveAll(efiBootImgTempMountDir)
+		if tmpErr != nil {
+			if err != nil {
+				err = fmt.Errorf("Failed to remove temporary mount directory '%s'.\nError:%v\nClean-up Error:%v", efiBootImgTempMountDir, err, tmpErr)
+			} else {
+				err = fmt.Errorf("Failed to remove temporary mount directory '%s'.\nClean-up Error:%v", efiBootImgTempMountDir, tmpErr)
+			}
+		}
 	}()
 
 	mountArgs := []string{
@@ -273,7 +289,14 @@ func (im *IsoMaker) setUpIsoGrub2Bootloader() error {
 
 	defer func() {
 		logger.Log.Debugf("Unmounting '%s'.", efiBootImgTempMountDir)
-		logger.PanicOnError(syscall.Unmount(efiBootImgTempMountDir, 0), "Failed to unmount '%s'.", efiBootImgTempMountDir)
+		tmpErr := syscall.Unmount(efiBootImgTempMountDir, 0)
+		if tmpErr != nil {
+			if err != nil {
+				err = fmt.Errorf("Failed to unmount '%s'.\nError:%v\nClean-up Error:%v", efiBootImgTempMountDir, err, tmpErr)
+			} else {
+				err = fmt.Errorf("Failed to unmount '%s'.\nClean-up Error:%v", efiBootImgTempMountDir, tmpErr)
+			}
+		}
 	}()
 
 	logger.Log.Debug("Copying EFI modules into efiboot.img.")
@@ -407,10 +430,13 @@ func (im *IsoMaker) prepareWorkDirectory() error {
 		return fmt.Errorf("Failed while creating directory '%s'.", im.buildDirPath)
 	}
 
-	im.deferIsoMakerCleanUp(func() {
+	im.deferIsoMakerCleanUp(func()(error) {
 		logger.Log.Debugf("Removing '%s'.", im.buildDirPath)
 		err := os.RemoveAll(im.buildDirPath)
-		logger.PanicOnError(err, "Failed to remove '%s'.\nError:%v", im.buildDirPath, err)
+		if err != nil {
+			err = fmt.Errorf("Failed to remove '%s'.\nError:%v", im.buildDirPath, err)
+		}
+		return err
 	})
 
 	err = im.copyStaticIsoRootFiles()
@@ -733,17 +759,26 @@ func (im *IsoMaker) buildIsoImageFilePath() string {
 
 // deferIsoMakerCleanUp accepts clean-up tasks to be ran when the entire
 // build process has finished, NOT at the end of the current scope.
-func (im *IsoMaker) deferIsoMakerCleanUp(cleanUpTask func()) {
+func (im *IsoMaker) deferIsoMakerCleanUp(cleanUpTask func()(error)) {
 	im.isoMakerCleanUpTasks = append(im.isoMakerCleanUpTasks, cleanUpTask)
 }
 
 // isoMakerCleanUp runs all clean-up tasks scheduled through "deferIsoMakerCleanUp".
 // Tasks are ran in reverse order to how they were scheduled.
-func (im *IsoMaker) isoMakerCleanUp() {
+func (im *IsoMaker) isoMakerCleanUp() (error err) {
 	// We defer again to run the tasks in the correct order AND so that a potential
 	// panic from one of these doesn't prevent other ones from running.
 	for _, cleanUpTask := range im.isoMakerCleanUpTasks {
-		defer cleanUpTask()
+		defer func() {
+			tmpErr := cleanUpTask()
+			if tmpErr != nil {
+				if err != nil {
+					err = fmt.ErrorF("Error:%v\nError:%v\n", err, tmpErr) 
+				} else {
+					err = fmt.ErrorF("Error:%v\n", tmpErr) 
+				}
+			}
+		}
 	}
 }
 
