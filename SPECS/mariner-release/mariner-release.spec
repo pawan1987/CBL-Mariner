@@ -54,12 +54,12 @@ EOF
 
 %files
 %defattr(-,root,root,-)
-%config(noreplace) %{_sysconfdir}/mariner-release
-%config(noreplace) %{_sysconfdir}/lsb-release
-%config(noreplace) %{_libdir}/os-release
-%config(noreplace) %{_sysconfdir}/os-release
-%config(noreplace) %{_sysconfdir}/issue
-%config(noreplace) %{_sysconfdir}/issue.net
+%{_sysconfdir}/mariner-release
+%{_sysconfdir}/lsb-release
+%{_libdir}/os-release
+%{_sysconfdir}/os-release
+%{_sysconfdir}/issue
+%{_sysconfdir}/issue.net
 
 %changelog
 * Wed Nov 29 2023 Jon Slobodzian <joslobo@microsoft.com> - 3.0-1
