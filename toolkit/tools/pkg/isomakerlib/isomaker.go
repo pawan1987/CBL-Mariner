@@ -125,9 +125,9 @@ func (im *IsoMaker) Make() (error err) {
 		tmpErr := im.isoMakerCleanUp()
 		if tmpErr != nil {
 			if err != nil {
-				err = fmt.Errorf("Error:%v\nError:%v\n", err, tmpErr)
+				err = fmt.Errorf("error:%w\nError:%w\n", err, tmpErr)
 			} else {
-				err = fmt.Errorf("Error:%v\n", tmpErr)
+				err = fmt.Errorf("error:%w\n", tmpErr)
 			}
 		}
 	}
@@ -268,9 +268,9 @@ func (im *IsoMaker) setUpIsoGrub2Bootloader() (error err) {
 		tmpErr := os.RemoveAll(efiBootImgTempMountDir)
 		if tmpErr != nil {
 			if err != nil {
-				err = fmt.Errorf("Failed to remove temporary mount directory '%s'.\nError:%v\nClean-up Error:%v", efiBootImgTempMountDir, err, tmpErr)
+				err = fmt.Errorf("failed to remove temporary mount directory '%s'.\nError:%w\nClean-up Error:%w", efiBootImgTempMountDir, err, tmpErr)
 			} else {
-				err = fmt.Errorf("Failed to remove temporary mount directory '%s'.\nClean-up Error:%v", efiBootImgTempMountDir, tmpErr)
+				err = fmt.Errorf("failed to remove temporary mount directory '%s'.\nClean-up Error:%w", efiBootImgTempMountDir, tmpErr)
 			}
 		}
 	}()
@@ -292,9 +292,9 @@ func (im *IsoMaker) setUpIsoGrub2Bootloader() (error err) {
 		tmpErr := syscall.Unmount(efiBootImgTempMountDir, 0)
 		if tmpErr != nil {
 			if err != nil {
-				err = fmt.Errorf("Failed to unmount '%s'.\nError:%v\nClean-up Error:%v", efiBootImgTempMountDir, err, tmpErr)
+				err = fmt.Errorf("failed to unmount '%s'.\nError:%w\nClean-up Error:%w", efiBootImgTempMountDir, err, tmpErr)
 			} else {
-				err = fmt.Errorf("Failed to unmount '%s'.\nClean-up Error:%v", efiBootImgTempMountDir, tmpErr)
+				err = fmt.Errorf("failed to unmount '%s'.\nClean-up Error:%w", efiBootImgTempMountDir, tmpErr)
 			}
 		}
 	}()
@@ -399,7 +399,7 @@ func (im *IsoMaker) createIsoRpmsRepo() error {
 
 	err := os.MkdirAll(isoRpmsRepoDirPath, os.ModePerm)
 	if err != nil {
-		return fmt.Errorf("Failed to mkdir '%s'.", isoRpmsRepoDirPath)
+		return fmt.Errorf("failed to mkdir '%s'.", isoRpmsRepoDirPath)
 	}
 
 	fetchedRepoDirContentsPath := filepath.Join(im.fetchedRepoDirPath, "*")
@@ -418,7 +418,7 @@ func (im *IsoMaker) prepareWorkDirectory() error {
 
 	exists, err := file.DirExists(im.buildDirPath)
 	if err != nil {
-		return fmt.Errorf("Failed while checking if directory '%s' exists.", im.buildDirPath)
+		return fmt.Errorf("failed while checking if directory '%s' exists.", im.buildDirPath)
 	}
 	if exists {
 		logger.Log.Warningf("Unexpected: temporary ISO build path '%s' exists. Removing.", im.buildDirPath)
@@ -427,14 +427,14 @@ func (im *IsoMaker) prepareWorkDirectory() error {
 
 	err = os.Mkdir(im.buildDirPath, os.ModePerm)
 	if err != nil {
-		return fmt.Errorf("Failed while creating directory '%s'.", im.buildDirPath)
+		return fmt.Errorf("failed while creating directory '%s'.", im.buildDirPath)
 	}
 
 	im.deferIsoMakerCleanUp(func()(error) {
 		logger.Log.Debugf("Removing '%s'.", im.buildDirPath)
 		err := os.RemoveAll(im.buildDirPath)
 		if err != nil {
-			err = fmt.Errorf("Failed to remove '%s'.\nError:%v", im.buildDirPath, err)
+			err = fmt.Errorf("failed to remove '%s'.\nError:%w", im.buildDirPath, err)
 		}
 		return err
 	})
@@ -462,7 +462,7 @@ func (im *IsoMaker) prepareWorkDirectory() error {
 func (im *IsoMaker) copyStaticIsoRootFiles() error {
 
 	if im.resourcesDirPath == "" && im.grubCfgPath == "" {
-		return fmt.Errorf("Missing required parameters. Must specify either the resources directory or provide a grub.cfg.")
+		return fmt.Errorf("missing required parameters. Must specify either the resources directory or provide a grub.cfg.")
 	}
 
 	if im.resourcesDirPath != "" {
@@ -483,7 +483,7 @@ func (im *IsoMaker) copyStaticIsoRootFiles() error {
 		targetGrubCfgDir := filepath.Dir(targetGrubCfg)
 		err := os.MkdirAll(targetGrubCfgDir, os.ModePerm)
 		if err != nil {
-			return fmt.Errorf("Failed while creating directory '%s'.\nError: %v", targetGrubCfgDir, err)
+			return fmt.Errorf("failed while creating directory '%s'.\nError: %w", targetGrubCfgDir, err)
 		}
 
 		// ToDo: use file.Copy()
@@ -521,7 +521,7 @@ func (im *IsoMaker) copyAndRenameConfigFiles() error {
 	configFilesAbsDirPath := filepath.Join(im.buildDirPath, configDirName)
 	err := os.Mkdir(configFilesAbsDirPath, os.ModePerm)
 	if err != nil {
-		return fmt.Errorf("Failed to create ISO's config files directory under '%s'.\nError:%v", configFilesAbsDirPath, err)
+		return fmt.Errorf("failed to create ISO's config files directory under '%s'.\nError:%w", configFilesAbsDirPath, err)
 	}
 	err = im.copyAndRenameAdditionalFiles(configFilesAbsDirPath)
 	if err != nil {
@@ -700,7 +700,7 @@ func (im *IsoMaker) saveConfigJSON(configFilesAbsDirPath string) error {
 
 	err := jsonutils.WriteJSONFile(isoConfigFileAbsPath, &im.config)
 	if err != nil {
-		return fmt.Errorf("Failed to save config JSON to '%s'.\nError:%v", isoConfigFileAbsPath, err)
+		return fmt.Errorf("failed to save config JSON to '%s'.\nError:%w", isoConfigFileAbsPath, err)
 	}
 	return nil
 }
@@ -714,7 +714,7 @@ func (im *IsoMaker) copyFileToConfigRoot(configFilesAbsDirPath, configFilesSubDi
 
 	err := os.MkdirAll(configFileSubDirAbsPath, os.ModePerm)
 	if err != nil {
-		return "", fmt.Errorf("Failed to create ISO's config subdirectory '%s'.\nError:%v", configFileSubDirAbsPath, err)
+		return "", fmt.Errorf("failed to create ISO's config subdirectory '%s'.\nError:%w", configFileSubDirAbsPath, err)
 	}
 
 	isoRelativeFilePath := filepath.Join(configFileSubDirRelativePath, fileName)
@@ -724,7 +724,7 @@ func (im *IsoMaker) copyFileToConfigRoot(configFilesAbsDirPath, configFilesSubDi
 
 	err = file.Copy(localAbsFilePath, isoAbsFilePath)
 	if err != nil {
-		return "", fmt.Errorf("Failed to copy file to ISO's config root '%s' from '%s'.\nError:%v", isoAbsFilePath, localAbsFilePath, err)
+		return "", fmt.Errorf("failed to copy file to ISO's config root '%s' from '%s'.\nError:%w", isoAbsFilePath, localAbsFilePath, err)
 	}
 
 	im.configSubDirNumber++
@@ -737,7 +737,7 @@ func (im *IsoMaker) initializePaths() error {
 	var err error
 	im.buildDirPath, err = filepath.Abs(im.buildDirPath)
 	if err != nil {
-		return fmt.Errorf("Failed while retrieving absolute path from source root path: '%s'.\nError:%v", im.buildDirPath, err)
+		return fmt.Errorf("failed while retrieving absolute path from source root path: '%s'.\nError:%w", im.buildDirPath, err)
 	}
 
 	im.efiBootImgPath = filepath.Join(im.buildDirPath, efiBootImgPathRelativeToIsoRoot)
@@ -750,9 +750,9 @@ func (im *IsoMaker) initializePaths() error {
 func (im *IsoMaker) buildIsoImageFilePath() string {
 	isoImageFileNameSuffix := ""
 	if im.releaseVersion != "" || im.imageNameTag != "" {
-		isoImageFileNameSuffix = fmt.Sprintf("-%v%v", im.releaseVersion, im.imageNameTag)
+		isoImageFileNameSuffix = fmt.Sprintf("-%w%w", im.releaseVersion, im.imageNameTag)
 	}
-	isoImageFileName := fmt.Sprintf("%v%v.iso", im.imageNameBase, isoImageFileNameSuffix)
+	isoImageFileName := fmt.Sprintf("%w%w.iso", im.imageNameBase, isoImageFileNameSuffix)
 
 	return filepath.Join(im.outputDirPath, isoImageFileName)
 }
@@ -773,9 +773,9 @@ func (im *IsoMaker) isoMakerCleanUp() (error err) {
 			tmpErr := cleanUpTask()
 			if tmpErr != nil {
 				if err != nil {
-					err = fmt.ErrorF("Error:%v\nError:%v\n", err, tmpErr) 
+					err = fmt.Errorf("error:%w\nError:%w\n", err, tmpErr) 
 				} else {
-					err = fmt.ErrorF("Error:%v\n", tmpErr) 
+					err = fmt.Errorf("error:%w\n", tmpErr) 
 				}
 			}
 		}
@@ -785,7 +785,7 @@ func (im *IsoMaker) isoMakerCleanUp() (error err) {
 func readConfigFile(configFilePath, baseDirPath string) (configuration.Config, error) {
 	config, err := configuration.LoadWithAbsolutePaths(configFilePath, baseDirPath)
 	if err != nil {
-		return configuration.Config{}, fmt.Errorf("Failed while reading config file from '%s' with base directory '%s'.\nError:%v", configFilePath, baseDirPath, err)
+		return configuration.Config{}, fmt.Errorf("failed while reading config file from '%s' with base directory '%s'.\nError:%w", configFilePath, baseDirPath, err)
 	}
 	return config, nil
 }
@@ -798,7 +798,7 @@ func verifyConfig(config configuration.Config, unattendedInstall bool) error {
 	}
 
 	if unattendedInstall && (len(config.SystemConfigs) > 1) && !config.DefaultSystemConfig.IsDefault {
-		return fmt.Errorf("For unattended installation with more than one system configuration present you must select a default one with the [IsDefault] field.")
+		return fmt.Errorf("for unattended installation with more than one system configuration present you must select a default one with the [IsDefault] field.")
 	}
 	return nil
 }
