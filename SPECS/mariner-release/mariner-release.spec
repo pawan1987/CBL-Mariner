@@ -1,67 +1,320 @@
+
+# Temporary transition from mariner->azure
+%{?mariner_release_version:%define azure_release_version %mariner_release_version}
+
+# This MUST be built with %azure_release_version externally defined (e.g. by the build tools).
+# This package CANNOT be built using standard tooling (e.g. rpmbuild, mock, etc) without also manually defining the macro.
+%{!?azure_release_version:%{error:This package must be built with azure_release_version externally defined.}}
+
+%define get_version_major() %{lua: _, _, v = string.find(arg[1], "(%d+)%.?"); print(v)}
+%define get_version_minor() %{lua: _, _, v = string.find(arg[1], "%d+%.(%d+)%.?"); print(v or 0)}
+%define get_version_date() %{lua: _, _, v = string.find(arg[1], "%d+%.%d+%.(%d+)"); print(v or 0)}
+
+%global dist_version %azure_release_version
+%define dist_version_major %get_version_major %dist_version
+%define dist_version_minor %get_version_minor %dist_version
+%define dist_version_date  %get_version_date  %dist_version
+
+%global dist_vendor Microsoft Corporation
+%global dist_name   Microsoft Azure Linux
+%global dist_home_url https://aka.ms/azurelinux
+
 Summary:        Azure Linux release files
 Name:           mariner-release
-Version:        3.0
-Release:        1%{?dist}
+Version:        %{dist_version_major}.%{dist_version_minor}
+Release:        2%{?dist}
 License:        MIT
-Vendor:         Microsoft Corporation
-Distribution:   Microsoft Azure Linux
 Group:          System Environment/Base
-URL:            https://aka.ms/azurelinux
-# Allows package management tools to find and set the default value
-# for the "releasever" variable from the RPM database.
-Provides:       system-release(releasever)
+Vendor:         %dist_vendor
+Distribution:   %dist_name
+URL:            %dist_home_url
+
+Source1:        90-default.preset
+Source2:        90-default-user.preset
+Source3:        99-default-disable.preset
+
+Provides:       azure-release = %{version}-%{release}
+Provides:       azure-release-variant = %{version}-%{release}
+
+Provides:       system-release
+Provides:       system-release(%{version})
+Requires:       azure-release-common = %{version}-%{release}
+
 BuildArch:      noarch
 
+# azure-release-common Requires: azure-release-identity, so at least one
+# package must provide it. This Recommends: pulls in
+# azure-release-identity-basic if nothing else is already doing so.
+Recommends:     azure-release-identity-basic
+
+BuildRequires:  redhat-rpm-config > 121-1
+BuildRequires:  systemd-rpm-macros
+
 %description
-Azure Linux release files such as yum configs and other %{_sysconfdir}/ release related files
+Azure Linux release files such as dnf configs and other %{_sysconfdir}/ release related files
+and systemd preset files that determine which services are enabled by default.
+
+
+%package common
+Summary: Azure release files
+
+Requires:   azure-release-variant = %{version}-%{release}
+Suggests:   azure-release
+
+Requires:   azure-repos(%{version})
+Requires:   azure-release-identity = %{version}-%{release}
+
+%description common
+Release files common to all Editions and Spins of Azure
+
+
+%if %{with basic}
+%package identity-basic
+Summary:        Package providing the basic Azure identity
+
+RemovePathPostfixes: .basic
+Provides:       azure-release-identity = %{version}-%{release}
+Conflicts:      azure-release-identity
+
+
+%description identity-basic
+Provides the necessary files for a basic Azure installation.
+%endif
+
+
+%if %{with cloud}
+%package cloud
+Summary:        Base package for Azure Cloud-specific default configurations
+
+RemovePathPostfixes: .cloud
+Provides:       azure-release = %{version}-%{release}
+Provides:       azure-release-variant = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(%{version})
+Requires:       azure-release-common = %{version}-%{release}
+
+Recommends:     azure-release-identity-cloud
+
+
+%description cloud
+Provides a base package for Azure Cloud-specific configuration files to
+depend on.
+
+
+%package identity-cloud
+Summary:        Package providing the identity for Azure Cloud Edition
+
+RemovePathPostfixes: .cloud
+Provides:       azure-release-identity = %{version}-%{release}
+Conflicts:      azure-release-identity
+Requires(meta): azure-release-cloud = %{version}-%{release}
+
+
+%description identity-cloud
+Provides the necessary files for a Azure installation that is identifying
+itself as Azure Cloud Edition.
+%endif
+
+
+%if %{with container}
+%package container
+Summary:        Base package for Azure container specific default configurations
+
+RemovePathPostfixes: .container
+Provides:       azure-release = %{version}-%{release}
+Provides:       azure-release-variant = %{version}-%{release}
+Provides:       system-release
+Provides:       system-release(%{version})
+Requires:       azure-release-common = %{version}-%{release}
+
+Recommends:     azure-release-identity-container
+
+
+%description container
+Provides a base package for Azure container specific configuration files to
+depend on as well as container system defaults.
+
+
+%package identity-container
+Summary:        Package providing the identity for Azure Container Base Image
+
+RemovePathPostfixes: .container
+Provides:       azure-release-identity = %{version}-%{release}
+Conflicts:      azure-release-identity
+Requires(meta): azure-release-container = %{version}-%{release}
+
+
+%description identity-container
+Provides the necessary files for a Azure installation that is identifying
+itself as the Azure Container Base Image.
+%endif
+
+
+%prep
+
+%build
 
 %install
+
+# Symlink the -release files
 install -d %{buildroot}%{_sysconfdir}
-install -d %{buildroot}/%{_libdir}
+ln -s ../usr/lib/azure-release %{buildroot}%{_sysconfdir}/azure-release
+ln -s azure-release %{buildroot}%{_sysconfdir}/mariner-release
+ln -s azure-release %{buildroot}%{_sysconfdir}/system-release
 
-echo "Azure Linux %{mariner_release_version}" > %{buildroot}%{_sysconfdir}/mariner-release
-echo "MARINER_BUILD_NUMBER=%{mariner_build_number}" >> %{buildroot}%{_sysconfdir}/mariner-release
+cat <<-"EOF" > %{buildroot}%{_libdir}/lsb-release
+	DISTRIB_ID="azurelinux"
+	DISTRIB_RELEASE="%{dist_version}"
+	DISTRIB_CODENAME=AzureLinux
+	DISTRIB_DESCRIPTION="Microsoft Azure Linux %{dist_version}"
+EOF
+ln -s ../usr/lib/lsb-release %{buildroot}%{_sysconfdir}/lsb-release
 
-cat > %{buildroot}%{_sysconfdir}/lsb-release <<- "EOF"
-DISTRIB_ID="azurelinux"
-DISTRIB_RELEASE="%{mariner_release_version}"
-DISTRIB_CODENAME=AzureLinux
-DISTRIB_DESCRIPTION="Microsoft Azure Linux %{mariner_release_version}"
+cat <<-"EOF" > %{buildroot}%{_libdir}/azure-release
+	Azure Linux %{dist_version}
+	AZURE_BUILD_NUMBER=%{mariner_build_number}
+	MARINER_BUILD_NUMBER=%{mariner_build_number}
+EOF
+ln -s ../usr/lib/azure-release %{buildroot}%{_sysconfdir}/azure-release
+
+cat <<-"EOF" > %{buildroot}%{_libdir}/issue
+	Welcome to Azure Linux %{dist_version} (%{_arch}) - Kernel \r (\l)
+EOF
+ln -s ../usr/lib/issue %{buildroot}%{_sysconfdir}/issue
+
+cat <<-"EOF" %{buildroot}%{_libdir}/issue.net
+	Welcome to Azure Linux %{dist_version} (%{_arch})
+EOF
+ln -s ../usr/lib/issue.net %{buildroot}%{_sysconfdir}/issue.net
+
+# Create /etc/issue.d
+mkdir -p %{buildroot}%{_sysconfdir}/issue.d
+
+# Create common os-release
+cat <<-"EOF" >> os-release
+	NAME="%{dist_name}"
+	VERSION="%{dist_version}"
+	ID=azurelinux
+	VERSION_ID="%{version}"
+	PRETTY_NAME="Microsoft Azure Linux %{version}"
+	ANSI_COLOR="1;34"
+	HOME_URL="%{url}"
+	BUG_REPORT_URL="%{url}"
+	SUPPORT_URL="%{url}"
 EOF
 
-version_id=`echo %{mariner_release_version} | grep -o -E '[0-9]+.[0-9]+' | head -1`
-cat > %{buildroot}/%{_libdir}/os-release << EOF
-NAME="Microsoft Azure Linux"
-VERSION="%{mariner_release_version}"
-ID=azurelinux
-VERSION_ID="$version_id"
-PRETTY_NAME="Microsoft Azure Linux $version_id"
-ANSI_COLOR="1;34"
-HOME_URL="%{url}"
-BUG_REPORT_URL="%{url}"
-SUPPORT_URL="%{url}"
+# Create os-release files for the different editions
+
+%if %{with basic}
+# Basic
+cp -p os-release \
+      %{buildroot}%{_libdir}/os-release.basic
+%endif
+
+%if %{with cloud}
+# Cloud
+cp -p os-release \
+      %{buildroot}%{_libdir}/os-release.cloud
+echo "VARIANT=\"Cloud Edition\"" >> %{buildroot}%{_libdir}/os-release.cloud
+echo "VARIANT_ID=cloud" >> %{buildroot}%{_libdir}/os-release.cloud
+%endif
+
+%if %{with container}
+# Container
+cp -p os-release \
+      %{buildroot}%{_libdir}/os-release.container
+echo "VARIANT=\"Container Image\"" >> %{buildroot}%{_libdir}/os-release.container
+echo "VARIANT_ID=container" >> %{buildroot}%{_libdir}/os-release.container
+%endif
+
+%if %{with server}
+# Server
+cp -p os-release \
+      %{buildroot}%{_libdir}/os-release.server
+echo "VARIANT=\"Server Edition\"" >> %{buildroot}%{_libdir}/os-release.server
+echo "VARIANT_ID=server" >> %{buildroot}%{_libdir}/os-release.server
+%endif
+
+# Create the symlink for /etc/os-release
+ln -s ../usr/lib/os-release %{buildroot}%{_sysconfdir}/os-release
+
+# Set up the dist tag macros
+install -d -m 755 %{buildroot}%{_rpmconfigdir}/macros.d
+cat <<- "EOF" >> %{buildroot}%{_rpmconfigdir}/macros.d/macros.dist
+	# dist macros.
+
+	%%__bootstrap         ~bootstrap
+	%%azure               %{dist_version_major}
+	%%distcore            .azl%%{azure}
+	%%dist                %%{distcore}%%{?with_bootstrap:%%{__bootstrap}}
+	%%dist_vendor         %{dist_vendor}
+	%%dist_name           %{dist_name}
+	%%dist_home_url       %{dist_home_url}
+	%%dist_bug_report_url %{dist_home_url}
+	%%dist_debuginfod_url %{dist_home_url}
 EOF
 
-ln -sv ../usr/lib/os-release %{buildroot}%{_sysconfdir}/os-release
+# Default presets for system and user
+install -Dm0644 %{SOURCE1} -t %{buildroot}%{_libdir}/systemd/system-preset/
+install -Dm0644 %{SOURCE2} -t %{buildroot}%{_libdir}/systemd/user-preset/
 
-cat > %{buildroot}%{_sysconfdir}/issue <<- EOF
-Welcome to Azure Linux %{mariner_release_version} (%{_arch}) - Kernel \r (\l)
-EOF
+# Default disable presets
+install -Dm0644 %{SOURCE3} -t %{buildroot}%{_libdir}/systemd/system-preset/
+install -Dm0644 %{SOURCE3} -t %{buildroot}%{_libdir}/systemd/user-preset/
 
-cat > %{buildroot}%{_sysconfdir}/issue.net <<- EOF
-Welcome to Azure Linux %{mariner_release_version} (%{_arch})
-EOF
 
-%files
+%files common
 %defattr(-,root,root,-)
-%{_sysconfdir}/mariner-release
-%{_sysconfdir}/lsb-release
-%{_libdir}/os-release
+%{_libdir}/azure-release
 %{_sysconfdir}/os-release
-%{_sysconfdir}/issue
-%{_sysconfdir}/issue.net
+%{_sysconfdir}/azure-release
+%{_sysconfdir}/system-release
+%attr(0644,root,root) %{_libdir}/issue
+%config(noreplace) %{_sysconfdir}/issue
+%attr(0644,root,root) %{_libdir}/issue.net
+%config(noreplace) %{_sysconfdir}/issue.net
+%dir %{_sysconfdir}/issue.d
+%attr(0644,root,root) %{_rpmconfigdir}/macros.d/macros.dist
+%dir %{_libdir}/systemd/user-preset/
+%{_libdir}/systemd/user-preset/90-default-user.preset
+%{_libdir}/systemd/user-preset/99-default-disable.preset
+%dir %{_libdir}/systemd/system-preset/
+%{_libdir}/systemd/system-preset/90-default.preset
+%{_libdir}/systemd/system-preset/99-default-disable.preset
+
+
+%if %{with basic}
+%files
+%files identity-basic
+%{_libdir}/os-release.basic
+%endif
+
+
+%if %{with cloud}
+%files cloud
+%files identity-cloud
+%{_libdir}/os-release.cloud
+%endif
+
+
+%if %{with container}
+%files container
+%files identity-container
+%{_libdir}/os-release.container
+%endif
+
+
+%if %{with server}
+%files server
+%files identity-server
+%{_libdir}/os-release.server
+%endif
+
 
 %changelog
+* Fri Jan 26 15:00:59 EST 2024 Dan Streetman <ddstreet@ieee.org> - 3.0-2
+- Add release subpackages
+
 * Wed Nov 29 2023 Jon Slobodzian <joslobo@microsoft.com> - 3.0-1
 - First version of Azure Linux 3.0.  Includes minimal rebranding changes.
 
