@@ -18,8 +18,6 @@ BuildRequires:  make
 BuildRequires:  openssl-devel
 BuildRequires:  zlib-devel
 
-Patch1:         remove_openssl_macro.patch
-
 %description
 Nmap ("Network Mapper") is a free and open source utility for network discovery and security auditing.
 
@@ -61,6 +59,7 @@ ln -s ncat %{buildroot}%{_bindir}/nc
 %changelog
 * Mon Jan 29 2024 Mitch Zhu <mitchzhu@microsoft.com> - 7.94-1
 - Upgrading to latest version for 3.0 release.
+- Remove outdated patch
 
 * Mon Apr 17 2023 Saul Paredes <saulparedes@microsoft.com> - 7.93-1
 - Upgrading to latest version to fix CVE-2018-25032
