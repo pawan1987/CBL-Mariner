@@ -16,6 +16,7 @@ BuildRequires:  libssh2-devel
 BuildRequires:  lua-devel
 BuildRequires:  make
 BuildRequires:  openssl-devel
+BuildRequires:  python3
 BuildRequires:  zlib-devel
 
 %description
