@@ -45,6 +45,8 @@ Patch0150:      0150-x86-efi-Reduce-maximum-bounce-buffer-size-to-16-MiB.patch
 Patch0156:      0156-efilinux-Fix-integer-overflows-in-grub_cmd_initrd.patch
 # CVE-2020-15705
 Patch0157:      0157-linuxefi-fail-kernel-validation-without-shim-protoco.patch
+# Fix to prevent user from overwriting signed grub binary using grub2-install
+Patch0166:      0166-grub-install-disable-support-for-EFI-platforms.patch
 # Fix to reset the global errno to success upon success.
 Patch0170:      0170-fix-memory-alloc-errno-reset.patch
 BuildRequires:  autoconf
