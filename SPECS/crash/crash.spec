@@ -1,6 +1,6 @@
 Name:          crash
 Version:       8.0.4
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       kernel crash analysis utility for live systems, netdump, diskdump, kdump, LKCD or mcore dumpfiles
 Group:         Development/Tools
 Vendor:        Microsoft Corporation
@@ -18,7 +18,7 @@ BuildRequires: lzo-devel
 BuildRequires: ncurses-devel
 BuildRequires: snappy-devel
 BuildRequires: zlib-devel
-BuildRequires: zstd-devel
+BuildRequires: libzstd-devel
 Requires:      binutils
 
 %description
@@ -63,6 +63,9 @@ cp -p defs.h %{buildroot}%{_includedir}/crash
 %{_includedir}/crash/*.h
 
 %changelog
+* Wed Jan 31 15:33:28 EST 2024 Dan Streetman <ddstreet@ieee.org> - 8.0.4-2
+- buildrequire libzstd-devel instead of zstd-devel
+
 * Thu Dec 07 2023 Andrew Phelps <anphel@microsoft.com> - 8.0.4-1
 - Upgrade to 8.0.4
 

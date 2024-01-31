@@ -1,5 +1,6 @@
 {
-  "Signatures": {
-    "zstd-1.5.5.tar.gz": "9c4396cc829cfae319a6e2615202e82aad41372073482fce286fac78646d3ee4"
-  }
+ "Signatures": {
+  "pzstd.1.patch": "557ba157cc16abba7cec0a87f2f49cbe558f8c8bc12db7650171cc3f9b64b4b0",
+  "zstd-1.5.5.tar.gz": "98e9c3d949d1b924e28e01eccb7deed865eefebf25c2f21c702e5cd5b63b85e1"
+ }
 }

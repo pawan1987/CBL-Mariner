@@ -1,7 +1,7 @@
 Summary:        Utility for the creation of squashfs filesystems
 Name:           squashfs-tools
 Version:        4.6.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -15,7 +15,7 @@ BuildRequires:  lz4-devel
 BuildRequires:  lzo-devel
 BuildRequires:  xz-devel
 BuildRequires:  zlib-devel
-BuildRequires:  zstd-devel
+BuildRequires:  libzstd-devel
 
 %define major_ver %(echo %{version} | cut -d. -f 1-2)
 
@@ -48,6 +48,9 @@ install -m 644 %{SOURCE2} %{buildroot}%{_mandir}/man1/unsquashfs.1
 %{_sbindir}/unsquashfs
 
 %changelog
+* Wed Jan 31 15:34:04 EST 2024 Dan Streetman <ddstreet@ieee.org> - 4.6.1-2
+- buildrequire libzstd-devel instead of zstd-devel
+
 * Fri Jan 12 2024 Xiaohong Deng <xiaohongdeng@microsoft.com> - 4.6.1-1
 - Upgrade to 4.6.1
 

@@ -1,7 +1,7 @@
 Summary:        Package manager
 Name:           rpm
 Version:        4.18.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 License:        GPLv2+ AND LGPLv2+ AND BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -33,7 +33,7 @@ BuildRequires:  popt-devel
 BuildRequires:  python3-devel
 BuildRequires:  sqlite-devel
 BuildRequires:  xz-devel
-BuildRequires:  zstd-devel
+BuildRequires:  libzstd-devel
 Requires:       bash
 Requires:       libarchive
 Requires:       libselinux
@@ -281,6 +281,9 @@ popd
 %{python3_sitelib}/*
 
 %changelog
+* Wed Jan 31 15:33:46 EST 2024 Dan Streetman <ddstreet@ieee.org> - 4.18.0-5
+- buildrequire libzstd-devel instead of zstd-devel
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 4.18.0-4
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

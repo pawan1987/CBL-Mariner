@@ -1,0 +1,17 @@
+diff -Naur zstd-1.5.4/programs/zstd.1 zstd-1.5.4.new/programs/zstd.1
+--- zstd-1.5.4/programs/zstd.1	2023-02-10 00:41:50.000000000 +0000
++++ zstd-1.5.4.new/programs/zstd.1	2023-02-13 12:44:01.575160149 +0000
+@@ -162,6 +162,13 @@
+ \fB\-\-show\-default\-cparams\fR: shows the default compression parameters that will be used for a particular input file, based on the provided compression level and the input size\. If the provided file is not a regular file (e\.g\. a pipe), this flag will output the parameters used for inputs of unknown size\.
+ .IP "\[ci]" 4
+ \fB\-\-\fR: All arguments after \fB\-\-\fR are treated as files
++
++.SH Parallel Zstd OPTIONS
++Additional options for the pzstd utility
++.TP
++.BR \-p ", " --processes
++ number of threads to use for (de)compression (default:4)
++
+ .IP "" 0
+ .SS "gzip Operation Modifiers"
+ When invoked via a \fBgzip\fR symlink, \fBzstd\fR will support further options that intend to mimic the \fBgzip\fR behavior:
