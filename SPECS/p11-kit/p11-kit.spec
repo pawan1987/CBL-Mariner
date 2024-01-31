@@ -1,25 +1,36 @@
-%define _userunitdir %{_libdir}/systemd/user
-Summary:        Library for loading and sharing PKCS#11 modules
 Name:           p11-kit
-Version:        0.25.0
-Release:        1%{?dist}
-License:        BSD
+Version:        0.25.3
+Release:        2%{?dist}
+Summary:        Library for loading and sharing PKCS#11 modules
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
-URL:            https://p11-glue.freedesktop.org/p11-kit.html
+License:        BSD-3-Clause
+URL:            http://p11-glue.freedesktop.org/p11-kit.html
 Source0:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.xz
-Source1:        trust-extract-compat
-Source2:        p11-kit-client.service
+Source1:        https://github.com/p11-glue/p11-kit/releases/download/%{version}/p11-kit-%{version}.tar.xz.sig
+Source2:        https://p11-glue.github.io/p11-glue/p11-kit/p11-kit-release-keyring.gpg
+Source3:        trust-extract-compat
+Source4:        p11-kit-client.service
+
 BuildRequires:  gcc
-BuildRequires:  gtk-doc
-BuildRequires:  libffi-devel
 BuildRequires:  libtasn1-devel >= 2.3
-BuildRequires:  systemd-bootstrap-devel
+BuildRequires:  libffi-devel
+BuildRequires:  gettext
+BuildRequires:  gtk-doc
+BuildRequires:  meson
+BuildRequires:  systemd-bootstrap-rpm-macros
+BuildRequires:  bash-completion
+# Work around for https://bugzilla.redhat.com/show_bug.cgi?id=1497147
+# Remove this once it is fixed
+BuildRequires:  pkgconfig(glib-2.0)
+BuildRequires:  gnupg2
+BuildRequires:  /usr/bin/xsltproc
 
 %description
 p11-kit provides a way to load and enumerate PKCS#11 modules, as well
 as a standard configuration setup for installing PKCS#11 modules in
 such a way that they're discoverable.
+
 
 %package devel
 Summary:        Development files for %{name}
@@ -29,25 +40,28 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
+
 %package trust
-Summary:        System trust module from %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires(post): chkconfig
-Requires(postun): chkconfig
-Conflicts:      nss < 3.14.3-9
+Summary:            System trust module from %{name}
+Requires:           %{name}%{?_isa} = %{version}-%{release}
+Requires(post):     %{_sbindir}/alternatives
+Requires(postun):   %{_sbindir}/alternatives
+Conflicts:          nss < 3.14.3-9
 
 %description trust
 The %{name}-trust package contains a system trust PKCS#11 module which
-contains certificate anchors and black lists.
+contains certificate anchors and blocklists.
+
 
 %package server
 Summary:        Server and client commands for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description server
-The %{name}-server package contains command line tools that enables
-exporting PKCS#11 modules through a Unix domain socket.  Note that this
+The %{name}-server package contains command line tools that enable to
+export PKCS#11 modules through a Unix domain socket.  Note that this
 feature is still experimental.
+
 
 # solution taken from icedtea-web.spec
 %define multilib_arches ppc64 sparc64 x86_64 ppc64le
@@ -56,49 +70,48 @@ feature is still experimental.
 %else
 %define alt_ckbi  libnssckbi.so
 %endif
-Vendor:         Microsoft Corporation
-Distribution:   Mariner
 
 %prep
-%setup -q
+gpgv2 --keyring %{SOURCE2} %{SOURCE1} %{SOURCE0}
+
+%autosetup -p1
 
 %build
 # These paths are the source paths that  come from the plan here:
 # https://fedoraproject.org/wiki/Features/SharedSystemCertificates:SubTasks
-%configure --disable-static --enable-doc --with-trust-paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source --disable-silent-rules LIBS='-lpthread'
-make %{?_smp_mflags} V=1
+%meson -Dgtk_doc=true -Dman=true -Dtrust_paths=%{_sysconfdir}/pki/ca-trust/source:%{_datadir}/pki/ca-trust-source
+%meson_build
 
 %install
-make install DESTDIR=%{buildroot}
-mkdir -p %{buildroot}%{_sysconfdir}/pkcs11/modules
-find %{buildroot} -type f -name "*.la" -delete -print
-find %{buildroot} -type f -name "*.la" -delete -print
-install -p -m 755 %{SOURCE1} %{buildroot}%{_libexecdir}/p11-kit/
+%meson_install
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/modules
+install -p -m 755 %{SOURCE3} $RPM_BUILD_ROOT%{_libexecdir}/p11-kit/
 # Install the example conf with %%doc instead
-rm %{buildroot}%{_sysconfdir}/pkcs11/pkcs11.conf.example
-mkdir -p %{buildroot}%{_userunitdir}
-install -p -m 644 %{SOURCE2} %{buildroot}%{_userunitdir}
+mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}
+mv $RPM_BUILD_ROOT%{_sysconfdir}/pkcs11/pkcs11.conf.example $RPM_BUILD_ROOT%{_docdir}/%{name}/pkcs11.conf.example
+mkdir -p $RPM_BUILD_ROOT%{_userunitdir}
+install -p -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_userunitdir}
+%find_lang %{name}
 
 %check
-make check
+%meson_test
 
 
-%post -p /sbin/ldconfig
 %post trust
-%{_sbindir}/update-alternatives --install %{_libdir}/libnssckbi.so \
-        %{alt_ckbi} %{_libdir}/pkcs11/p11-kit-trust.so 30
+%{_sbindir}/alternatives --install %{_libdir}/libnssckbi.so %{alt_ckbi} %{_libdir}/pkcs11/p11-kit-trust.so 30
 
-%postun -p /sbin/ldconfig
 %postun trust
 if [ $1 -eq 0 ] ; then
         # package removal
-        %{_sbindir}/update-alternatives --remove %{alt_ckbi} %{_libdir}/pkcs11/p11-kit-trust.so
+        %{_sbindir}/alternatives --remove %{alt_ckbi} %{_libdir}/pkcs11/p11-kit-trust.so
 fi
 
-%files
+
+%files -f %{name}.lang
+%{!?_licensedir:%global license %%doc}
 %license COPYING
 %doc AUTHORS NEWS README
-%doc p11-kit/pkcs11.conf.example
+%{_docdir}/%{name}/pkcs11.conf.example
 %dir %{_sysconfdir}/pkcs11
 %dir %{_sysconfdir}/pkcs11/modules
 %dir %{_datadir}/p11-kit
@@ -111,6 +124,7 @@ fi
 %{_mandir}/man1/trust.1.gz
 %{_mandir}/man8/p11-kit.8.gz
 %{_mandir}/man5/pkcs11.conf.5.gz
+%{_datadir}/bash-completion/completions/p11-kit
 
 %files devel
 %{_includedir}/p11-kit-1/
@@ -125,6 +139,7 @@ fi
 %{_libdir}/pkcs11/p11-kit-trust.so
 %{_datadir}/p11-kit/modules/p11-kit-trust.module
 %{_libexecdir}/p11-kit/trust-extract-compat
+%{_datadir}/bash-completion/completions/trust
 
 %files server
 %{_libdir}/pkcs11/p11-kit-client.so
@@ -133,27 +148,60 @@ fi
 %{_userunitdir}/p11-kit-server.service
 %{_userunitdir}/p11-kit-server.socket
 
+
 %changelog
-* Tue Nov 21 2023 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 0.25.0-1
-- Auto-upgrade to 0.25.0 - Azure Linux 3.0 - package upgrades
+* Wed Jan 31 12:03:34 EST 2024 Dan Streetman <ddstreet@ieee.org> - 0.25.3-2
+- Update to version from Fedora 39.
+- Next line is present only to avoid tooling failures, and does not indicate the actual package license.
+- Initial CBL-Mariner import from Fedora 39 (license: MIT).
+- license verified
 
-* Thu Feb 24 2022 Max Brodeur-Urbas <maxbr@microsoft.com> - 0.24.1-1
-- Upgrading to v0.24.1
+* Wed 15 Nov 2023 12:00:00 AM  Packit <hello@packit.dev> - 0.25.3-1
+- [packit] 0.25.3 upstream release
 
-* Wed Sep 29 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.23.22-3
-- Replacing 'systemd-devel' BR with 'systemd-bootstrap-devel'
-  to remove cyclic dependencies in other packages.
+* Tue 31 Oct 2023 12:00:00 AM  Packit <hello@packit.dev> - 0.25.2-1
+- [packit] 0.25.2 upstream release
 
-* Mon Apr 26 2021 Thomas Crain <thcrain@microsoft.com> - 0.23.22-2
-- Replace incorrect %%{_lib} usage with %%{_libdir}
+* Thu 26 Oct 2023 12:00:00 AM  Packit <hello@packit.dev> - 0.25.1-1
+- [packit] 0.25.1 upstream release
 
-* Mon Dec 28 2020 Nicolas Ontiveros <niontive@microsoft.com> - 0.23.22-1
-- Upgrade to version 0.23.22 to fix CVE-2020-29361, CVE-2020-29362, and CVE-2020-29363
-- Update source URL
+* Fri 14 Jul 2023 12:00:00 AM  Packit <hello@packit.dev> - 0.25.0-1
+- [packit] 0.25.0 upstream release
 
-* Wed May 27 2020 Paul Monson <paulmon@microsoft.com> - 0.23.16.1-2
-- Initial CBL-Mariner import from Fedora 29 (license: MIT).
-- License verified.
+* Thu 19 Jan 2023 12:00:00 AM  Fedora Release Engineering <releng@fedoraproject.org> - 0.24.1-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_38_Mass_Rebuild
+
+* Mon 12 Dec 2022 12:00:00 AM  Florian Weimer <fweimer@redhat.com> - 0.24.1-5
+- Port meson build script to C99
+
+* Fri 22 Jul 2022 12:00:00 AM  Fedora Release Engineering <releng@fedoraproject.org> - 0.24.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
+
+* Thu 20 Jan 2022 12:00:00 AM  Fedora Release Engineering <releng@fedoraproject.org> - 0.24.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
+
+* Mon 17 Jan 2022 12:00:00 AM  Packit Service <user-cont-team+packit-service@redhat.com> - 0.24.1-1
+- Release 0.24.1 (Daiki Ueno)
+- common: Support copying attribute array recursively (Daiki Ueno)
+- common: Add assert_ptr_cmp (Daiki Ueno)
+- gtkdoc: remove dependencies on custom target files (Eli Schwartz)
+- doc: Replace occurrence of black list with blocklist (Daiki Ueno)
+- build: Suppress cppcheck false-positive on array bounds (Daiki Ueno)
+- ci: Use Docker image from the same repository (Daiki Ueno)
+- ci: Integrate Docker image building to GitHub workflow (Daiki Ueno)
+- rpc: Fallback to version 0 if server does not support negotiation (Daiki Ueno)
+- build: Port e850e03be65ed573d0b69ee0408e776c08fad8a3 to meson (Daiki Ueno)
+- Link libp11-kit so that it cannot unload (Emmanuel Dreyfus)
+- trust: Use dngettext for plurals (Daiki Ueno)
+- rpc: Support protocol version negotiation (Daiki Ueno)
+- rpc: Separate authentication step from transaction (Daiki Ueno)
+- Meson: p11_system_config_modules instead of p11_package_config_modules (Issam E. Maghni)
+- shell: test -a|o is not POSIX (Issam E. Maghni)
+- Meson: Add libtasn1 to trust programs (Issam E. Maghni)
+- meson: optionalise glib's development files for gtk_doc (Đoàn Trần Công Danh)
+
+* Sat 08 Jan 2022 12:00:00 AM  Miro Hrončok <mhroncok@redhat.com> - 0.23.22-5
+- Rebuilt for https://fedoraproject.org/wiki/Changes/LIBFFI34
 
 * Thu May 23 2019 Daiki Ueno <dueno@redhat.com> - 0.23.16.1-1
 - Update to upstream 0.23.16.1 release

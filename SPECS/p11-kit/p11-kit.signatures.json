@@ -1,7 +1,9 @@
 {
  "Signatures": {
-  "p11-kit-0.25.0.tar.xz": "d55583bcdde83d86579cabe3a8f7f2638675fef01d23cace733ff748fc354706",
+  "p11-kit-0.25.3.tar.xz": "d8ddce1bb7e898986f9d250ccae7c09ce14d82f1009046d202a0eb1b428b2adc",
+  "p11-kit-0.25.3.tar.xz.sig": "75f3540542bed6dcfdca553eb7efa4d4d6694e539a09a455209eceae7bc630be",
   "p11-kit-client.service": "8f9fb1c1248a9609e7133a862e07cc9fcc3f02a6b20c895b482290f609fc87b0",
+  "p11-kit-release-keyring.gpg": "656443703212257dff7a38c5a8ba3c63c3029034c246fd11926fd1eceb881622",
   "trust-extract-compat": "e3b9b63689b120e461687c7febc6ab0c3d33d6acd6f943c46113c9ed284b49ac"
  }
 }
