@@ -32,8 +32,8 @@ Patch3:        emacs-libdir-vs-systemd.patch
 Patch5:        0001-configure-Remove-obsolete-check-for-b-i486-linuxaout.patch
 
 BuildRequires: gcc
-BuildRequires: atk-devel
-BuildRequires: cairo-devel
+#BuildRequires: atk-devel
+#BuildRequires: cairo-devel
 BuildRequires: freetype-devel
 BuildRequires: fontconfig-devel
 BuildRequires: dbus-devel
@@ -43,43 +43,43 @@ BuildRequires: libpng-devel
 BuildRequires: libjpeg-turbo-devel
 BuildRequires: libjpeg-turbo
 BuildRequires: libtiff-devel
-BuildRequires: libX11-devel
+#BuildRequires: libX11-devel
 BuildRequires: libXau-devel
 BuildRequires: libXdmcp-devel
-BuildRequires: libXi-devel
-BuildRequires: libXrender-devel
-BuildRequires: libXt-devel
-BuildRequires: libXpm-devel
+#BuildRequires: libXi-devel
+#BuildRequires: libXrender-devel
+#BuildRequires: libXt-devel
+#BuildRequires: libXpm-devel
 BuildRequires: ncurses-devel
 BuildRequires: xorg-x11-proto-devel
 BuildRequires: zlib-devel
-BuildRequires: gnutls-devel
-BuildRequires: librsvg2-devel
-BuildRequires: m17n-lib-devel
-BuildRequires: libotf-devel
+#BuildRequires: gnutls-devel
+#BuildRequires: librsvg2-devel
+#BuildRequires: m17n-lib-devel
+#BuildRequires: libotf-devel
 BuildRequires: libselinux-devel
 BuildRequires: alsa-lib-devel
-BuildRequires: gpm-devel
-BuildRequires: liblockfile-devel
+#BuildRequires: gpm-devel
+#BuildRequires: liblockfile-devel
 BuildRequires: libxml2-devel
 BuildRequires: autoconf
 BuildRequires: bzip2
-BuildRequires: cairo
+#BuildRequires: cairo
 BuildRequires: texinfo
 BuildRequires: gzip
 BuildRequires: desktop-file-utils
-BuildRequires: libappstream-glib
+#BuildRequires: libappstream-glib
 BuildRequires: libacl-devel
-BuildRequires: harfbuzz-devel
+#BuildRequires: harfbuzz-devel
 BuildRequires: jansson-devel
 BuildRequires: systemd-devel
-BuildRequires: libgccjit-devel
-BuildRequires: libtree-sitter-devel
-BuildRequires: libsqlite3x-devel
+#BuildRequires: libgccjit-devel
+#BuildRequires: libtree-sitter-devel
+#BuildRequires: libsqlite3x-devel
 BuildRequires: libwebp-devel
 
-BuildRequires: gtk3-devel
-BuildRequires: webkit2gtk4.1-devel
+#BuildRequires: gtk3-devel
+#BuildRequires: webkit2gtk4.1-devel
 
 BuildRequires: gnupg2
 
@@ -271,7 +271,7 @@ cd ..
 mkdir build-nox && cd build-nox
 ln -s ../configure .
 %configure --with-x=no --with-modules --with-json \
-           --with-native-compilation=aot --with-tree-sitter --with-sqlite3
+           --without-native-compilation --without-tree-sitter --without-gnutls --without-sqlite3
 %{setarch} %make_build bootstrap
 %{setarch} %make_build
 cd ..
