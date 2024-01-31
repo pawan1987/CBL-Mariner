@@ -395,11 +395,13 @@ fi
 %post -p /sbin/ldconfig
 %postun
 /sbin/ldconfig
-if getent passwd named >/dev/null; then
-    userdel named
-fi
-if getent group named >/dev/null; then
-    groupdel named
+if [ $1 -lt 2 ]; then
+    if getent passwd named >/dev/null; then
+        userdel named
+    fi
+    if getent group named >/dev/null; then
+        groupdel named
+    fi
 fi
 
 # Fix permissions on existing device files on upgrade
