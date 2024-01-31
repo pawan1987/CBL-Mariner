@@ -16,7 +16,7 @@ clean Py3-style codebase, module by module.
 Name: future
 Summary: Easy, clean, reliable Python 2/3 compatibility
 Version: 0.18.3
-Release: 7%{?dist}
+Release: 8%{?dist}
 License: MIT
 URL: http://python-future.org/
 Source0: https://github.com/PythonCharmers/python-future/archive/refs/tags/v%{version}/python-%{name}-%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -59,11 +59,11 @@ Obsoletes: python34-%{name} < 0:%{version}-%{release}
 %prep
 %setup -q -n python-future-%{version}
 
-%patch0 -p1 -b .backup
-%patch1 -p1 -b .backup
+%patch 0 -p1 -b .backup
+%patch 1 -p1 -b .backup
 %if 0%{?python3_version_nodots} >= 311
-%patch2 -p1 -b .backup
-%patch3 -p1 -b .backup
+%patch 2 -p1 -b .backup
+%patch 3 -p1 -b .backup
 %endif
 
 find . -name '*.py' | xargs %{_pathfix} -pn -i "%{__python3}"
@@ -105,6 +105,9 @@ PYTHONPATH=$PWD/build/lib py.test%{python3_version} -k "not test_urllibnet and n
 %{python3_sitelib}/*.egg-info
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.18.3-8
+- Updating the usage of the '%%patch' macro.
+
 * Thu Nov 30 2023 Olivia Crain <oliviacrain@microsoft.com> - 0.18.2-7
 - Fix pytest invocation
 

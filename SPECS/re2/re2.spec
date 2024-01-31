@@ -3,7 +3,7 @@
 Summary:        C++ fast alternative to backtracking RE engines
 Name:           re2
 Version:        %{shortver}
-Release:        10%{?dist}
+Release:        11%{?dist}
 License:        BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -44,7 +44,7 @@ you will need to install %{name}-devel.
 %prep
 %setup -q -n %{name}-%{longver}
 
-%patch1 -p1 -b .soname
+%patch 1 -p1 -b .soname
 
 %build
 # The -pthread flag issue has been submitted upstream:
@@ -86,6 +86,9 @@ rm -fv %{buildroot}%{_libdir}/libre2.a
 %{_libdir}/pkgconfig/re2.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 20190801-11
+- Updating the usage of the '%%patch' macro.
+
 * Fri Apr 29 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 20190801-10
 - Fixing source URL.
 

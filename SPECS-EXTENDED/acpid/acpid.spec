@@ -10,7 +10,7 @@ Distribution:   Mariner
 Summary: ACPI Event Daemon
 Name: acpid
 Version: 2.0.32
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv2+
 Source: http://downloads.sourceforge.net/acpid2/%{name}-%{version}.tar.xz
 Source2: acpid.video.conf
@@ -34,7 +34,7 @@ acpid is a daemon that dispatches ACPI events to user-space programs.
 
 %prep
 %setup -q
-%patch0 -p1 -b .kacpimon-dynamic-connections
+%patch 0 -p1 -b .kacpimon-dynamic-connections
 
 %build
 %configure
@@ -101,6 +101,9 @@ fi
 	/bin/systemctl try-restart acpid.service >/dev/null 2>&1 || :
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0.32-4
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0.32-3
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -525,4 +528,3 @@ fi
 * Mon Aug 13 2001  Tim Hockin <thockin@sun.com>
   - added changelog
   - 0.99.1-1
-

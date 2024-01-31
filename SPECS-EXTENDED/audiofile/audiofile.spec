@@ -4,7 +4,7 @@ Distribution:   Mariner
 Summary: Library for accessing various audio file formats
 Name: audiofile
 Version: 0.3.6
-Release: 27%{?dist}
+Release: 28%{?dist}
 # library is LGPL / the two programs GPL / see README
 License: LGPLv2+ and GPLv2+
 Source: http://audiofile.68k.org/%{name}-%{version}.tar.gz
@@ -47,15 +47,15 @@ other resources you can use to develop Audio File applications.
 
 %prep
 %setup -q
-%patch0 -p1 -b .CVE-2015-7747
-%patch1 -p1 -b .left-shift-neg
-%patch2 -p1 -b .narrowing-conversion
-%patch3 -p1 -b .pull42
-%patch4 -p1 -b .pull43
-%patch5 -p1 -b .pull44
-%patch6 -p1 -b .CVE-2018-17095
-%patch7 -p1 -b .CVE-2018-13440
-%patch8 -p1 -b .CVE-2018-13440
+%patch 0 -p1 -b .CVE-2015-7747
+%patch 1 -p1 -b .left-shift-neg
+%patch 2 -p1 -b .narrowing-conversion
+%patch 3 -p1 -b .pull42
+%patch 4 -p1 -b .pull43
+%patch 5 -p1 -b .pull44
+%patch 6 -p1 -b .CVE-2018-17095
+%patch 7 -p1 -b .CVE-2018-13440
+%patch 8 -p1 -b .CVE-2018-13440
 
 
 %build
@@ -94,6 +94,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.3.6-28
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 07 2022 Muhammad Falak <mwani@microsoft.com> - 0.3.6-27
 - Drop macro `%make_check`
 - Drop check section as it produces a 35GB log file breaking ptest

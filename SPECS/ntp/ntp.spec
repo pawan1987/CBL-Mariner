@@ -1,7 +1,7 @@
 Summary:        Network Time Protocol reference implementation
 Name:           ntp
 Version:        4.2.8p15
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        BSD AND GPLv2+ AND LGPLv2+ AND MIT AND OpenLDAP AND Public Domain
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -63,7 +63,7 @@ state of the NTP daemon running on the local machine.
 
 %prep
 %setup -q -a 1
-%patch0 -p1
+%patch 0 -p1
 
 %build
 
@@ -199,6 +199,9 @@ fi
 %{_mandir}/man8/ntpstat.8*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.2.8p15-4
+- Updating the usage of the '%%patch' macro.
+
 * Thu Dec 16 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.2.8p15-3
 - Removing the explicit %%clean stage.
 

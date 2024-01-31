@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name:		libgadu
 Version:	1.12.2
-Release:	11%{?dist}
+Release:	12%{?dist}
 Summary:	A Gadu-gadu protocol compatible communications library
 License:	LGPLv2
 Source0:	https://github.com/wojtekka/libgadu/releases/download/%{version}%{?rcver}/libgadu-%{version}%{?rcver}.tar.gz
@@ -60,7 +60,7 @@ Pakiet libgadu-doc zawiera dokumentację biblioteki libgadu.
 
 %prep
 %setup -q -n %{name}-%{version}%{?rcver}
-%patch0 -p1 -b .gcc10
+%patch 0 -p1 -b .gcc10
 
 # bug 1126750: touch to force rebuild with protobuf-c-1.0.0 (incompatible with 0.15)
 touch packets.proto
@@ -97,6 +97,9 @@ make check
 %doc docs/protocol.html docs/html
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.12.2-12
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.12.2-11
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

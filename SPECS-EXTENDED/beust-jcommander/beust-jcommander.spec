@@ -21,7 +21,7 @@ Distribution:   Mariner
 %global short_name jcommander
 Name:           beust-%{short_name}
 Version:        1.78
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Java framework for parsing command line parameters
 License:        Apache-2.0
 Group:          Development/Libraries/Java
@@ -54,7 +54,7 @@ This package contains the %{summary}.
 %prep
 %setup -q -n %{name}-%{version}
 rm -rf gradle* kobalt* lib
-%patch0 -p1
+%patch 0 -p1
 
 chmod -x license.txt
 cp -p %{SOURCE1} pom.xml
@@ -90,6 +90,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.78-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Nov 12 2020 Joe Schmitt <joschmit@microsoft.com> - 1.78-1
 - Initial CBL-Mariner import from openSUSE Tumbleweed (license: same as "License" tag).
 - Use javapackages-local-bootstrap to avoid build cycle.

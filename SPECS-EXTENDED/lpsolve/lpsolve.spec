@@ -3,7 +3,7 @@ Distribution:   Mariner
 Name:      lpsolve
 Summary:   A Mixed Integer Linear Programming (MILP) solver
 Version:   5.5.2.0
-Release:   26%{?dist}
+Release:   27%{?dist}
 Source:    http://downloads.sourceforge.net/lpsolve/lp_solve_%{version}_source.tar.gz
 URL:       http://sourceforge.net/projects/lpsolve
 License:   LGPLv2+
@@ -26,8 +26,8 @@ Includes and definitions for developing with lpsolve
 
 %prep
 %setup -q -n lp_solve_5.5
-%patch0 -p1 -b .cflags.patch
-%patch1 -p1 -b .defines.patch
+%patch 0 -p1 -b .cflags.patch
+%patch 1 -p1 -b .defines.patch
 
 %build
 %set_build_flags
@@ -59,6 +59,9 @@ install -p -m 644 \
 %{_includedir}/lpsolve
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.5.2.0-27
+- Updating the usage of the '%%patch' macro.
+
 * Fri Dec 10 2021 Thomas Crain <thcrain@microsoft.com> - 5.5.2.0-26
 - License verified
 

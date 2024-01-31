@@ -1,7 +1,7 @@
 Summary:       Programs that test various rt-features
 Name:          rt-tests
 Version:       1.8
-Release:       13%{?dist}
+Release:       14%{?dist}
 License:       GPLv2
 Vendor:        Microsoft Corporation
 Distribution:  Mariner
@@ -36,20 +36,20 @@ latency. It also tests the functioning of priority-inheritance mutexes.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
+%patch 5 -p1
+%patch 6 -p1
+%patch 7 -p1
+%patch 8 -p1
+%patch 9 -p1
+%patch 10 -p1
+%patch 11 -p1
+%patch 12 -p1
+%patch 13 -p1
+%patch 14 -p1
 
 %build
 make %{?_smp_mflags} NUMA=1 HAVE_PARSE_CPUSTRING_ALL=1
@@ -104,6 +104,9 @@ make %{?_smp_mflags} DESTDIR=%{buildroot} prefix=%{_prefix} install
 /usr/share/man/man8/get_cyclictest_snapshot.8.gz
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.8-14
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jan 20 2022 Cameron Baird <cameronbaird@microsoft.com> 1.8-13
 - Initial CBL-Mariner import from CentOS 8 (license: MIT).
 - License verified

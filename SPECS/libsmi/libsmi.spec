@@ -1,7 +1,7 @@
 Summary:        A library to access SMI MIB information
 Name:           libsmi
 Version:        0.4.8
-Release:        28%{?dist}
+Release:        29%{?dist}
 License:        TCL AND BSD-3-Clause
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -44,10 +44,10 @@ libsmi-based applications.
 
 %prep
 %setup -q
-%patch0 -p1 -b .wget111
-%patch1 -p1 -b .CVE-2010-2891
-%patch2 -p1 -b .clash
-%patch3 -p1 -b .format-security
+%patch 0 -p1 -b .wget111
+%patch 1 -p1 -b .CVE-2010-2891
+%patch 2 -p1 -b .clash
+%patch 3 -p1 -b .format-security
 cp %{SOURCE2} .
 
 %build
@@ -97,6 +97,9 @@ make check ||:
 %{_mandir}/man3/*.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.4.8-29
+- Updating the usage of the '%%patch' macro.
+
 * Fri Feb 03 2023 Riken Maharjan <rmaharjan@microsoft.com> - 0.4.8-28
 - Move from extended to core.
 - License verified.

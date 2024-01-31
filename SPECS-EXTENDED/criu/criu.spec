@@ -14,7 +14,7 @@ Distribution:   Mariner
 
 Name: criu
 Version: 3.15
-Release: 3%{?dist}
+Release: 4%{?dist}
 Provides: crtools = %{version}-%{release}
 Obsoletes: crtools <= 1.0-2
 Summary: Tool for Checkpoint/Restore in User-space
@@ -105,10 +105,10 @@ their content in human-readable form.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 %if 0%{?rhel} && 0%{?rhel} <= 7
-%patch100 -p1
+%patch 100 -p1
 %endif
 
 %build
@@ -187,6 +187,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libcriu.a
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.15-4
+- Updating the usage of the '%%patch' macro.
+
 * Tue Sep 21 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.15-3
 - Added a patch to fix build errors by unifying struct names across the source code.
 - Removed the "-fstack-protector" flag breaking the build.

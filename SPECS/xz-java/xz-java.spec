@@ -19,7 +19,7 @@
 Summary:        Pure Java implementation of XZ compression
 Name:           xz-java
 Version:        1.8
-Release:        5%{?dist}
+Release:        6%{?dist}
 License:        Public Domain
 Group:          Development/Libraries/Java
 Vendor:         Microsoft Corporation
@@ -50,7 +50,7 @@ This package contains the API documentation of xz-java.
 
 %prep
 %setup -q -c -n %{name}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 sed -i 's/linkoffline="[^"]*"//;/extdoc_/d' build.xml
@@ -79,6 +79,9 @@ cp -pr build/doc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.8-6
+- Updating the usage of the '%%patch' macro.
+
 * Mon Mar 28 2022 Cameron Baird <cameronbaird@microsoft.com> - 1.8-5
 - Move to SPECS
 - License verified

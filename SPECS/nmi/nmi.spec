@@ -2,7 +2,7 @@
 Summary:        Node Managed Identity
 Name:           nmi
 Version:        1.8.7
-Release:        15%{?dist}
+Release:        16%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -33,7 +33,7 @@ NMI is the resource that is used when your pods look to use their identity.
 %prep
 %autosetup -c -N -n %{name}-%{version}
 pushd aad-pod-identity-%{version}
-%patch0 -p1
+%patch 0 -p1
 popd
 
 %build
@@ -63,6 +63,9 @@ popd
 %{_bindir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.8.7-16
+- Updating the usage of the '%%patch' macro.
+
 * Mon Oct 16 2023 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 1.8.7-15
 - Bump release to rebuild with go 1.20.9
 

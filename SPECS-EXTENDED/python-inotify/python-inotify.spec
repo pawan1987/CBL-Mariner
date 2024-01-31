@@ -5,7 +5,7 @@ Distribution:   Mariner
 Summary:       Monitor filesystem events with Python under Linux
 Name:          python-inotify
 Version:       0.9.6
-Release:       21%{?dist}
+Release:       22%{?dist}
 License:       MIT
 URL:           https://github.com/seb-m/pyinotify
 Source0:       http://seb.dbzteam.org/pub/pyinotify/releases/pyinotify-%{version}.tar.gz
@@ -27,7 +27,7 @@ Summary:       %{summary}
 
 %prep
 %setup -q -n %{oname}-%{version}
-%patch01 -p1
+%patch 01 -p1
 sed -i '1c#! %{__python3}' python3/pyinotify.py
 
 %build
@@ -44,6 +44,9 @@ sed -i '1c#! %{__python3}' python3/pyinotify.py
 %{python3_sitelib}/__pycache__/%{oname}*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.6-22
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.6-21
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -210,4 +213,3 @@ sed -i '1c#! %{__python3}' python3/pyinotify.py
 
 * Tue Mar  6 2007 Terje Rosten <terjeros@phys.ntnu.no> - 0.7.0-1
 - Initial build
-

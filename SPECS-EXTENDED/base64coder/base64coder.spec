@@ -22,7 +22,7 @@ Distribution:   Mariner
 %global short_ver 20101219
 Name:           base64coder
 Version:        %{short_ver}
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Base64 encoder/decoder Java library
 License:        EPL-1.0 OR LGPL-2.1-or-later OR GPL-2.0-or-later OR Apache-2.0 OR BSD-2-Clause
 Group:          Development/Libraries/Java
@@ -58,9 +58,9 @@ This package contains %{summary}.
 
 %prep
 %setup -q -n %{name}-%{long_ver}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
 dos2unix README.txt CHANGES.txt
 
 cp %{SOURCE1} ./LICENSE.txt
@@ -92,6 +92,9 @@ cp -pr target/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 20101219-5
+- Updating the usage of the '%%patch' macro.
+
 * Fri Dec 10 2021 Thomas Crain <thcrain@microsoft.com> - 20101219-4
 - License verified
 

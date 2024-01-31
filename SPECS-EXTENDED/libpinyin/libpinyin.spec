@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name:           libpinyin
 Version:        2.3.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Library to deal with pinyin
 
 License:        GPLv3+
@@ -61,7 +61,7 @@ The libzhuyin package contains libzhuyin compatibility library.
 %setup -q
 
 %if %snapshot
-%patch0 -p1 -b .head
+%patch 0 -p1 -b .head
 %endif
 
 %build
@@ -109,6 +109,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/libzhuyin*.so.*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.0-5
+- Updating the usage of the '%%patch' macro.
+
 * Mon Jun 28 2021 Thomas Crain <thcrain@microsoft.com> - 2.3.0-4
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Require libzhuyin subpackage from libpinyin-devel

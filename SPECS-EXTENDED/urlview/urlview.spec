@@ -4,7 +4,7 @@ Distribution:   Mariner
 %global gitrev %(c=%{gitfullrev}; echo ${c:0:6})
 Name:           urlview
 Version:        0.9
-Release:        29%{?dist}
+Release:        30%{?dist}
 Summary:        URL extractor/launcher
 
 License:        GPLv2
@@ -23,7 +23,7 @@ view a specific item.
 
 %prep
 %setup -q -n %{name}-%{gitfullrev}
-%patch1 -p1 -b .default
+%patch 1 -p1 -b .default
 
 %build
 %configure
@@ -48,6 +48,9 @@ echo '.so man1/urlview.1' > $RPM_BUILD_ROOT%{_mandir}/man1/url_handler.sh.1
 %{_mandir}/man5/urlview.conf.5*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9-30
+- Updating the usage of the '%%patch' macro.
+
 * Fri Feb 04 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9-29
 - Removing 'Conflicts' on an older package never present in CBL-Mariner.
 - License verified.

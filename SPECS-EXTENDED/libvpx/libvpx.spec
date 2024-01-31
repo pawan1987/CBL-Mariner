@@ -8,7 +8,7 @@ Distribution:   Mariner
 Name:			libvpx
 Summary:		VP8/VP9 Video Codec SDK
 Version:		1.13.1
-Release:		1%{?dist}
+Release:		2%{?dist}
 License:		BSD
 Source0:		https://github.com/webmproject/libvpx/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Source1:		vpx_config.h
@@ -47,7 +47,7 @@ and decoder.
 
 %prep
 %setup -q -n libvpx-%{version}
-%patch0 -p1 -b .leave-fs-on
+%patch 0 -p1 -b .leave-fs-on
 
 %build
 %ifarch %{ix86}
@@ -237,6 +237,9 @@ make test
 %{_bindir}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.13.1-2
+- Updating the usage of the '%%patch' macro.
+
 * Wed Oct 04 2023 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 1.13.1-1
 - Auto-upgrade to 1.13.1 - to fix CVE.
 - Add %check section.

@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           libicns
 Version:        0.8.1
-Release:        20%{?dist}
+Release:        21%{?dist}
 Summary:        Library for manipulating Macintosh icns files
 
 # libicns, icns2png and icontainer2icns are under LGPLv2+
@@ -45,7 +45,7 @@ icontainer2icns - extract icns files from icontainers
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 
 %build
@@ -82,6 +82,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.8.1-21
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.8.1-20
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -188,4 +191,3 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 * Sat Dec 13 2008 Andrea Musuruane <musuruan@gmail.com> - 0.6.0-1
 - First release for Fedora
-

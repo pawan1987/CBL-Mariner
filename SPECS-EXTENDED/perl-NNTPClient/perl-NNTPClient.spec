@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           perl-NNTPClient
 Version:        0.37
-Release:        12%{?dist}
+Release:        13%{?dist}
 Summary:        Perl 5 module to talk to NNTP (RFC977) server
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/NNTPClient
@@ -36,8 +36,8 @@ Programming interface.
 
 %prep
 %setup -q -n NNTPClient-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor
@@ -57,6 +57,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.37-13
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.37-12
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

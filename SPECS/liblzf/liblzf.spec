@@ -1,7 +1,7 @@
 Summary:        Small data compression library
 Name:           liblzf
 Version:        3.6
-Release:        24%{?dist}
+Release:        25%{?dist}
 License:        BSD OR GPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -31,7 +31,7 @@ developing applications that use liblzf.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 %build
 sh ./bootstrap.sh
@@ -65,6 +65,9 @@ rm -f %{buildroot}%{_libdir}/liblzf.la
 %{_libdir}/pkgconfig/liblzf.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.6-25
+- Updating the usage of the '%%patch' macro.
+
 * Tue Nov 01 2022 Riken Maharjan <rmaharjan@microsoft.com> - 3.6-24
 - Move to core
 

@@ -5,7 +5,7 @@ Distribution:   Mariner
 
 Name:           python-%{upstream_name}
 Version:        1.7.0
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        Sphinx domain for documenting HTTP APIs
 License:        BSD
 URL:            http://packages.python.org/sphinxcontrib-httpdomain/
@@ -33,7 +33,7 @@ for generating documentation from Flask routing tables.
 
 %prep
 %setup -q -n %{upstream_name}-%{version}
-%patch4 -p2
+%patch 4 -p2
 rm -r *.egg-info
 
 %build
@@ -48,6 +48,9 @@ rm -r *.egg-info
 %{python3_sitelib}/sphinxcontrib*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.7.0-10
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.7.0-9
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

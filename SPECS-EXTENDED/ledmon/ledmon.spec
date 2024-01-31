@@ -1,7 +1,7 @@
 Summary: Enclosure LED Utilities
 Name: ledmon
 Version: 0.92
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -27,7 +27,7 @@ use this application.
 
 %prep
 %setup -q
-%patch0 -p1 -b .cflags
+%patch 0 -p1 -b .cflags
 
 %build
 # can't use smp_flags because -j4 makes the build fail
@@ -43,6 +43,9 @@ make install INSTALL="%{__install} -p" DESTDIR=$RPM_BUILD_ROOT SBIN_DIR=$RPM_BUI
 %{_mandir}/*/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.92-5
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.92-4
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

@@ -8,7 +8,7 @@ Distribution:   Mariner
 Summary:   Multi Router Traffic Grapher
 Name:      mrtg
 Version:   2.17.7
-Release:   6%{?dist}
+Release:   7%{?dist}
 URL:       http://oss.oetiker.ch/mrtg/
 Source0:   http://oss.oetiker.ch/mrtg/pub/mrtg-%{version}.tar.gz
 Source1:   http://oss.oetiker.ch/mrtg/pub/mrtg-%{version}.tar.gz.md5
@@ -53,10 +53,10 @@ images which provide a LIVE visual representation of this traffic.
 
 %prep
 %setup -q
-%patch0 -p1 -b .lib64
-%patch1 -p1 -b .socket6
-%patch2 -p1 -b .ifhighspeed
-%patch3 -p1 -b .traffic-sum-man-option
+%patch 0 -p1 -b .lib64
+%patch 1 -p1 -b .socket6
+%patch 2 -p1 -b .ifhighspeed
+%patch 3 -p1 -b .traffic-sum-man-option
 
 for i in doc/mrtg-forum.1 doc/mrtg-squid.1 CHANGES; do
     iconv -f iso-8859-1 -t utf-8 < "$i" > "${i}_"
@@ -143,6 +143,9 @@ fi
 %{_unitdir}/mrtg.timer
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.17.7-7
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.17.7-6
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

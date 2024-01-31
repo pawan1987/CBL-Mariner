@@ -22,7 +22,7 @@ Distribution:   Mariner
 %global jdk10_revision 45b1d041a4ef
 Name:           ecj
 Version:        4.12
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Eclipse Compiler for Java
 License:        EPL-2.0
 Group:          Development/Libraries/Java
@@ -57,9 +57,9 @@ the JDT Core batch compiler.
 
 %prep
 %setup -q -c -a 1
-%patch0 -p1
-%patch2 -p1
-%patch3
+%patch 0 -p1
+%patch 2 -p1
+%patch 3
 
 sed -i -e 's|debuglevel=\"lines,source\"|debug=\"yes\"|g' build.xml
 
@@ -106,6 +106,9 @@ install -m 644 -p ecj.1 %{buildroot}%{_mandir}/man1/ecj.1
 %{_mandir}/man1/ecj*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.12-6
+- Updating the usage of the '%%patch' macro.
+
 * Fri Feb 18 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.12-5
 - Removing Java < 9 parts.
 - License verified.

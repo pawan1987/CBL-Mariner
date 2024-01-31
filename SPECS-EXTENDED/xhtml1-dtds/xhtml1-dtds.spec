@@ -4,7 +4,7 @@
 # http://www.w3.org/Consortium/Legal/IPR-FAQ-20000620#DTD
 Name:           xhtml1-dtds
 Version:        1.0
-Release:        20020803%{?dist}
+Release:        20020804%{?dist}
 Summary:        XHTML 1.0 document type definitions
 License:        W3C
 Vendor:         Microsoft Corporation
@@ -36,8 +36,8 @@ the foundation for future extensibility of XHTML.
 
 %prep
 %setup -q -n xhtml1-%{date}
-%patch0 -p0
-%patch1 -p1
+%patch 0 -p0
+%patch 1 -p1
 cp -p %{SOURCE1} DTD/catalog.xml
 cp %{SOURCE2} .
 
@@ -112,6 +112,9 @@ cd - >/dev/null
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0-20020804
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Mateusz Malisz <mamalisz@microsoft.com> - 1.0-20020803
 - Update Source0
 - Improved formatting

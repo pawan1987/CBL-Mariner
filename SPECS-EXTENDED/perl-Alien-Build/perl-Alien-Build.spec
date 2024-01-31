@@ -8,7 +8,7 @@
 
 Name:           perl-Alien-Build
 Version:        2.17
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Build external dependencies for use in CPAN
 # lib/Alien/Build/Plugin/Test/Mock.pm contains Base64-encoded files for tests
 # (a bash script, C source file, a gzipped tar archive, Mach-O 64-bit x86_64
@@ -221,7 +221,7 @@ candidates for your Prefer plugin.
 # Remove redundant pkgconfig implementations, keep
 # Alien::Build::Plugin::PkgConfig::LibPkgConf,
 # MANIFEST is updated by Remove-redundant-pkgconfig-implementations.patch
-%patch0 -p1
+%patch 0 -p1
 rm lib/Alien/Build/Plugin/PkgConfig/{CommandLine,PP}.pm 
 rm t/alien_build_plugin_pkgconfig_{commandline,pp}.t
 
@@ -263,6 +263,9 @@ make test
 %{_mandir}/man3/Alien::Build::Plugin::Decode::Mojo.3pm.*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.17-4
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 01 2021 Muhammad Falak <mwani@microsft.com> - 2.17-3
 - Remove epoch
 

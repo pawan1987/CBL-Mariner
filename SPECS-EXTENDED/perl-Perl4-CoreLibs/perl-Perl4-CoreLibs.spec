@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           perl-Perl4-CoreLibs
 Version:        0.004
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        Libraries historically supplied with Perl 4
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Perl4-CoreLibs
@@ -82,7 +82,7 @@ predates satisfactory replacements.
 
 %prep
 %setup -q -n Perl4-CoreLibs-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 perl Build.PL installdirs=vendor
@@ -101,6 +101,9 @@ perl Build.PL installdirs=vendor
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.004-12
+- Updating the usage of the '%%patch' macro.
+
 * Wed Oct 06 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.004-11
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Using built-in "newgetopt.pl".

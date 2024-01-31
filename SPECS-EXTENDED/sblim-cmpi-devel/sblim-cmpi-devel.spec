@@ -3,7 +3,7 @@ Distribution:   Mariner
 
 Name:           sblim-cmpi-devel
 Version:        2.0.3
-Release:        21%{?dist}
+Release:        22%{?dist}
 Summary:        SBLIM CMPI Provider Development Support
 
 License:        EPL
@@ -34,7 +34,7 @@ This packages provides the C++ wrapper library for CMPI development
 
 %prep
 %setup -q
-%patch0 -p1 -b .docdir
+%patch 0 -p1 -b .docdir
 
 %build
 %configure
@@ -60,6 +60,9 @@ cp %{SOURCE1} $RPM_BUILD_ROOT%{_rpmconfigdir}/macros.d
 %{_libdir}/libcmpiCppImpl.so*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0.3-22
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0.3-21
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

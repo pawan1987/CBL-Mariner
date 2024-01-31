@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           perl-GD
 Version:        2.71
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Perl interface to the GD graphics library
 License:        GPL+ or Artistic 2.0
 URL:            https://metacpan.org/release/GD
@@ -58,10 +58,10 @@ create PNG images on the fly or modify existing files.
 %setup -q -n GD-%{version}
 
 # Re-code documentation as UTF8
-%patch0
+%patch 0
 
 # Upstream wants -Wformat=1 but we don't
-%patch1
+%patch 1
 
 # Fix shellbangs in sample scripts
 perl -pi -e 's|/usr/local/bin/perl\b|%{__perl}|' \
@@ -96,6 +96,9 @@ make test TEST_VERBOSE=1
 %{_mandir}/man3/GD::Simple.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.71-6
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.71-5
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

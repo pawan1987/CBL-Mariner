@@ -3,7 +3,7 @@ Distribution:   Mariner
 %global cpan_version 0.46alpha
 Name:           perl-XML-Grove
 Version:        0.46
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Simple access to infoset of parsed XML, HTML, or SGML instances
 
 License:        GPL+ or Artistic
@@ -43,8 +43,8 @@ the objects using normal Perl syntax.
 
 %prep
 %setup -q -n XML-Grove-%{cpan_version}
-%patch1 -p1 -b .test
-%patch2 -p1
+%patch 1 -p1 -b .test
+%patch 2 -p1
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
@@ -68,6 +68,9 @@ make test
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.46-3
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 01 2021 Muhammad Falak <mwani@microsft.com> - 0.46-2
 - Remove epoch
 

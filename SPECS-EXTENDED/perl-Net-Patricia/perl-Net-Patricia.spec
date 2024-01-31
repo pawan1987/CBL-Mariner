@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           perl-Net-Patricia
 Version:        1.22
-Release:        25%{?dist}
+Release:        26%{?dist}
 Summary:        Patricia Trie perl module for fast IP address lookups
 # The entire source code is GPLv2+ except libpatricia/ which is BSD
 License:        GPLv2+ and BSD
@@ -50,7 +50,7 @@ lookups within the BSD kernel since the 4.3 Reno release.
 
 %prep
 %setup -q -n Net-Patricia-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
@@ -78,6 +78,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.22-26
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.22-25
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

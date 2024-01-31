@@ -4,7 +4,7 @@ Summary: The NIS (Network Information Service) server
 Url: https://github.com/thkukuk/ypserv
 Name: ypserv
 Version: 4.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPLv2
 Source0: https://github.com/thkukuk/%{name}/archive/v%{version}.tar.gz#!/%{name}-%{version}.tar.gz
 Source1: ypserv.service
@@ -64,17 +64,17 @@ machines.
 
 %setup -q
 
-%patch0 -p1 -b .redhat
-%patch2 -p1 -b .nfsnobody
-%patch3 -p1 -b .respzero
-%patch4 -p1 -b .nonedomain
-%patch5 -p1 -b .slp-warning
-%patch6 -p1 -b .manfix
-%patch7 -p1 -b .aliases
-%patch8 -p1 -b .confpost
-%patch10 -p1 -b .netgrprecur
-%patch12  -b .headers
-%patch14 -p1 -b .selinux-context
+%patch 0 -p1 -b .redhat
+%patch 2 -p1 -b .nfsnobody
+%patch 3 -p1 -b .respzero
+%patch 4 -p1 -b .nonedomain
+%patch 5 -p1 -b .slp-warning
+%patch 6 -p1 -b .manfix
+%patch 7 -p1 -b .aliases
+%patch 8 -p1 -b .confpost
+%patch 10 -p1 -b .netgrprecur
+%patch 12  -b .headers
+%patch 14 -p1 -b .selinux-context
 
 # Delete generated man pages. They will be generated later from source.
 rm makedbm/makedbm.8
@@ -174,6 +174,9 @@ install -m 755 %{SOURCE4} $RPM_BUILD_ROOT%{_libexecdir}/rpc.yppasswdd.env
 %{_includedir}/rpcsvc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.1-5
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.1-4
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

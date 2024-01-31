@@ -3,7 +3,7 @@ Distribution:   Mariner
 Name: hunspell-wa
 Summary: Walloon hunspell dictionaries
 Version: 0.4.17
-Release: 14%{?dist}
+Release: 15%{?dist}
 Source0: http://chanae.walon.org/walon/aspell-wa-%{version}.tar.bz2
 URL: http://chanae.walon.org/walon/aspell.php
 License: LGPLv2+
@@ -18,7 +18,7 @@ Walloon hunspell dictionaries.
 
 %prep
 %setup -q -n aspell-wa-%{version}
-%patch0 -p1 -b .buildfix
+%patch 0 -p1 -b .buildfix
 
 %build
 make myspell
@@ -45,6 +45,9 @@ cp -p wa.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/wa_BE.aff
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.4.17-15
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.4.17-14
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

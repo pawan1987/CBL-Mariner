@@ -1,7 +1,7 @@
 Summary:        JSON::XS for Cpanel, fast and correct serializing
 Name:           perl-Cpanel-JSON-XS
 Version:        4.27
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPL+ OR Artistic
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -125,7 +125,7 @@ reach the latter goal it was written in C.
 perl -pi -e 's|^#!/opt/bin/perl|#!/usr/bin/perl|' eg/*
 
 # Skip the signature check as we've tweaked some files
-%patch0
+%patch 0
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
@@ -156,6 +156,9 @@ make test
 %{_mandir}/man3/Cpanel::JSON::XS::Type.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.27-3
+- Updating the usage of the '%%patch' macro.
+
 * Wed Jan 26 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.27-2
 - Initial CBL-Mariner import from Fedora 36 (license: MIT).
 - License verified.

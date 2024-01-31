@@ -6,7 +6,7 @@ Distribution:   Mariner
 
 Name:		linuxptp
 Version:	3.1.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	PTP implementation for Linux
 
 License:	GPLv2+
@@ -45,15 +45,15 @@ Supporting legacy APIs and other platforms is not a goal.
 
 %prep
 %setup -q -a 10 -a 11 -n %{name}-%{!?gitfullver:%{version}}%{?gitfullver}
-%patch0 -p1 -b .zerolength
+%patch 0 -p1 -b .zerolength
 mv linuxptp-testsuite-%{testsuite_ver}* testsuite
 mv clknetsim-%{clknetsim_ver}* testsuite/clknetsim
 
 pushd testsuite/clknetsim
-%patch1 -p1 -R -b .phc2sys
+%patch 1 -p1 -R -b .phc2sys
 popd
 
-%patch2 -p1 -b .pre-ha
+%patch 2 -p1 -b .pre-ha
 
 %build
 %{make_build} \
@@ -111,6 +111,9 @@ PATH=..:$PATH ./run
 %{_mandir}/man8/*.8*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.1.1-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Nov 16 2023 Harshit Gupta <guptaharshit@microsoft.com> - 3.1.1-1
 - Initial CBL-Mariner import from Fedora 37 (license: MIT).
 - License Verified.

@@ -22,7 +22,7 @@ Distribution:   Mariner
 %define __requires_exclude system.bundle
 Name:           xerces-j2
 Version:        2.12.0
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Java XML parser
 License:        ASL 2.0 and Public Domain and W3C
 Group:          Development/Libraries/Java
@@ -91,10 +91,10 @@ Requires:       %{name} = %{version}-%{release}
 %setup -q -n xerces-%{cvs_version}
 find "(" -name "*.class" -o -name "*.jar" ")" -delete
 find -type f -exec dos2unix {} \;
-%patch0 -p1
-%patch1 -p1
-%patch2
-%patch3 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2
+%patch 3 -p1
 
 %build
 mkdir -p tools
@@ -173,6 +173,9 @@ ln -sf %{name}.jar %{_javadir}/jaxp_parser_impl.jar
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.12.0-6
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.12.0-5
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 - License verified.

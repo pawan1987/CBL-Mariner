@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           teckit
 Version:        2.5.9
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Conversion library and mapping compiler
 # COPYING:                      links to license/LICENSING.txt
 # license/License_CPLv05.txt:   CPLv0.5 text
@@ -85,7 +85,7 @@ that use TECkit, a character encoding and mapping, library.
 %prep
 %{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 # Remove bundled libraries
 rm -r zlib-*/*.c SFconv/expat
 # Regenerate build script
@@ -133,6 +133,9 @@ rm -f %{buildroot}%{_libdir}/*.la
 %{_libdir}/pkgconfig/teckit.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.5.9-5
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.5.9-4
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

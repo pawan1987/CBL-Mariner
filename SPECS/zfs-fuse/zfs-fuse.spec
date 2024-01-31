@@ -3,7 +3,7 @@
 Summary:        ZFS ported to Linux FUSE
 Name:           zfs-fuse
 Version:        0.7.2.2
-Release:        17%{?dist}
+Release:        18%{?dist}
 License:        CDDL
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -49,10 +49,10 @@ operating system.
 %prep
 %setup -q
 
-%patch0
-%patch1 -p1
-%patch2 -p1
-%patch3
+%patch 0
+%patch 1 -p1
+%patch 2 -p1
+%patch 3
 
 f=LICENSE
 mv $f $f.iso88591
@@ -136,6 +136,9 @@ rm -rf %{_var}/lock/zfs
 %{_mandir}/man8/zstreamdump.8.gz
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.7.2.2-18
+- Updating the usage of the '%%patch' macro.
+
 * Fri Apr 01 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.7.2.2-17
 - Cleaning-up spec.
 

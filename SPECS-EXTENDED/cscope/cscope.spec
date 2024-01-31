@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: C source code tree search and browse tool 
 Name: cscope
 Version: 15.9
-Release: 8%{?dist}
+Release: 9%{?dist}
 Source0: https://downloads.sourceforge.net/project/%{name}/%{name}/%{version}/%{name}-%{version}.tar.gz
 URL: http://cscope.sourceforge.net
 License: BSD and GPLv2+
@@ -28,7 +28,7 @@ matches for use in file editing.
 
 %prep
 %setup -q
-%patch1 -p1 
+%patch 1 -p1 
 
 autoreconf
 
@@ -76,6 +76,9 @@ rm -f %{emacs_lisp_path}/xcscope.el
 rm -f %{vim_plugin_path}/cctree.vim
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 15.9-9
+- Updating the usage of the '%%patch' macro.
+
 * Wed Nov 03 2021 Thomas Crain <thcrain@microsoft.com> - 15.9-8
 - Remove xemacs support
 

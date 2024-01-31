@@ -1,7 +1,7 @@
 Summary:        Library to enable creation and expansion of ISO-9660 filesystems
 Name:           libisoburn
 Version:        1.5.4
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        GPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -67,7 +67,7 @@ DVD-RAM, BD-R and BD-RE.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1 -b .multilib
+%patch 0 -p1 -b .multilib
 
 libtoolize --force
 autoreconf --force --install
@@ -122,6 +122,9 @@ cd releng
 %{_infodir}/xorriso*.info*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.4-4
+- Updating the usage of the '%%patch' macro.
+
 * Tue Sep 26 2023 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.4-3
 - Removing 'exit' calls from the '%%check' section.
 

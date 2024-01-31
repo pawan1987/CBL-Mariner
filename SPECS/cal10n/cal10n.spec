@@ -17,7 +17,7 @@
 Summary:        Compiler assisted localization library (CAL10N)
 Name:           cal10n
 Version:        0.7.7
-Release:        6%{?dist}
+Release:        7%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -57,7 +57,7 @@ API documentation for %{name}.
 %prep
 %setup -q
 tar -xf %{SOURCE1}
-%patch0 -p1
+%patch 0 -p1
 find . -name "*.jar" | xargs rm
 
 # bnc#759912
@@ -125,6 +125,9 @@ popd
 %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.7.7-7
+- Updating the usage of the '%%patch' macro.
+
 * Fri Mar 17 2023 Mykhailo Bykhovtsev <mbykhovtsev@microsoft.com> - 0.7.7-6
 - Moved from extended to core
 - Updated source URL

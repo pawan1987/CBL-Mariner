@@ -3,7 +3,7 @@
 Summary:        The Apache HTTP Server
 Name:           httpd
 Version:        2.4.58
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        Apache-2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -141,9 +141,9 @@ Security (TLS) protocols.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
 
 %build
 %configure \
@@ -345,6 +345,9 @@ fi
 %{_libexecdir}/httpd-ssl-pass-dialog
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.4.58-2
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 20 2023 Muhammad Falak <mwani@microsoft.com> - 2.4.58-1
 - Upgrade version to address CVE-2023-45802, CVE-2023-43622 & CVE-2023-31122
 

@@ -1,7 +1,7 @@
 Summary:        Utilities for writing cds.
 Name:           cdrkit
 Version:        1.1.11
-Release:        11%{?dist}
+Release:        12%{?dist}
 License:        GPLv2+
 Group:          System Environment/Base
 Vendor:         Microsoft Corporation
@@ -25,8 +25,8 @@ The Cdrtools package contains CD recording utilities. These are useful for readi
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 %build
 make %{?_smp_mflags}
@@ -42,6 +42,9 @@ ln -s  genisoimage  %{buildroot}%{_prefix}/bin/mkisofs
 %{_datadir}/man/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.11-12
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 1.1.11-11
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

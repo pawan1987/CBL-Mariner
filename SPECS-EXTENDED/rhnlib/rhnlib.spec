@@ -5,7 +5,7 @@ Distribution:   Mariner
 Summary: Python libraries for the Spacewalk project
 Name: rhnlib
 Version: 2.8.6
-Release: 10%{?dist}
+Release: 11%{?dist}
 URL:     https://github.com/spacewalkproject/spacewalk
 Source0: https://github.com/spacewalkproject/spacewalk/archive/refs/tags/%{name}-%{version}-1.tar.gz#/%{name}-%{version}.tar.gz
 Patch0: rhnlib-2.8.6-1-to-rhnlib-2.8.6-2-el8.patch
@@ -48,13 +48,13 @@ rhnlib is a collection of python modules used by the Spacewalk (http://spacewalk
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
+%patch 5 -p1
+%patch 6 -p1
 if [ ! -e setup.py ]; then
     sed -e 's/@VERSION@/%{version}/' -e 's/@NAME@/%{name}/' setup.py.in > setup.py
 fi
@@ -83,6 +83,9 @@ make -f Makefile.rhnlib
 %endif
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.8.6-11
+- Updating the usage of the '%%patch' macro.
+
 * Thu Dec 16 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.8.6-10
 - Removing the explicit %%clean stage.
 - License verified.
@@ -395,4 +398,3 @@ make -f Makefile.rhnlib
 * Mon Apr 19 2010 Michael Mraka <michael.mraka@redhat.com> 2.5.24-1
 - Cleaning up, preparing for automatization
 - 575259 - properly set protocol type
-

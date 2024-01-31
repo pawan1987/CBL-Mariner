@@ -20,7 +20,7 @@ Distribution:   Mariner
 
 Name:           jsch
 Version:        0.1.55
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Pure Java implementation of SSH2
 License:        BSD-3-Clause
 Group:          Development/Libraries/Java
@@ -65,8 +65,8 @@ functionality into your own Java programs.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 cp %{SOURCE1} pom.xml
 %pom_remove_parent
 
@@ -107,6 +107,9 @@ cp -pr examples/* %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.1.55-3
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.1.55-2
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

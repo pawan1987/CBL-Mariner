@@ -7,7 +7,7 @@
 
 Name:		perl-Perl-Critic
 Version:	1.138
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Critique Perl source code for best-practices
 License:	GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -127,10 +127,10 @@ of Perl code were mixed directly in the test script. That sucked.
 %setup -q -n Perl-Critic-%{version}
 
 # Switch spell checker tool from aspell to hunspell
-%patch0 -p1
+%patch 0 -p1
 
 # Fix shellbang in ppidump tool
-%patch3
+%patch 3
 
 # Drop exec bits from samples/docs to avoid dependency bloat
 find tools examples -type f -exec chmod -c -x {} ';'
@@ -167,6 +167,9 @@ LC_ALL=en_US ./Build test
 %{_mandir}/man3/Test::Perl::Critic::Policy.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.138-4
+- Updating the usage of the '%%patch' macro.
+
 * Sun Jul 25 2021 Jon Slobodzian <joslobo@microsoft.com> - 1.138-3
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Removed dependency on glibc-langpack-en.

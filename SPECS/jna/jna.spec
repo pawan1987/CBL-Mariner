@@ -22,7 +22,7 @@
 Summary:        Java Native Access
 Name:           jna
 Version:        5.10.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 # Most of code is dual-licensed under either LGPL 2.1+ only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
 # which is pure Apache License 2.0.
@@ -86,8 +86,8 @@ find . -name '*jar' | xargs rm
 rm -rf dist
 dos2unix OTHERS
 
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 chmod -Rf a+rX,u+w,g-w,o-w .
 sed -i 's|@LIBDIR@|%{_libdir}/%{name}|' src/com/sun/jna/Native.java
@@ -159,6 +159,9 @@ ant
 %license LICENSE
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.10.0-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Feb 24 2022 Cameron Baird <cameronbaird@microsoft.com> - 5.10.0-1
 - Update source to v5.10.0
 - Update jna_remove_clover_and_win32_native_jar.patch

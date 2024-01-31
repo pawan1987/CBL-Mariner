@@ -3,7 +3,7 @@
 Summary:        Userland logical volume management tools
 Name:           lvm2
 Version:        2.03.15
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        GPLv2 AND BSD 2-Clause AND LGPLv2.1
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -165,7 +165,7 @@ the device-mapper event library.
 
 %prep
 %setup -q -n LVM2.%{version}
-%patch0 -p1 -b .preferred_names
+%patch 0 -p1 -b .preferred_names
 
 %build
 %define _default_pid_dir /run
@@ -335,6 +335,9 @@ echo "disable lvm2-monitor.service" >> %{buildroot}%{_libdir}/systemd/system-pre
 %ghost %{_sysconfdir}/lvm/cache/.cache
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.03.15-4
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 2.03.15-3
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

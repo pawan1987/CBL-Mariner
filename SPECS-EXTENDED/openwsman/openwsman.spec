@@ -3,7 +3,7 @@ Distribution:   Mariner
 
 Name:		openwsman
 Version:	2.6.8
-Release:	13%{?dist}
+Release:	14%{?dist}
 Summary:	Open source Implementation of WS-Management
 
 License:	BSD
@@ -101,13 +101,13 @@ This package provides Perl bindings to access the openwsman client API.
 %prep
 %setup -q
 
-%patch1 -p1 -b .pamsetup
-%patch2 -p1 -b .ruby-binding-build
-%patch3 -p1 -b .openssl-1.1-fix
-%patch4 -p1 -b .http-status-line
-%patch5 -p1 -b .libcurl-error-codes-update
-%patch6 -p1 -b .CVE-2019-3816
-%patch7 -p1 -b .CVE-2019-3833
+%patch 1 -p1 -b .pamsetup
+%patch 2 -p1 -b .ruby-binding-build
+%patch 3 -p1 -b .openssl-1.1-fix
+%patch 4 -p1 -b .http-status-line
+%patch 5 -p1 -b .libcurl-error-codes-update
+%patch 6 -p1 -b .CVE-2019-3816
+%patch 7 -p1 -b .CVE-2019-3833
 
 %build
 # Removing executable permissions on .c and .h files to fix rpmlint warnings. 
@@ -236,6 +236,9 @@ rm -f /var/log/wsmand.log
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6.8-14
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jun 10 2021 Muhammad Falak Wani <mwani@microsoft.com> - 2.6.8-13
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Remove support for building ruby-gem

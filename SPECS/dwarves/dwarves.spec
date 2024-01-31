@@ -3,7 +3,7 @@
 Summary:        Debugging Information Manipulation Tools (pahole & friends)
 Name:           dwarves
 Version:        1.21
-Release:        4%{?dist}
+Release:        5%{?dist}
 License:        GPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -67,7 +67,7 @@ Debugging information processing library development files.
 
 %prep
 %setup -q
-%patch1 -p1
+%patch 1 -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release .
@@ -137,6 +137,9 @@ rm -Rf %{buildroot}
 %{_libdir}/%{libname}_reorganize.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.21-5
+- Updating the usage of the '%%patch' macro.
+
 * Fri Aug 20 2021 Chris Co <chrco@microsoft.com> - 1.21-4
 - Initial CBL-Mariner import from Fedora 35 (license: MIT).
 

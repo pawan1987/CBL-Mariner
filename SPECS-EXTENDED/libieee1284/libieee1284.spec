@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: A library for interfacing IEEE 1284-compatible devices
 Name: libieee1284
 Version: 0.2.11
-Release: 33%{?dist}
+Release: 34%{?dist}
 License: GPLv2+
 URL: http://cyberelk.net/tim/libieee1284/
 Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
@@ -26,10 +26,10 @@ developing applications that use libieee1284.
 %prep
 %setup -q
 # Fixed strict aliasing warnings (bug #605170).
-%patch1 -p1 -b .strict-aliasing
+%patch 1 -p1 -b .strict-aliasing
 
 # Add support for building on aarch64 (bug #925774).
-%patch2 -p1 -b .aarch64
+%patch 2 -p1 -b .aarch64
 
 %build
 touch doc/interface.xml
@@ -56,6 +56,9 @@ rm -f %{buildroot}%{_libdir}/*.la
 %ldconfig_scriptlets
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.2.11-34
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.2.11-33
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

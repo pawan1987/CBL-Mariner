@@ -5,7 +5,7 @@ Distribution:   Mariner
 
 Name:           perl-LWP-Protocol-https
 Version:        6.10
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Provide HTTPS support for LWP::UserAgent
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/LWP-Protocol-https
@@ -62,8 +62,8 @@ access sites using HTTP over SSL/TLS.
 
 %prep
 %setup -q -n LWP-Protocol-https-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 %if !%{with perl_LWP_Protocol_https_enables_internet_test}
 rm t/apache.t
 perl -i -ne 'print $_ unless m{^t/apache.t}' MANIFEST
@@ -87,6 +87,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 6.10-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Jan 29 2021 Joe Schmitt <joschmit@microsoft.com> - 6.10-2
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Remove double buildrequire conditional

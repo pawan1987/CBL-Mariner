@@ -1,7 +1,7 @@
 Summary:        Wrapper for the libev high-performance event loop library
 Name:           perl-EV
 Version:        4.33
-Release:        8%{?dist}
+Release:        9%{?dist}
 # Note: The source archive includes a libev/ folder which contents are licensed
 #       as "BSD or GPLv2+". However, those are removed at build-time and
 #       perl-EV is instead built against the system-provided libev.
@@ -39,8 +39,8 @@ much more detailed information.
 %prep
 %setup -q -n EV-%{version}
 
-%patch0 -p1
-%patch1
+%patch 0 -p1
+%patch 1
 
 # remove all traces of the bundled libev
 rm -fr ./libev
@@ -69,6 +69,9 @@ PERL_CANARY_STABILITY_NOPROMPT=1 %{_bindir}/perl Makefile.PL INSTALLDIRS=vendor 
 %{_mandir}/man3/*.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.33-9
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jan 27 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.33-8
 - Initial CBL-Mariner import from Fedora 36 (license: MIT).
 - License verified.

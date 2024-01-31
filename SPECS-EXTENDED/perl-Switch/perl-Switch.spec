@@ -1,6 +1,6 @@
 Name:		perl-Switch
 Version:	2.17
-Release:	17%{?dist}
+Release:	18%{?dist}
 Summary:	A switch statement for Perl
 License:	GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -34,7 +34,7 @@ various cases.
 
 %prep
 %setup -q -n Switch-%{version}
-%patch0 -p1 -b .fixme
+%patch 0 -p1 -b .fixme
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
@@ -55,6 +55,9 @@ make test
 %{_mandir}/man3/*.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.17-18
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.17-17
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

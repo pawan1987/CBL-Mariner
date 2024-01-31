@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: A binary file delta generator
 Name: xdelta
 Version: 3.1.0
-Release: 11%{?dist}
+Release: 12%{?dist}
 License: ASL 2.0
 Source0: https://github.com/jmacd/xdelta-devel/releases/download/v%{version}/xdelta3-%{version}.tar.gz
 URL: http://xdelta.org/
@@ -29,7 +29,7 @@ algorithm to replace the standard diff program used by RCS
 
 %prep
 %setup -q -n %{name}3-%{version}
-%patch1 -p2 -b .man-page-day
+%patch 1 -p2 -b .man-page-day
 
 %build
 %configure
@@ -61,6 +61,9 @@ sudo -u test ./xdelta3 test && userdel test
 %{_mandir}/man1/xdelta*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.1.0-12
+- Updating the usage of the '%%patch' macro.
+
 * Mon Aug 22 2022 Muhammad Falak <mwani@microsoft.com> - 3.1.0-11
 - Run the `%check` section via a non-root user to fix ptest build
 - License verified

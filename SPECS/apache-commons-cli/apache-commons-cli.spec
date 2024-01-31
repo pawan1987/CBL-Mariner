@@ -18,7 +18,7 @@
 Summary:        Command Line Interface Library for Java
 Name:           apache-commons-cli
 Version:        1.4
-Release:        5%{?dist}
+Release:        6%{?dist}
 License:        Apache-2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -53,7 +53,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src -a1
-%patch0 -p1
+%patch 0 -p1
 
 %pom_remove_parent
 
@@ -87,6 +87,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4-6
+- Updating the usage of the '%%patch' macro.
+
 * Fri Mar 17 2023 Mykhailo Bykhovtsev <mbykhovtsev@microsoft.com> - 1.4-5
 - Moved from extended to core
 - License verified

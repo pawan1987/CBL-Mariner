@@ -1,7 +1,7 @@
 Summary:        East Asian Width properties
 Name:           perl-Unicode-EastAsianWidth
 Version:        12.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 License:        CC0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -31,7 +31,7 @@ status of East Asian characters, as specified in
 
 %prep
 %setup -q -n Unicode-EastAsianWidth-%{version}
-%patch0 -p1 -b .noinc
+%patch 0 -p1 -b .noinc
 rm -rf inc/*
 
 %build
@@ -54,6 +54,9 @@ make test
 %{_mandir}/man3/Unicode::EastAsianWidth.3pm*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 12.0-5
+- Updating the usage of the '%%patch' macro.
+
 * Tue Mar 07 2023 Muhammad Falak <mwani@microsoft.com> - 12.0-4
 - License verified
 

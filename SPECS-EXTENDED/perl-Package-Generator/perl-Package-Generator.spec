@@ -9,7 +9,7 @@
 
 Name:		perl-Package-Generator
 Version:	1.106
-Release:	18%{?dist}
+Release:	19%{?dist}
 Summary:	Generate new packages quickly and easily
 License:	GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -43,7 +43,7 @@ them unused names and sets up their package data, if provided.
 
 # We need to patch the test suite if we have an old version of Test::More
 %if %{old_test_more}
-%patch1
+%patch 1
 %endif
 
 %build
@@ -69,6 +69,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man3/Package::Reaper.3pm*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.106-19
+- Updating the usage of the '%%patch' macro.
+
 * Wed Apr 28 2021 Thomas Crain <thcrain@microsoft.com> - 1.106-18
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Remove colons from patchnames

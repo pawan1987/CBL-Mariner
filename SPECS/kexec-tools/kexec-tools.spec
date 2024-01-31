@@ -6,7 +6,7 @@
 Summary:        The kexec/kdump userspace component
 Name:           kexec-tools
 Version:        2.0.23
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        GPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -123,7 +123,7 @@ mkdir -p -m755 kcp
 tar -z -x -v -f %{SOURCE9}
 tar -z -x -v -f %{SOURCE19}
 
-%patch601 -p1
+%patch 601 -p1
 
 %build
 autoreconf
@@ -324,6 +324,9 @@ done
 /usr/share/makedumpfile/
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0.23-4
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 2.0.23-3
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

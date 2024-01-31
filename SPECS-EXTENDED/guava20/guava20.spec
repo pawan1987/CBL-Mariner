@@ -22,7 +22,7 @@ Distribution:   Mariner
 %global guava_alias com.google.collections:google-collections,com.google.guava:guava-jdk5
 Name:           guava20
 Version:        20.0
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Google Core Libraries for Java
 # Most of the code is under ASL 2.0
 # Few classes are under CC0, grep for creativecommons
@@ -69,8 +69,8 @@ guava-testlib provides additional functionality for conveninent unit testing
 %setup -q -n guava-%{version}
 cat %{SOURCE1} | sed 's#@BNDVRSN@#%{version}.0#g' >manifest.txt
 
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 find . -name '*.jar' -delete
 
@@ -162,6 +162,9 @@ cp -a build/apidoc/* %{buildroot}%{_javadocdir}/%{name}
 %files testlib -f .mfiles-testlib
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 20.0-6
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 20.0-5
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

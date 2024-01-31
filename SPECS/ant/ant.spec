@@ -23,7 +23,7 @@
 Summary:        Apache Ant
 Name:           ant
 Version:        1.10.11
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        ASL 2.0 AND W3C
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -98,9 +98,9 @@ find -name build.xml -o -name pom.xml | xargs sed -i -e s/-SNAPSHOT//
 find -name \*.jar -print -delete
 
 # When bootstrapping, we don't have junit
-%patch0 -p1
+%patch 0 -p1
 # Explicitly set sourcepath when compiling bootstrap
-%patch1 -p1
+%patch 1 -p1
 
 # clean jar files
 find . -name "*.jar" -print -delete
@@ -263,6 +263,9 @@ popd
 %{_bindir}/*.py*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.10.11-2
+- Updating the usage of the '%%patch' macro.
+
 * Wed Dec 08 2021 Andrew Phelps <anphel@microsoft.com> - 1.10.11-1
 - Update to build with jdk11
 

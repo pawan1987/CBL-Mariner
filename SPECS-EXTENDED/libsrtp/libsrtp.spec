@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name:		libsrtp
 Version:	2.3.0
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	An implementation of the Secure Real-time Transport Protocol (SRTP)
 License:	BSD
 URL:		https://github.com/cisco/libsrtp
@@ -29,7 +29,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .sharedfix
+%patch 0 -p1 -b .sharedfix
 
 %if 0%{?rhel} > 0
 %ifarch ppc64
@@ -59,6 +59,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/*.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.0-4
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.0-3
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

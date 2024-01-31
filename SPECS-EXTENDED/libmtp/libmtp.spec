@@ -5,7 +5,7 @@ Distribution:   Mariner
 
 Name:           libmtp
 Version:        1.1.18
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Software library for MTP media players
 URL:            http://libmtp.sourceforge.net/
 
@@ -47,7 +47,7 @@ library for MTP media players.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %configure --disable-static \
@@ -109,6 +109,9 @@ chrpath --delete $RPM_BUILD_ROOT{%{_bindir},/usr/lib/udev}/mtp*
 %{_libdir}/pkgconfig/libmtp.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.18-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.18-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 

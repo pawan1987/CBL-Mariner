@@ -21,7 +21,7 @@ Distribution:   Mariner
 %define section free
 Name:           jarjar
 Version:        1.4
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Tool to repackage Java libraries
 License:        ASL 2.0
 Group:          Development/Libraries/Java
@@ -68,8 +68,8 @@ another library.
 
 %prep
 %setup -q
-%patch0
-%patch1 -p1
+%patch 0
+%patch 1 -p1
 # remove all binary libs
 rm -f lib/*.jar
 # maven plugin
@@ -122,6 +122,9 @@ cp -pr dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4-7
+- Updating the usage of the '%%patch' macro.
+
 * Wed Feb 23 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4-6
 - Removing dependency on "maven2".
 

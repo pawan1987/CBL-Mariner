@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: Korean(Hangul) Man(manual) Pages from the Korean Manpage Project
 Name: man-pages-ko
 Version: 20050219
-Release: 39%{?dist}
+Release: 40%{?dist}
 License: Copyright only
 #Vendor: Korean Manpage Project Team.
 URL: http://man.kldp.org/
@@ -31,7 +31,7 @@ is maintained by Korean Manpage Project Team.
 
 %prep
 %setup -q -c %{name}-%{version}
-%patch0 -p0
+%patch 0 -p0
 find . -name CVS -exec rm -rf {} \;
 cp -p %{SOURCE1} COPYING
 
@@ -72,6 +72,9 @@ cp -a man? $RPM_BUILD_ROOT%{_mandir}/ko/
 %{_mandir}/ko/man*/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 20050219-40
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 01 2021 Muhammad Falak <mwani@microsft.com> - 20050219-39
 - Remove epoch
 
@@ -283,4 +286,3 @@ cp -a man? $RPM_BUILD_ROOT%{_mandir}/ko/
 
 * Tue Apr  4 2000 Bae, Sunghoon <plodder@kldp.org>
 - First Release
-

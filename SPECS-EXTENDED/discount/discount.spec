@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           discount
 Version:        2.2.4
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        A command-line utility for converting Markdown files into HTML
 License:        BSD
 URL:            http://www.pell.portland.or.us/~orc/Code/%{name}
@@ -38,7 +38,7 @@ libmarkdown.
 %prep
 %setup -q
 
-%patch0 -p1
+%patch 0 -p1
 
 
 %build
@@ -103,6 +103,9 @@ make test
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.2.4-6
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.2.4-5
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -251,4 +254,3 @@ make test
 
 * Thu Sep 22 2011 Craig Barnes <cr@igbarn.es> - 2.1.1.3-1
 - Initial package.
-

@@ -6,7 +6,7 @@
 Summary:        Secure imap and pop3 server
 Name:           dovecot
 Version:        2.3.20
-Release:        1%{?dist}
+Release:        2%{?dist}
 #dovecot itself is MIT, a few sources are PD, pigeonhole is LGPLv2
 License:        MIT AND LGPLv2
 Vendor:         Microsoft Corporation
@@ -114,13 +114,13 @@ This package provides the development files for dovecot.
 
 %prep
 %setup -q -n %{name}-%{version}%{?prever} -a 8
-%patch1 -p1 -b .default-settings
-%patch2 -p1 -b .mkcert-permissions
-%patch3 -p1 -b .mkcert-paths
-%patch6 -p1 -b .waitonline
-%patch8 -p1 -b .initbysystemd
-%patch9 -p1 -b .systemd_w_protectsystem
-%patch15 -p1 -b .bigkey
+%patch 1 -p1 -b .default-settings
+%patch 2 -p1 -b .mkcert-permissions
+%patch 3 -p1 -b .mkcert-paths
+%patch 6 -p1 -b .waitonline
+%patch 8 -p1 -b .initbysystemd
+%patch 9 -p1 -b .systemd_w_protectsystem
+%patch 15 -p1 -b .bigkey
 
 #pushd dovecot-2*3-pigeonhole-%{pigeonholever}
 #popd
@@ -445,6 +445,9 @@ make check
 %{_libdir}/%{name}/dict/libdriver_pgsql.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.20-2
+- Updating the usage of the '%%patch' macro.
+
 * Wed Aug 30 2023 Archana Choudhary <archana1@microsoft.com> - 2.3.20-1
 - Upgrade to 2.3.20
 - Resolves: CVE-2021-33515 CVE-2021-29157 CVE-2022-30550 CVE-2020-28200

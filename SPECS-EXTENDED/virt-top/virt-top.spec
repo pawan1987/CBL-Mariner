@@ -5,7 +5,7 @@ Distribution:   Mariner
 
 Name:           virt-top
 Version:        1.0.9
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Utility like top(1) for displaying virtualization stats
 License:        GPLv2+
 
@@ -58,10 +58,10 @@ different virtualization systems.
 %setup -q
 
 %if 0%{?rhel} >= 6
-%patch0 -p1
+%patch 0 -p1
 %endif
 
-%patch1 -p1
+%patch 1 -p1
 
 
 %build
@@ -118,6 +118,9 @@ install -m 0644 processcsv.py.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.9-8
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.9-7
 - Switching to using full number for the 'Release' tag.
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).

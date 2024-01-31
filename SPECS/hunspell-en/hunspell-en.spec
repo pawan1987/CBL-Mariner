@@ -2,7 +2,7 @@
 Summary:        English hunspell dictionaries
 Name:           hunspell-en
 Version:        0.%{upstreamid}
-Release:        18%{?dist}
+Release:        19%{?dist}
 # README_en_GB.txt has specified just LGPL which mean LGPLv2+
 # scowl/speller/aspell/en_affix.dat is BSD
 # scowl/speller/aspell/en_phonet.dat is LGPLv2
@@ -73,18 +73,18 @@ UK English hunspell dictionaries
 %prep
 %setup -q -n wordlist-rel-2014.08.11.1
 %setup -q -T -D -a 1 -n wordlist-rel-2014.08.11.1
-%patch0  -b .mozilla
-%patch1 -p1 -b .singleletters
-%patch2 -p1 -b .two_initial_cap
-%patch3  -b .strippedabbrevs
-%patch4  -b .allow-non-typographical
-%patch5  -b .SI_and_IEC
-%patch6 -p1 -b .calender
-%patch7 -p1 -b .en_IE
-%patch8 -p1 -b .nogit
-%patch9 -p1 -b .fixbuild
-%patch10 -p1 -b .etc
-%patch11 -p1 -b .regex
+%patch 0  -b .mozilla
+%patch 1 -p1 -b .singleletters
+%patch 2 -p1 -b .two_initial_cap
+%patch 3  -b .strippedabbrevs
+%patch 4  -b .allow-non-typographical
+%patch 5  -b .SI_and_IEC
+%patch 6 -p1 -b .calender
+%patch 7 -p1 -b .en_IE
+%patch 8 -p1 -b .nogit
+%patch 9 -p1 -b .fixbuild
+%patch 10 -p1 -b .etc
+%patch 11 -p1 -b .regex
 cp %{SOURCE2} %{SOURCE3} .
 
 %build
@@ -140,6 +140,9 @@ popd
 %{_datadir}/myspell/en_GB.*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20140811.1-19
+- Updating the usage of the '%%patch' macro.
+
 * Fri Sep 16 2022 Osama Esmail <osamaesmail@microsoft.com> - 0.20140811.1-18
 - Moved from SPECS-EXTENDED to SPECS
 - License verified

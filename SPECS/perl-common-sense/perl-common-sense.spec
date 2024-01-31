@@ -5,7 +5,7 @@
 Summary:        "Common sense" Perl defaults
 Name:           perl-common-sense
 Version:        3.75
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/common-sense
@@ -43,7 +43,7 @@ It's supposed to be mostly the same, with much lower memory usage, as:
 %setup -q -n common-sense-%{version}
 
 # Specify POD encoding
-%patch1
+%patch 1
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor
@@ -69,6 +69,9 @@ make test
 %{_mandir}/man3/common::sense.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.75-2
+- Updating the usage of the '%%patch' macro.
+
 * Tue Apr 26 2022 Mateusz Malisz <mamalisz@microsoft.com> - 3.75-1
 - Update to 3.75
 

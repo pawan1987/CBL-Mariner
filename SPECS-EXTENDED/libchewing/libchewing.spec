@@ -7,7 +7,7 @@ Distribution:   Mariner
 
 Name:           libchewing
 Version:        0.5.1
-Release:        18%{?dist}
+Release:        19%{?dist}
 Summary:        Intelligent phonetic input method library for Traditional Chinese
 Summary(zh_TW): %{name_zh_TW}
 
@@ -65,7 +65,7 @@ Python binding of libchewing.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 %build
 CFLAGS="%{optflags} -g -DLIBINSTDIR='%{_libdir}'"
@@ -99,6 +99,9 @@ rm -f %{buildroot}/%{_infodir}/dir
 %{libchewing_python_dir}/__pycache__/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.5.1-19
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.5.1-18
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

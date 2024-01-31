@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: PostScript Utilities
 Name:    psutils
 Version: 1.23
-Release: 19%{?dist}
+Release: 20%{?dist}
 License: psutils
 
 # We can't follow https://fedoraproject.org/wiki/Packaging:SourceURL#Github
@@ -44,7 +44,7 @@ Various scripts from the psutils distribution that require perl.
 %prep
 %setup -q
 
-%patch0 -p1 -b .paperconf
+%patch 0 -p1 -b .paperconf
 # Use /usr/bin/perl instead of /usr/bin/env perl
 sed -i -e 's,/usr/bin/env perl,%{__perl},' \
   extractres psjoin
@@ -83,6 +83,9 @@ sed -i -e 's,/usr/bin/env perl,%{__perl},' \
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.23-20
+- Updating the usage of the '%%patch' macro.
+
 * Tue Apr 26 2022 Mandeep Plaha <mandeepplaha@microsoft.com> - 1.23-19
 - Updated source URL.
 - License verified.

@@ -5,7 +5,7 @@ Distribution:   Mariner
 Summary: An HTTP and WebDAV client library
 Name: neon
 Version: 0.31.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: LGPLv2+
 URL: https://notroj.github.io/neon/
 Source0: https://notroj.github.io/neon/neon-%{version}.tar.gz
@@ -38,7 +38,7 @@ The development library for the C language HTTP and WebDAV client library.
 
 %prep
 %setup -q
-%patch0 -p1 -b .multilib
+%patch 0 -p1 -b .multilib
 
 # prevent installation of HTML docs
 sed -ibak '/^install-docs/s/install-html//' Makefile.in
@@ -82,6 +82,9 @@ make %{?_smp_mflags} check
 %{_libdir}/*.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.31.2-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.31.2-2
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

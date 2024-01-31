@@ -2,7 +2,7 @@
 Summary:        Open Fingerprint Architecture library
 Name:           libofa
 Version:        0.9.3
-Release:        42%{?dist}
+Release:        43%{?dist}
 License:        GPL-2.0-only
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -45,11 +45,11 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 find . -name README -or -name \*.cpp -or -name \*.h | xargs --no-run-if-empty sed -i -e 's|\r||'  ||:
 
-%patch1 -p1 -b .gcc41
-%patch2 -p1 -b .pkgconfig
-%patch3 -p1 -b .gcc43
-%patch4 -p1 -b .curl
-%patch5 -p1 -b .gcc47
+%patch 1 -p1 -b .gcc41
+%patch 2 -p1 -b .pkgconfig
+%patch 3 -p1 -b .gcc43
+%patch 4 -p1 -b .curl
+%patch 5 -p1 -b .gcc47
 
 ## pkg-config < 0.20.0 (apparently?) doesn't grok URL
 %if "%(pkg-config --version 2>/dev/null)" < "0.20.0"
@@ -90,6 +90,9 @@ rm -rf examples/.deps examples/Makefile examples/*.gcc43
 %{_libdir}/libofa.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.3-43
+- Updating the usage of the '%%patch' macro.
+
 * Mon Jan 16 2023 Suresh Thelkar <sthelkar@microsoft.com> - 0.9.3-42
 - Initial CBL-Mariner import from Fedora 36 (license: MIT)
 - License verified

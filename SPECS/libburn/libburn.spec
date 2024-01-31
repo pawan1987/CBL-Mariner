@@ -5,7 +5,7 @@
 Summary:         Library for reading, mastering and writing optical discs
 Name:            libburn
 Version:         1.5.4
-Release:         1%{?dist}
+Release:         2%{?dist}
 License:         GPLv2+
 Group:           System Environment/Libraries
 URL:             https://dev.lovelyhq.com/libburnia/libburn
@@ -50,7 +50,7 @@ features from the command line.
 
 %prep
 %setup -q -n %{pkgname}
-%patch0 -p1 -b .multilib
+%patch 0 -p1 -b .multilib
 
 libtoolize --force
 autoreconf --force --install
@@ -89,6 +89,9 @@ rm -rf $RPM_BUILD_ROOT%{_defaultdocdir}
 %{_mandir}/man1/%{cdrskin}.1*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.4-2
+- Updating the usage of the '%%patch' macro.
+
 * Mon Mar 14 2022 Nicolas Guibourge <nicolasg@microsoft.com> - 1.5.4-1
 - Upgrade to 1.5.4.
 

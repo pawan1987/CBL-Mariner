@@ -33,7 +33,7 @@
 Summary:        Low-level DNS(SEC) library with API
 Name:           ldns
 Version:        1.7.0
-Release:        32%{?dist}
+Release:        33%{?dist}
 License:        BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -131,10 +131,10 @@ This package contains documentation for the ldns library
 %setup -qcn %{pkgname}
 pushd %{pkgname}
 
-%patch1 -p2 -b .multilib
-%patch2 -p1 -b .limit
-%patch3 -p1 -b .realloc
-%patch4 -p2 -b .swig4
+%patch 1 -p2 -b .multilib
+%patch 2 -p1 -b .limit
+%patch 3 -p1 -b .realloc
+%patch 4 -p2 -b .swig4
 # To built svn snapshots
 %if 0%{snapshot}
   rm config.guess config.sub ltmain.sh
@@ -295,6 +295,9 @@ rm -rf doc/man
 %doc doc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.7.0-33
+- Updating the usage of the '%%patch' macro.
+
 * Mon Jul 25 2022 Rachel Menge <rachelmenge@microsoft.com> - 1.7.0-32
 - Move from SPECS-EXTENDED to SPECS
 

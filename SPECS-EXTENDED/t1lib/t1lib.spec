@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           t1lib
 Version:        5.1.2
-Release:        28%{?dist}
+Release:        29%{?dist}
 
 Summary:        PostScript Type 1 font rasterizer
 
@@ -58,12 +58,12 @@ This package contains static libraries for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1 -b .segf
-%patch2 -p1 -b .afm-fix
-%patch3 -p1 -b .type1-inv-rw-fix
-%patch4 -p1 -b .aarch64
-%patch5 -p1 -b .format-security
+%patch 0 -p1
+%patch 1 -p1 -b .segf
+%patch 2 -p1 -b .afm-fix
+%patch 3 -p1 -b .type1-inv-rw-fix
+%patch 4 -p1 -b .aarch64
+%patch 5 -p1 -b .format-security
 
 # use debian patches directly instead of duplicating them
 #patch -p1 < debian/patches/segfault.diff -b -z .segf
@@ -145,6 +145,9 @@ touch $RPM_BUILD_ROOT%{_datadir}/t1lib/{FontDatabase,t1lib.config}
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.1.2-29
+- Updating the usage of the '%%patch' macro.
+
 * Fri Jun 17 2022 Olivia Crain <oliviacrain@microsoft.com> - 5.1.2-28
 - Rename Debian patch to fix SRPM packing
 - Fix dead upstream URL
@@ -321,4 +324,3 @@ touch $RPM_BUILD_ROOT%{_datadir}/t1lib/{FontDatabase,t1lib.config}
 
 * Sun Oct 26 2003 Marius L. Jøhndal <mariuslj at ifi.uio.no> 0:5.0.0-0.fdr.1
 - Initial RPM release.
-

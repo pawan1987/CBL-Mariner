@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           perl-Parse-RecDescent
 Version:        1.967015
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        Generate Recursive-Descent Parsers
 License:        (GPL+ or Artistic) and (GPLv2+ or Artistic)
 # demo/demo_another_Cgrammar.pl:    GPLv2+ or Artistic
@@ -56,7 +56,7 @@ provides:
 %setup -q -n Parse-RecDescent-%{version}
 
 # Recode as UTF8
-%patch0 -p1
+%patch 0 -p1
 
 # Fix permissions and script interpreters
 chmod -c a-x demo/* tutorial/*
@@ -80,6 +80,9 @@ make test
 %{_mandir}/man3/Parse::RecDescent.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.967015-12
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.967015-11
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

@@ -1,7 +1,7 @@
 Summary: General dimension convex hull programs
 Name: qhull
 Version: 7.2.1
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: Qhull
 Source0: https://github.com/qhull/qhull/archive/v%{version}.tar.gz#/qhull-%{version}.tar.gz
 
@@ -57,8 +57,8 @@ about a point.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
+%patch 1 -p1
+%patch 2 -p1
 
 %build
 mkdir -p build
@@ -112,6 +112,9 @@ chrpath --delete ${RPM_BUILD_ROOT}%{_libdir}/lib*.so.*
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 7.2.1-6
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 29 2021 Muhammad Falak <mwani@microsft.com> - 7.2.1-5
 - Remove epoch
 

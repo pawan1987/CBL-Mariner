@@ -1,6 +1,6 @@
 Name:           perl-MIME-Charset
 Version:        1.012.2
-Release:        12%{?dist}
+Release:        13%{?dist}
 Summary:        Charset Informations for MIME
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -51,7 +51,7 @@ messages on Internet.
 
 %prep
 %setup -q -n MIME-Charset-%{version}
-%patch0 -p1
+%patch 0 -p1
 # Remove bundled modules
 rm -rf ./inc
 sed -i -e '/^inc\//d' MANIFEST
@@ -75,6 +75,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.012.2-13
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jan 13 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.012.2-12
 - License verified.
 

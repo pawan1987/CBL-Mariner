@@ -5,7 +5,7 @@ Distribution:   Mariner
 
 Name:		perl-Readonly-XS
 Version:	1.05
-Release:	37%{?dist}
+Release:	38%{?dist}
 Summary:	Companion module for Readonly
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Readonly-XS
@@ -45,10 +45,10 @@ scalar variables.
 %setup -q -n Readonly-XS-%{version}
 
 # Build process does not actually need perl(Readonly)
-%patch0
+%patch 0
 
 # Fix script interpreter for test suite since we're packaging it
-%patch1
+%patch 1
 
 # And tests don't need to be executable either
 chmod -c -x t/test.t
@@ -79,6 +79,9 @@ make test
 %{_mandir}/man3/Readonly::XS.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.05-38
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.05-37
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

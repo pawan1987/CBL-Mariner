@@ -1,6 +1,6 @@
 Name:           perl-File-Find-Rule-Perl
 Version:        1.15
-Release:        17%{?dist}
+Release:        18%{?dist}
 Summary:        Common rules for searching for Perl things
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -29,7 +29,7 @@ Common rules for searching for Perl things.
 
 %prep
 %setup -q -n File-Find-Rule-Perl-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1
@@ -48,6 +48,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.15-18
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.15-17
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

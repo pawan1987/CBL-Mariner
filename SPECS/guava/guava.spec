@@ -17,7 +17,7 @@
 Summary:        Google Core Libraries for Java
 Name:           guava
 Version:        25.0
-Release:        7%{?dist}
+Release:        8%{?dist}
 License:        Apache-2.0 AND CC0-1.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -63,8 +63,8 @@ guava-testlib provides additional functionality for conveninent unit testing
 
 %prep
 %setup -q -a1
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 find . -name '*.jar' -delete
 
@@ -142,6 +142,9 @@ cp -r %{name}-testlib/target/site/apidocs %{buildroot}%{_javadocdir}/%{name}/%{n
 %files testlib -f .mfiles-guava-testlib
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 25.0-8
+- Updating the usage of the '%%patch' macro.
+
 * Wed Aug 23 2023 Dallas Delaney <dadelan@microsoft.com> 25.0-7
 - Add patch for CVE-2020-8908
 

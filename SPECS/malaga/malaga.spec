@@ -1,7 +1,7 @@
 Summary:        A programming language for automatic language analysis
 Name:           malaga
 Version:        7.12
-Release:        32%{?dist}
+Release:        33%{?dist}
 License:        GPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -51,10 +51,10 @@ Library files for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
 # Remove "@" marks so that the build process is more verbose
 sed -i.debug -e 's|^\([ \t][ \t]*\)@|\1|' Makefile.in
 # Remove "-s" so binaries won't be stripped
@@ -101,6 +101,9 @@ chmod 0755 %{buildroot}%{_libdir}/libmalaga.so*
 %{_includedir}/malaga.h
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 7.12-33
+- Updating the usage of the '%%patch' macro.
+
 * Fri Sep 16 2022 Osama Esmail <osamaesmail@microsoft.com> - 7.12-32
 - Moved from SPECS-EXTENDED to SPECS
 - License verified

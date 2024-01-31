@@ -8,7 +8,7 @@ Name:           perl-XML-LibXML
 # it might not be needed anymore
 # this module is maintained, the other is not
 Version:        2.0207
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Perl interface to the libxml2 library
 License:        (GPL+ or Artistic) and MIT
 URL:            https://metacpan.org/release/XML-LibXML
@@ -113,8 +113,8 @@ with "%{_libexecdir}/%{name}/test".
 
 %prep
 %setup -q -n XML-LibXML-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 chmod -x *.c
 for i in Changes; do
   /usr/bin/iconv -f iso8859-1 -t utf-8 $i > $i.conv && /bin/mv -f $i.conv $i
@@ -183,6 +183,9 @@ fi
 %{_libexecdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0207-8
+- Updating the usage of the '%%patch' macro.
+
 * Tue Jul 26 2022 Henry Li <lihl@microsoft.com> - 2.0207-7
 - Initial CBL-Mariner import from Fedora 37 (license: MIT)
 - License Verified

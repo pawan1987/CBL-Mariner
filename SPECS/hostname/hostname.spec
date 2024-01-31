@@ -1,7 +1,7 @@
 Summary:        Utility to set/show the host name or domain name
 Name:           hostname
 Version:        3.23
-Release:        8%{?dist}
+Release:        9%{?dist}
 License:        GPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -24,7 +24,7 @@ DNS name, and to display or set its hostname or NIS domain name.
 %prep
 %setup -q -n hostname
 cp %{SOURCE1} %{SOURCE2} %{SOURCE3} .
-%patch1 -p1
+%patch 1 -p1
 
 %build
 make CFLAGS="%{optflags} $CFLAGS -D_GNU_SOURCE" LDFLAGS="$RPM_LD_FLAGS"
@@ -60,6 +60,9 @@ fi
 %{_libexecdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.23-9
+- Updating the usage of the '%%patch' macro.
+
 * Tue Nov 01 2022 Riken Maharjan <rmaharjan@microsoft.com> - 3.23-8
 - License verified
 - Initial CBL-Mariner import from Fedora 37 (license: MIT).

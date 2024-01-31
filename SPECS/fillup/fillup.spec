@@ -18,7 +18,7 @@
 Summary:        Tool for Merging Config Files
 Name:           fillup
 Version:        1.42
-Release:        278%{?dist}
+Release:        279%{?dist}
 License:        GPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -45,14 +45,14 @@ its variable name.
 
 %prep
 %setup -q
-%patch0
-%patch1 -p1
-%patch2
-%patch3
-%patch4
-%patch5
-%patch6 -p1
-%patch7 -p1
+%patch 0
+%patch 1 -p1
+%patch 2
+%patch 3
+%patch 4
+%patch 5
+%patch 6 -p1
+%patch 7 -p1
 
 %build
 mkdir -p OBJ
@@ -75,6 +75,9 @@ make %{?_smp_mflags} test    OPTISPLUS="%{optflags}"
 %{_mandir}/man8/fillup*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.42-279
+- Updating the usage of the '%%patch' macro.
+
 * Mon Mar 07 2022 Muhammad Falak <mwani@microsoft.com> - 1.42.278
 - Introduce patch to fix ptest
 

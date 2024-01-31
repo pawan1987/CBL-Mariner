@@ -1,7 +1,7 @@
 Summary:        Basic and advanced IPV4-based networking
 Name:           iproute
 Version:        5.15.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        GPLv2
 URL:            https://www.kernel.org/pub/linux/utils/net/iproute2
 Group:          Applications/System
@@ -37,7 +37,7 @@ you will need to install %{name}-devel.
 sed -i /ARPD/d Makefile
 sed -i 's/arpd.8//' man/man8/Makefile
 sed -i 's/m_ipt.o//' tc/Makefile
-%patch0 -p1
+%patch 0 -p1
 
 %build
 # Not an autoconf configure file
@@ -71,6 +71,9 @@ sed -i 's/\"libnetlink.h\"/"..\/include\/libnetlink.h\"/g' ../lib/libnetlink.c
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.15.0-4
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 5.15.0-3
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

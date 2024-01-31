@@ -2,7 +2,7 @@
 Summary:        Alternative C/C++ preprocessor
 Name:           mcpp
 Version:        2.7.2
-Release:        28%{?dist}
+Release:        29%{?dist}
 License:        BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -51,9 +51,9 @@ This package provides an html manual for mcpp.
 
 %prep
 %setup -q
-%patch0 -b -z.euc-jp
-%patch1 -p1
-%patch2 -p1
+%patch 0 -b -z.euc-jp
+%patch 1 -p1
+%patch 2 -p1
 
 %build
 %configure --enable-mcpplib --disable-static
@@ -89,6 +89,9 @@ rm -f %{buildroot}%{_libdir}/libmcpp.la
 %lang(ja) %doc doc-jp/mcpp-manual-jp.html
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.7.2-29
+- Updating the usage of the '%%patch' macro.
+
 * Mon Jun 27 2022 Daniel McIlvaney <damcilva@microsoft.com> - 2.7.2-28
 - Add inline comments to patch.mcpp.2.7.2 patch file to indicate it fixes CVE-2019-14274.
 

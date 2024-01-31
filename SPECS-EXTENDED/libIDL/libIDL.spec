@@ -1,7 +1,7 @@
 Summary: Library for parsing IDL (Interface Definition Language)
 Name: libIDL
 Version: 0.8.14
-Release: 23%{?dist}
+Release: 24%{?dist}
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL: http://ftp.gnome.org/pub/gnome/sources/libIDL/0.8/
@@ -32,7 +32,7 @@ or compile programs that use libIDL.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .multilib
+%patch 0 -p1 -b .multilib
 
 %build
 %configure
@@ -60,6 +60,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*a
 %{_infodir}/libIDL2.info.*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.8.14-24
+- Updating the usage of the '%%patch' macro.
+
 * Wed Nov 03 2021 Muhammad Falak <mwani@microsft.com> - 0.8.14-23
 - Remove epoch from pkgconfig
 
@@ -291,4 +294,3 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*a
 * Thu Sep 27 2001 Havoc Pennington <hp@redhat.com>
 - initial build of standalone libIDL
 - fix braindamage
-

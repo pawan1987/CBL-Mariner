@@ -30,7 +30,7 @@
 Summary:        A text mode mail user agent
 Name:           mutt
 Version:        2.2.12
-Release:        1%{?dist}
+Release:        2%{?dist}
 # The entire source code is GPLv2+ except
 # pgpewrap.c setenv.c sha1.c wcwidth.c which are Public Domain
 License:        GPLv2+ AND Public Domain
@@ -82,17 +82,17 @@ for selecting groups of messages.
 %setup -q
 # do not run ./prepare -V, because it also runs ./configure
 
-%patch10 -p1 -b .lynx_no_backscapes
-%patch12 -p1 -b .nodotlock
+%patch 10 -p1 -b .lynx_no_backscapes
+%patch 12 -p1 -b .nodotlock
 
 autoreconf --install
-%patch1 -p1 -b .muttrc
-%patch2 -p1 -b .cabundle
-%patch3 -p1 -b .syncdebug
-%patch8 -p1 -b .system_certs
-%patch9 -p1 -b .ssl_ciphers
-%patch13 -p1 -b .optusegpgagent
-%patch14 -p1
+%patch 1 -p1 -b .muttrc
+%patch 2 -p1 -b .cabundle
+%patch 3 -p1 -b .syncdebug
+%patch 8 -p1 -b .system_certs
+%patch 9 -p1 -b .ssl_ciphers
+%patch 13 -p1 -b .optusegpgagent
+%patch 14 -p1
 
 sed -i -r 's/`$GPGME_CONFIG --libs`/"\0 -lgpg-error"/' configure
 
@@ -210,6 +210,9 @@ ln -sf ./muttrc.5 %{buildroot}%{_mandir}/man5/muttrc.local.5
 %{_infodir}/mutt.info.*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.2.12-2
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Archana Choudhary <archana1@microsoft.com> - 2.2.12-1
 - Upgrade to 2.2.12 -  CVE-2022-1328 CVE-2023-4875  CVE-2023-4874
 - Update Patches

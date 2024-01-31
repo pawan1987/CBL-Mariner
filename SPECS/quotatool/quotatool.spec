@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           quotatool
 Version:        1.6.2
-Release:        24%{?dist}
+Release:        25%{?dist}
 Summary:        Command-line utility for filesystem quotas
 License:        GPLv2
 URL:            http://quotatool.ekenberg.se
@@ -25,11 +25,11 @@ scripts and other non-interactive situations.
 
 %prep
 %setup -q
-%patch0 -p1 -b .fix-compiler-warnings
-%patch1 -p1 -b .fix-implicit-fallthrough
-%patch2 -p1 -b .make-sure-make-clean-works-if-configure-has-not-run
-%patch3 -p1 -b .improved-error-message
-%patch4 -p1 -b .fix-compiler-warnings-again
+%patch 0 -p1 -b .fix-compiler-warnings
+%patch 1 -p1 -b .fix-implicit-fallthrough
+%patch 2 -p1 -b .make-sure-make-clean-works-if-configure-has-not-run
+%patch 3 -p1 -b .improved-error-message
+%patch 4 -p1 -b .fix-compiler-warnings-again
 
 %build
 %configure
@@ -46,6 +46,9 @@ mkdir -p %{buildroot}%{_mandir}/man8
 %{_mandir}/man8/%{name}.8*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.6.2-25
+- Updating the usage of the '%%patch' macro.
+
 * Wed Dec 13 2023 Sindhu Karri <lakarri@microsoft.com> - 1.6.2-24
 - Initial CBL-Mariner import from Fedora 39 (license: MIT)
 - Source license verified to be GPLv2

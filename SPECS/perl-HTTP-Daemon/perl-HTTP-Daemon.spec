@@ -1,6 +1,6 @@
 Name:           perl-HTTP-Daemon
 Version:        6.06
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Simple HTTP server class
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -60,7 +60,7 @@ IO::Socket::IP, so you can perform socket operations directly on it too.
 
 %prep
 %setup -q -n HTTP-Daemon-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
@@ -83,6 +83,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 6.06-5
+- Updating the usage of the '%%patch' macro.
+
 * Tue Jul 26 2022 Henry Li <lihl@microsoft.com> - 6.06-4
 - License Verified
 

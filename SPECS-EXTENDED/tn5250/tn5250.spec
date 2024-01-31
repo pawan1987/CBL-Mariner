@@ -6,7 +6,7 @@ Distribution:   Mariner
 Summary:   5250 Telnet protocol and Terminal
 Name:      tn5250
 Version:   0.17.4
-Release:   26%{?dist}
+Release:   27%{?dist}
 License:   LGPLv2+
 Source:    http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1:   xt5250.desktop
@@ -40,7 +40,7 @@ Libraries and header files to use with lib5250.
 
 %prep
 %setup -q
-%patch0 -p1 -b .fedora
+%patch 0 -p1 -b .fedora
 
 autoreconf -vfi
 
@@ -91,6 +91,9 @@ cp -pf linux/README README.Linux
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.17.4-27
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.17.4-26
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

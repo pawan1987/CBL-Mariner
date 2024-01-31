@@ -20,7 +20,7 @@ Distribution:   Mariner
 
 Name:           xpp3
 Version:        1.1.4c
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        XML Pull Parser
 License:        Apache-1.1
 Group:          Development/Libraries/Java
@@ -69,7 +69,7 @@ Hotspot in JDK 1.4.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
 # "src/java/addons_tests" does not exist
@@ -139,6 +139,9 @@ install -p -m 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/%{name}-xpath.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.4c-7
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.4c-6
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

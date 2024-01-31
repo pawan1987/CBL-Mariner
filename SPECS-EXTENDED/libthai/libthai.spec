@@ -1,7 +1,7 @@
 Summary:  Thai language support routines
 Name: libthai
 Version: 0.1.28
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: LGPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -32,7 +32,7 @@ libthai.
 
 %prep
 %setup -q
-%patch0 -p1 -b .multilib
+%patch 0 -p1 -b .multilib
 
 %build
 %configure --disable-static
@@ -58,6 +58,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.1.28-6
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 02 2020 Joe Schmitt <joschmit@microsoft.com> - 0.1.28-5
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Remove doxygen dependency.

@@ -5,7 +5,7 @@ Distribution:   Mariner
 
 Name:       ibus-hangul
 Version:    1.5.4
-Release:    2%{?dist}
+Release:    3%{?dist}
 Summary:    The Hangul engine for IBus input platform
 License:    GPLv2+
 URL:        https://github.com/libhangul/ibus-hangul
@@ -36,7 +36,7 @@ libhangul.
 
 %prep
 %setup -q
-%patch1 -p1 -b .setup-abspath
+%patch 1 -p1 -b .setup-abspath
 
 # autopoint -f
 # AUTOPOINT='intltoolize --automake --copy' autoreconf -fi
@@ -116,6 +116,9 @@ desktop-file-validate ${RPM_BUILD_ROOT}%{_datadir}/applications/ibus-setup-hangu
 %{_datadir}/icons/hicolor/*/apps/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.4-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.4-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 

@@ -22,7 +22,7 @@
 Summary:        Influx data language
 Name:           flux
 Version:        0.191.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -71,7 +71,7 @@ programs using Influx data language.
 
 %prep
 %setup -q
-%patch2 -p1
+%patch 2 -p1
 pushd libflux
 tar -xf %{SOURCE1}
 install -D %{SOURCE2} .cargo/config
@@ -139,6 +139,9 @@ RUSTFLAGS=%{rustflags} cargo test --release
 %{_includedir}/influxdata/flux.h
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.191.0-4
+- Updating the usage of the '%%patch' macro.
+
 * Thu Sep 14 2023 Muhammad Falak <mwani@microsoft.com> - 0.191.0-3
 - Introduce patch to drop warnings as build blocker
 

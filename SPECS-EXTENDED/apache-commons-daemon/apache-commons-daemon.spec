@@ -21,7 +21,7 @@ Distribution:   Mariner
 %define short_name commons-daemon
 Name:           apache-%{short_name}
 Version:        1.2.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Commons Daemon - Controlling of Java Daemons
 License:        Apache-2.0
 Group:          System/Daemons
@@ -78,8 +78,8 @@ The Javadoc Documentation for Commons Daemon.
 %prep
 %setup -q -n %{short_name}-%{version}-src
 cp %{SOURCE10} build.xml
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 # remove java binaries from sources
 rm -rf src/samples/build/
@@ -142,6 +142,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.3-3
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.3-2
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

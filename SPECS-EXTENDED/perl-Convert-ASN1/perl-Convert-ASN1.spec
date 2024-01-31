@@ -6,7 +6,7 @@ Distribution:   Mariner
 Summary:        ASN.1 encode/decode library
 Name:           perl-Convert-ASN1
 Version:        0.27
-Release:        21%{?dist}
+Release:        22%{?dist}
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Convert-ASN1
 Source0:        https://cpan.metacpan.org/authors/id/G/GB/GBARR/Convert-ASN1-%{version}.tar.gz#/perl-Convert-ASN1-%{version}.tar.gz
@@ -77,9 +77,9 @@ with "%{_libexecdir}/%{name}/test".
 
 %prep
 %setup -q -n Convert-ASN1-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
 chmod +x t/*.t
 
 %build
@@ -111,6 +111,9 @@ make test
 %{_libexecdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.27-22
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 01 2021 Muhammad Falak <mwani@microsft.com> - 0.27-21
 - Remove epoch
 

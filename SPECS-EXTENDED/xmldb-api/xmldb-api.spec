@@ -22,7 +22,7 @@ Distribution:   Mariner
 %define cvs_version 20041010
 Name:           xmldb-api
 Version:        0.1
-Release:        28%{?dist}
+Release:        29%{?dist}
 Summary:        XML:DB API for Java
 License:        Apache-1.1
 Url:            http://xmldb-org.sourceforge.net
@@ -90,7 +90,7 @@ implementation is also provided.
 
 %prep
 %setup -q -n xapi
-%patch0 -p1
+%patch 0 -p1
 find . -name "*.jar" | xargs -t rm
 # FIXME: (dwalluck): These use org.apache.xalan.xpath
 rm src/common/org/xmldb/common/xml/queries/xalan/XPathQueryImpl.java
@@ -140,6 +140,9 @@ cp -pr src/build/javadoc/full/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.1-29
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Mateusz Malisz <mamalisz@microsoft.com> - 0.1-28
 - Update Source0
 - Improve formatting

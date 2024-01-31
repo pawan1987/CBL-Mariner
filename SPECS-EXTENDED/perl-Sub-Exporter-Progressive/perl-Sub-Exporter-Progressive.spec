@@ -3,7 +3,7 @@
 
 Name:		perl-Sub-Exporter-Progressive
 Version:	0.001013
-Release:	12%{?dist}
+Release:	13%{?dist}
 Summary:	Only use Sub::Exporter if you need it
 License:	GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -53,7 +53,7 @@ might as well use it directly.
 
 # We need to patch the test suite if we have old versions of Test::More
 %if %{old_test_more}
-%patch1
+%patch 1
 %endif
 
 %build
@@ -80,6 +80,9 @@ make test
 %{_mandir}/man3/Sub::Exporter::Progressive.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.001013-13
+- Updating the usage of the '%%patch' macro.
+
 * Wed Apr 28 2021 Thomas Crain <thcrain@microsoft.com> - 0.001013-12
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Remove colons from patchnames

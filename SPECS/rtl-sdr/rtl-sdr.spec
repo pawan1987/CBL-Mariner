@@ -2,7 +2,7 @@
 Summary:        SDR utilities for Realtek RTL2832 based DVB-T dongles
 Name:           rtl-sdr
 Version:        0.6.0
-Release:        12%{?dist}
+Release:        13%{?dist}
 License:        GPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -27,7 +27,7 @@ Development files for rtl-sdr.
 
 %prep
 %setup -q -n librtlsdr-%{version}
-%patch0 -p1
+%patch 0 -p1
 rm -f src/getopt/*
 rmdir src/getopt
 
@@ -65,6 +65,9 @@ exit 0
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.6.0-13
+- Updating the usage of the '%%patch' macro.
+
 * Tue Feb 08 2022 Neha Agarwal <nehaagarwal@microsoft.com> - 0.6.0-12
 - Initial CBL-Mariner import from Fedora 36 (license: MIT)
 - License verified

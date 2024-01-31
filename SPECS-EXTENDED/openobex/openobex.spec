@@ -5,7 +5,7 @@ Distribution:   Mariner
 Summary: Library for using OBEX
 Name: openobex
 Version: 1.7.2
-Release: 12%{?dist}
+Release: 13%{?dist}
 License: GPLv2+ and LGPLv2+
 URL: http://openobex.sourceforge.net
 # git clone https://git.gitorious.org/openobex/mainline.git
@@ -45,10 +45,10 @@ calendar entries (vCal) and business cards (vCard) using the OBEX protocol.
 
 %prep
 %setup -q -n %{name}-%{version}-Source
-%patch0 -p1 -b .flush
-%patch1 -p1 -b .push
-%patch2 -p1 -b .udev
-%patch3 -p1 -b .strtoul
+%patch 0 -p1 -b .flush
+%patch 1 -p1 -b .push
+%patch 2 -p1 -b .udev
+%patch 3 -p1 -b .strtoul
 
 %build
 export CFLAGS="%{optflags} -std=gnu99 -D_POSIX_C_SOURCE=200809L -D_DEFAULT_SOURCE"
@@ -105,6 +105,9 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/obex_test.1*
 %{_mandir}/man1/obex_push.1*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.7.2-13
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.7.2-12
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -327,5 +330,3 @@ rm -f $RPM_BUILD_ROOT%{_mandir}/man1/obex_test.1*
 
 * Thu May 18 2000 Pontus Fuchs <pontus.fuchs@tactel.se>
 - Initial RPM
-
-

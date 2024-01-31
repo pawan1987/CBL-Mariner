@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           wsmancli
 Version:        2.6.0
-Release:        13%{?dist}
+Release:        14%{?dist}
 License:        BSD
 Url:            http://www.openwsman.org/
 Source0:        https://github.com/Openwsman/wsmancli/archive/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -21,7 +21,7 @@ systems using Web Services Management protocol.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 cp -fp %SOURCE1 %SOURCE2 %SOURCE3 .;
 
 %build
@@ -42,6 +42,9 @@ make DESTDIR=%{buildroot} install
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6.0-14
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Mateusz Malisz <mamalisz@microsoft.com> - 2.6.0-13
 - Update Source0
 - Improve formatting

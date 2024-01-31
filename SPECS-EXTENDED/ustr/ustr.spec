@@ -27,7 +27,7 @@
 
 Name: ustr
 Version: 1.0.4
-Release: 31%{?dist}
+Release: 32%{?dist}
 Summary: String library, very low memory overhead, simple to import
 License: MIT or LGPLv2+ or BSD
 Vendor:         Microsoft Corporation
@@ -83,7 +83,7 @@ Requires: %{name}-debug = %{version}-%{release}
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 %build
 make %{?_smp_mflags} all-shared CFLAGS="${CFLAGS:-%optflags}  -fgnu89-inline" \
@@ -143,6 +143,9 @@ make $@ %{ustr_make_install} prefix=%{_prefix} \
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.4-32
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.4-31
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -294,4 +297,3 @@ make $@ %{ustr_make_install} prefix=%{_prefix} \
 
 * Mon May 14 2007 James Antill <james@and.org> - 0.98.1-0
 - Initial spec
-

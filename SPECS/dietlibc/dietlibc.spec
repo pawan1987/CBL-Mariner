@@ -11,7 +11,7 @@
 Summary:        Small libc implementation
 Name:           dietlibc
 Version:        0.34
-Release:        6%{?dist}
+Release:        7%{?dist}
 License:        GPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -61,7 +61,7 @@ This package contains the dynamic libraries for dietlibc.
 %prep
 %setup -q
 
-%patch1
+%patch 1
 
 %if %{without ssp}
 sed -i -e 's!^#define WANT_SSP$!// \0!g;
@@ -127,6 +127,9 @@ ulimit -m $[ 128*1024 ] -v $[ 256*1024 ] -d $[ 128*1024 ] -s 512
 %{pkglibdir}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.34-7
+- Updating the usage of the '%%patch' macro.
+
 * Tue Mar 29 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.34-6
 - License verified.
 

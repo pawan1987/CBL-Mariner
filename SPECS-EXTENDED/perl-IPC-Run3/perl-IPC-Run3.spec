@@ -1,6 +1,6 @@
 Name:           perl-IPC-Run3
 Version:        0.048
-Release:        19%{?dist}
+Release:        20%{?dist}
 Summary:        Run a subprocess in batch mode
 License:        GPL+ or Artistic or BSD
 Vendor:         Microsoft Corporation
@@ -40,7 +40,7 @@ API and none of the bloat and rarely used features of IPC::Run.
 
 %prep
 %setup -q -n IPC-Run3-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 # Perms in tarballs are broken 
 find -type f -exec chmod -x {} \;
@@ -63,6 +63,9 @@ make test RELEASE_TESTING=1
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.048-20
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.048-19
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

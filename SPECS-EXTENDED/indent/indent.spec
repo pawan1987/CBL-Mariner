@@ -5,7 +5,7 @@ Distribution:   Mariner
 Summary:    A GNU program for formatting C code
 Name:       indent
 Version:    2.2.12
-Release:    6%{?dist}
+Release:    7%{?dist}
 # COPYING:                      GPLv3 text
 # doc/indent.info:              Verbatim (generated from doc/indent.texi)
 #   <http://lists.gnu.org/archive/html/bug-indent/2018-09/msg00008.html>
@@ -68,9 +68,9 @@ you want a program to format your code.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
 # Regenerate sources
 rm src/gperf.c src/gperf-cc.c
 # Update config.sub to support aarch64, bug #925588
@@ -100,6 +100,9 @@ make check
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.2.12-7
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jun 17 2021 Thomas Crain <thcrain@microsoft.com> - 2.2.12-6
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Conditionally build tex-based documentation

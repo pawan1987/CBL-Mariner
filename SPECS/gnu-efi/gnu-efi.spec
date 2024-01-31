@@ -1,7 +1,7 @@
 Summary:        Development Libraries and headers for EFI
 Name:           gnu-efi
 Version:        3.0.9
-Release:        10%{?dist}
+Release:        11%{?dist}
 License:        BSD
 URL:            https://sourceforge.net/projects/gnu-efi
 Vendor:         Microsoft Corporation
@@ -45,7 +45,7 @@ applications that run under EFI (Extensible Firmware Interface).
 
 %prep
 %setup -q -n gnu-efi-%{version}
-%patch0001 -p1
+%patch 0001 -p1
 
 %build
 # Remove gcc's ldflags because gnu-efi uses ld directly.
@@ -74,6 +74,9 @@ mv %{buildroot}/%{_libdir}/*.lds %{buildroot}/%{_libdir}/*.o %{buildroot}/%{_lib
 %{_includedir}/efi
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.0.9-11
+- Updating the usage of the '%%patch' macro.
+
 * Wed Mar 23 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.0.9-10
 - Updating 'Source' URL.
 

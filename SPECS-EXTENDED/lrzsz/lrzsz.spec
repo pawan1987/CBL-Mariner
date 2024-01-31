@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: The lrz and lsz modem communications programs
 Name: lrzsz
 Version: 0.12.20
-Release: 50%{?dist}
+Release: 51%{?dist}
 License: GPLv2+
 Source: http://www.ohse.de/uwe/releases/%{name}-%{version}.tar.gz
 Patch1: lrzsz-0.12.20-glibc21.patch
@@ -22,10 +22,10 @@ copylefted Zmodem solution for Linux systems.
 %prep
 %setup -q
 
-%patch1 -p1 -b .glibc21
-%patch2 -p1 -b .crc
-%patch3 -p1 -b .man
-%patch4 -p1 -b .aarch64
+%patch 1 -p1 -b .glibc21
+%patch 2 -p1 -b .crc
+%patch 3 -p1 -b .man
+%patch 4 -p1 -b .aarch64
 
 rm -f po/*.gmo
 
@@ -48,6 +48,9 @@ for m in sb sx; do ln -s sz.1 %{buildroot}%{_mandir}/man1/$m.1; done
 %{_mandir}/*/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.12.20-51
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.12.20-50
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

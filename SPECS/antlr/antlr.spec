@@ -21,7 +21,7 @@
 Summary:        Another Tool for Language Recognition
 Name:           antlr
 Version:        2.7.7
-Release:        124%{?dist}
+Release:        125%{?dist}
 License:        Public Domain
 Group:          Development/Tools/Other
 Vendor:         Microsoft Corporation
@@ -120,12 +120,12 @@ find . -name "*.jar" -exec rm -f {} \;
 find . -name "*.exe" -exec rm -f {} \;
 find . -name "*.dll" -exec rm -f {} \;
 find . -name Makefile.in | xargs chmod 0644
-%patch0
+%patch 0
 cp -p %{SOURCE1} build.xml
 #Fix the source so that it compiles with GCC 4.5
-%patch1 -p1
+%patch 1 -p1
 #Ensure that the manuals are installed in the correct openSUSE docpath
-%patch2
+%patch 2
 # check for license problematic files:
 find | grep "\(ShowString.java$\|StreamConverter.java$\)" && exit 42 || :
 
@@ -209,6 +209,9 @@ find doc -type f | xargs chmod 0644
 %endif
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.7.7-125
+- Updating the usage of the '%%patch' macro.
+
 * Fri Apr 29 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.7.7-124
 - Fixing source URL.
 

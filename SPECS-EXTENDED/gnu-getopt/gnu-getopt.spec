@@ -20,7 +20,7 @@ Distribution:   Mariner
 
 Name:           gnu-getopt
 Version:        1.0.14
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Java getopt Implementation
 License:        GPLv2
 Group:          Development/Libraries/Java
@@ -55,7 +55,7 @@ classes.
 
 %prep
 %setup -q -c
-%patch0
+%patch 0
 mv gnu/getopt/buildx.xml build.xml
 
 %build
@@ -83,6 +83,9 @@ cp -a build/api/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.14-4
+- Updating the usage of the '%%patch' macro.
+
 * Wed Jan 12 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.14-3
 - License verified.
 

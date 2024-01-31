@@ -1,6 +1,6 @@
 Name:           perl-Paper-Specs
 Version:        0.10
-Release:        23%{?dist}
+Release:        24%{?dist}
 Summary:        Size and layout information for paper stock, forms, and labels
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -26,7 +26,7 @@ This package provides features such as:
 
 %prep
 %setup -q -n Paper-Specs-%{version}
-%patch0 -p1 
+%patch 0 -p1 
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
@@ -49,6 +49,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.10-24
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.10-23
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

@@ -1,7 +1,7 @@
 Summary:	ltrace intercepts and records dynamic library calls.
 Name:		ltrace
 Version:	0.7.3
-Release:        8%{?dist}
+Release:        9%{?dist}
 License:	GPLv2+
 URL:		http://www.ltrace.org/
 Group:		Development/Debuggers
@@ -22,11 +22,11 @@ ltrace intercepts and records dynamic library calls which are called by an execu
 %prep
 %setup -q
 %ifarch aarch64
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
 %endif
 
 %build
@@ -50,6 +50,9 @@ make %{?_smp_mflags} check
 %{_datadir}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.7.3-9
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 0.7.3-8
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

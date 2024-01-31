@@ -24,7 +24,7 @@ Distribution:   Mariner
 Summary: UW Server daemons for IMAP and POP network mail protocols
 Name:	 uw-imap 
 Version: 2007f
-Release: 26%{?dist}
+Release: 27%{?dist}
 
 # See LICENSE.txt, http://www.apache.org/licenses/LICENSE-2.0
 License: ASL 2.0 
@@ -157,13 +157,13 @@ This package contains some utilities for managing UW IMAP email,including:
 %prep
 %setup -q -n imap-%{version}%{?dev}%{?snap}
 
-%patch1 -p1 -b .paths
-%patch2 -p1 -b .doc
+%patch 1 -p1 -b .paths
+%patch 2 -p1 -b .doc
 
-%patch5 -p1 -b .overflow
+%patch 5 -p1 -b .overflow
 
-%patch9 -p1 -b .shared
-%patch10 -p1 -b .authmd5
+%patch 9 -p1 -b .shared
+%patch 10 -p1 -b .authmd5
 
 
 install -p -m644 %{SOURCE20} imap.pam
@@ -175,13 +175,13 @@ install -p -m644 %{SOURCE20} imap.pam
 
 
 %if 0%{?_with_system_libc_client}
-%patch11 -p1 -b .system_c_client
+%patch 11 -p1 -b .system_c_client
 %endif
 
-%patch12 -p1 -b .fmt-sec
-%patch13 -p1 -b .poll
-%patch14 -p1 -b .openssl11
-%patch15 -p1 -b .ldflags
+%patch 12 -p1 -b .fmt-sec
+%patch 13 -p1 -b .poll
+%patch 14 -p1 -b .openssl11
+%patch 15 -p1 -b .ldflags
 
 
 %build
@@ -348,6 +348,9 @@ done
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2007f-27
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2007f-26
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -694,4 +697,3 @@ done
 * Sat Feb 14 2004 Kaj J. Niemi <kajtzu@fi.basen.net> 0:2002e-0.1
 - c-client 2002e is based on imap-2002d
 - Build shared version, build logic is copied from FreeBSD net/cclient
-

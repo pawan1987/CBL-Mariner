@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary:	A sophisticated file transfer program
 Name:		lftp
 Version:	4.9.2
-Release:	2%{?dist}
+Release:	3%{?dist}
 License:	GPLv3+
 Source0:	http://lftp.yar.ru/ftp/%{name}-%{version}.tar.xz
 URL:		http://lftp.yar.ru/
@@ -30,7 +30,7 @@ Utility scripts for use with lftp.
 %prep
 %setup -q
 
-%patch1 -p1 -b .date_fmt
+%patch 1 -p1 -b .date_fmt
 
 #sed -i.rpath -e '/lftp_cv_openssl/s|-R.*lib||' configure
 sed -i.norpath -e \
@@ -93,6 +93,9 @@ desktop-file-install	\
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.9.2-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.9.2-2
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

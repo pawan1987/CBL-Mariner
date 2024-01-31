@@ -4,7 +4,7 @@ Distribution:   Mariner
 Name:          %{srcname}
 Version:       0.5
 # Used like this because upstream releases like 0.5-0
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       Python xmlstream and jabber IM protocol libs
 
 License:       LGPLv2+
@@ -40,12 +40,12 @@ This module contains python3 bindings.
 %prep
 %setup -q -n %{srcname}-%{version}-0
 chmod -x examples/*.py
-%patch0 -p1 -b .no-init
-%patch1 -p1 -b .clean-sockets
-%patch2 -p0 -b .ipv6
-%patch3 -p0 -b .sha-deprecation
-%patch4 -p1 -b .proxy
-%patch5 -p1 -b .python3
+%patch 0 -p1 -b .no-init
+%patch 1 -p1 -b .clean-sockets
+%patch 2 -p0 -b .ipv6
+%patch 3 -p0 -b .sha-deprecation
+%patch 4 -p1 -b .proxy
+%patch 5 -p1 -b .python3
 
 mv %{SOURCE1} ./LICENSE.txt
 
@@ -61,6 +61,9 @@ mv %{SOURCE1} ./LICENSE.txt
 %{python3_sitelib}/jabber*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.5-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Dec 11 2021 Thomas Crain <thcrain@microsoft.com> - 0.5-2
 - License verified
 

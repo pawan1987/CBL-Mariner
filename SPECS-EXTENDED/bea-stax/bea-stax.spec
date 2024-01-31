@@ -22,7 +22,7 @@ Distribution:   Mariner
 %global apiver  1.0.1
 Name:           bea-stax
 Version:        1.2.0
-Release:        39%{?dist}
+Release:        40%{?dist}
 Summary:        Streaming API for XML
 License:        ASL 2.0
 Group:          Development/Libraries/Java
@@ -62,8 +62,8 @@ Streaming API for XML
 
 %prep
 %setup -q -c
-%patch0 -b .target15
-%patch2 -b .gcj-build
+%patch 0 -b .target15
+%patch 2 -b .gcj-build
 cp %{SOURCE10} LICENSE
 
 %build
@@ -106,6 +106,9 @@ install -p -m 0644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/%{name}-api-%{version}
 %endif
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.0-40
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.0-39
 - Updating source URLs.
 - License verified.

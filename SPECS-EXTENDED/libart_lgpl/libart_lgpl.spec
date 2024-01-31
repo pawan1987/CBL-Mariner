@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name: libart_lgpl
 Version: 2.3.21
-Release: 24%{?dist}
+Release: 25%{?dist}
 Summary: Library of graphics routines used by libgnomecanvas
 URL: http://www.gnome.org/
 Source0: http://download.gnome.org/sources/libart_lgpl/2.3/%{name}-%{version}.tar.bz2
@@ -27,7 +27,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .multilib
+%patch 0 -p1 -b .multilib
 
 %build
 libtoolize
@@ -74,6 +74,9 @@ EOF
 %{_includedir}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.21-25
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.21-24
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -275,5 +278,3 @@ EOF
 
 * Thu Sep 13 2001 Havoc Pennington <hp@redhat.com>
 - Initial build.
-
-

@@ -4,7 +4,7 @@ Name: hyphen-hsb
 Summary: Upper Sorbian hyphenation rules
 %global upstreamid 20110620
 Version: 0.%{upstreamid}
-Release: 17%{?dist}
+Release: 18%{?dist}
 #Source0: http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-hsb.tex?view=co
 Source0: hyph-hsb.tex
 Source1: %{name}-LICENSE.txt
@@ -22,7 +22,7 @@ Upper Sorbian hyphenation rules.
 %prep
 %setup -T -q -c -n hyphen-hsb
 cp -p %{SOURCE0} .
-%patch0 -p0 -b .clean
+%patch 0 -p0 -b .clean
 cp %{SOURCE1} ./LICENSE.txt
 
 %build
@@ -42,6 +42,9 @@ cp -p hyph_hsb_DE.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20110620-18
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20110620-17
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

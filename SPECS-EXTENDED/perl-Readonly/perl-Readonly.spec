@@ -1,6 +1,6 @@
 Name:		perl-Readonly
 Version:	2.05
-Release:	12%{?dist}
+Release:	13%{?dist}
 Summary:	Facility for creating read-only scalars, arrays, hashes
 License:	GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -46,7 +46,7 @@ Readonly:
 %setup -q -n Readonly-%{version}
 
 # Fix script interpreter for test suite since we're packaging it
-%patch0
+%patch 0
 
 %build
 perl Build.PL --installdirs=vendor
@@ -65,6 +65,9 @@ perl Build.PL --installdirs=vendor
 %{_mandir}/man3/Readonly.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.05-13
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 30 2020 Joe Schmitt <joschmit@microsoft.com> - 2.05-12
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Always set a BR on perl-generators.

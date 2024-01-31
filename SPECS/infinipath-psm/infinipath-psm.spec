@@ -3,7 +3,7 @@
 Summary:        Intel Performance Scaled Messaging (PSM) Libraries
 Name:           infinipath-psm
 Version:        3.3
-Release:        29%{?dist}
+Release:        30%{?dist}
 License:        GPLv2 OR BSD-3-Clause
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -47,15 +47,15 @@ Development files for the %{name} library.
 
 %prep
 %setup -q -n psm-%{version}
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
+%patch 5 -p1
+%patch 6
+%patch 7 -p1
+%patch 8 -p1
+%patch 9 -p1
 find libuuid -type f -not -name 'psm_uuid.[c|h]' -not -name Makefile -delete
 
 %build
@@ -88,6 +88,9 @@ install -m 0644 %{SOURCE1} %{buildroot}%{_udevrulesdir}/60-ipath.rules
 %{_includedir}/psm_mq.h
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.3-30
+- Updating the usage of the '%%patch' macro.
+
 * Fri Feb 03 2023 Riken Maharjan <rmaharjan@microsoft.com> - 3.3-29
 - Move from extended to Core.
 

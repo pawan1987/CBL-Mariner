@@ -4,7 +4,7 @@
 Summary:        Tool to transform and deploy CPU microcode update for x86
 Name:           microcode_ctl
 Version:        2.1
-Release:        41%{?dist}
+Release:        42%{?dist}
 License:        GPLv2+ and Redistributable, no modification permitted
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -23,7 +23,7 @@ back to the old microcode.
 
 %prep
 %setup -q -n %{name}-%{upstream_version}
-%patch0 -p1
+%patch 0 -p1
 # License not extracted from nested tar by Makefile- do it manually here
 tar --no-anchored --strip-components=1 -xvf microcode*.tar.gz license
 
@@ -40,6 +40,9 @@ make DESTDIR=%{buildroot} PREFIX=%{_prefix} INSDIR=/usr/sbin install clean
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1-42
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 01 2021 Muhammad Falak <mwani@microsft.com> - 2.1-41
 - Remove epoch
 
@@ -386,4 +389,3 @@ make DESTDIR=%{buildroot} PREFIX=%{_prefix} INSDIR=/usr/sbin install clean
 
 * Sat Dec 18 2004 Dave Jones <davej@redhat.com>
 - Initial packaging, based upon kernel-utils.
-

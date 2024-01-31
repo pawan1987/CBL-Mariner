@@ -1,6 +1,6 @@
 Name:           perl-Devel-Cycle
 Version:        1.12
-Release:        18%{?dist}
+Release:        19%{?dist}
 Summary:        Find memory cycles in objects
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -40,7 +40,7 @@ based memory management, circular references will cause memory leaks.
 %setup -q -n Devel-Cycle-%{version}
 
 # Fix a Perl 5.12 incompatibility (#757274, CPAN RT#56681)
-%patch0 -p1
+%patch 0 -p1
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor
@@ -60,6 +60,9 @@ make test
 %{_mandir}/man3/Devel::Cycle.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.12-19
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.12-18
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

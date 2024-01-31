@@ -4,7 +4,7 @@ Name: hyphen-grc
 Summary: Ancient Greek hyphenation rules
 %global upstreamid 20110913
 Version: 0.%{upstreamid}
-Release: 18%{?dist}
+Release: 19%{?dist}
 #Source0: http://tug.org/svn/texhyphen/trunk/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-grc.tex?view=co
 Source0: hyph-grc.tex
 Source1: %{name}-LICENSE.txt
@@ -23,7 +23,7 @@ Ancient Greek hyphenation rules.
 %prep
 %setup -T -q -c -n hyphen-grc
 cp -p %{SOURCE0} hyph-grc.tex
-%patch0 -p0 -b .clean
+%patch 0 -p0 -b .clean
 cp %{SOURCE1} ./LICENSE.txt
 
 %build
@@ -45,6 +45,9 @@ cp -p hyph_grc_GR.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20110913-19
+- Updating the usage of the '%%patch' macro.
+
 * Fri Jul 23 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20110913-18
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Removing unused BR on 'glibc-langpack-el'.

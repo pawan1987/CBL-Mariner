@@ -3,7 +3,7 @@
 Summary:        Command Line XML Toolkit
 Name:           xmlstarlet
 Version:        1.6.1
-Release:        16%{?dist}
+Release:        17%{?dist}
 License:        MIT
 URL:            http://xmlstar.sourceforge.net/
 Vendor:         Microsoft Corporation
@@ -32,7 +32,7 @@ commands.
 
 %prep
 %setup -q
-%patch0 -p1 -b .nogit
+%patch 0 -p1 -b .nogit
 
 
 %build
@@ -60,6 +60,9 @@ make check
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.6.1-17
+- Updating the usage of the '%%patch' macro.
+
 * Fri Aug 21 2020 Thomas Crain <thcrain@microsoft.com> - 1.6.1-16
 - Initial CBL-Mariner import from Fedora 33 (license: MIT)
 - License verified
@@ -205,4 +208,3 @@ make check
 
 * Tue Nov 22 2005 Paul W. Frields <stickster@gmail.com> - 1.0.1-1.1
 - Initial RPM version
-

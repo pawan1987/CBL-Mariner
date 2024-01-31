@@ -1,7 +1,7 @@
 Summary:        The finger client
 Name:           finger
 Version:        0.17
-Release:        4%{?dist}
+Release:        5%{?dist}
 License:        BSD with advertising
 Group:          Applications/Internet
 Vendor:         Microsoft Corporation
@@ -39,8 +39,8 @@ system at the moment or a person.
 
 %prep
 %setup -q -n bsd-finger-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 %build
 sed -i 's/install -s/install/' finger/Makefile
@@ -87,6 +87,9 @@ make -k check |& tee %{_specdir}/%{name}-check-log || %{nocheck}
 %{_mandir}/man8/fingerd.8*
 
 %changelog
+*   Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.17-5
+-   Updating the usage of the '%%patch' macro.
+
 *   Mon Apr 27 2020 Pawel Winogrodzki <pawelwi@microsoft.com> 0.17-4
 -   Fixed 'Source0' tag.
 -   License verified.

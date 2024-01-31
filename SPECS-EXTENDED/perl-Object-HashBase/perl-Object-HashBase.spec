@@ -1,6 +1,6 @@
 Name:           perl-Object-HashBase
 Version:        0.009
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Build hash-based classes
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -52,7 +52,7 @@ also generate the tests for it.
 
 %prep
 %setup -q -n Object-HashBase-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
@@ -79,6 +79,9 @@ make test
 %{_mandir}/man3/Object::HashBase::*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.009-4
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.009-3
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

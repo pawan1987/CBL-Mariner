@@ -21,7 +21,7 @@ Distribution:   Mariner
 %define	cvsversion	20041111
 Name:           isorelax
 Version:        0.1
-Release:        31%{?dist}
+Release:        32%{?dist}
 Summary:        Public interfaces useful for applications to support RELAX Core
 License:        MIT
 Group:          Development/Libraries/Java
@@ -63,7 +63,7 @@ cp %{SOURCE3} test
 chmod -R go=u-w *
 find . -name "*.jar" -exec rm -f {} \;
 rm -rf src/jp/gr/xml/relax/swift
-%patch0 -b .sav0
+%patch 0 -b .sav0
 
 %build
 export CLASSPATH=$(build-classpath \
@@ -94,6 +94,9 @@ install -m 644 %{SOURCE4} %{buildroot}%{_mavenpomdir}/%{name}-%{version}.pom
 %endif
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.1-32
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.1-31
 - Updating source URLs.
 - License verified.

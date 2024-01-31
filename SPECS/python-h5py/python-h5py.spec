@@ -13,7 +13,7 @@ simplifies the process of reading and writing data from Python.
 Summary:        A Python interface to the HDF5 library
 Name:           h5py
 Version:        3.7.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 License:        BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -50,7 +50,7 @@ Requires:       python%{python3_pkgversion}-six
 
 %prep
 %setup -q -c -n %{name}-%{version}
-%patch0
+%patch 0
 mv %{name}-%{version} serial
 cd serial
 %{__python3} api_gen.py
@@ -92,6 +92,9 @@ cd -
 %{python3_sitearch}/%{name}-%{version}-*.egg-info
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.7.0-5
+- Updating the usage of the '%%patch' macro.
+
 * Tue Nov 01 2022 Riken Maharjan <rmaharjan@microsoft.com> - 3.7.0-4
 - License verified
 - Initial CBL-Mariner import from Fedora 37 (license: MIT).

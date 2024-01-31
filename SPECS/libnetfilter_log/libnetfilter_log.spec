@@ -2,7 +2,7 @@
 
 Name:           libnetfilter_log
 Version:        1.0.1
-Release:        22%{?dist}
+Release:        23%{?dist}
 Summary:        Netfilter logging userspace library
 License:        GPLv2
 Vendor:         Microsoft Corporation
@@ -41,7 +41,7 @@ libnetfilter_log is used by ulogd2.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %configure --disable-static --disable-rpath
@@ -70,6 +70,9 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.1-23
+- Updating the usage of the '%%patch' macro.
+
 * Tue Dec 13 2022 Suresh Babu Chalamalasetty <schalam@microsoft.com> - 1.0.1-22
 - Initial CBL-Mariner import from Fedora 37 (license: MIT).
 - License verified.

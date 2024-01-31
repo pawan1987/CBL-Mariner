@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           filebench
 Version:        1.4.9.1
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        A model based file system workload generator
 
 License:        CDDL
@@ -24,7 +24,7 @@ for detailed workload specification.
 
 %prep
 %setup -q
-%patch0 -p1 -b .dofile
+%patch 0 -p1 -b .dofile
 cp -p %{SOURCE1} .
 cp -p %{SOURCE2} .
 
@@ -48,6 +48,9 @@ install -m 644 -p %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/man1
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.9.1-15
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.9.1-14
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

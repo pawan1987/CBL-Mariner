@@ -4,7 +4,7 @@ Name: hyphen-fa
 Summary: Farsi hyphenation rules
 %global upstreamid 20130404
 Version: 0.%{upstreamid}
-Release: 14%{?dist}
+Release: 15%{?dist}
 Source0: http://mirrors.ctan.org/language/hyphenation/fahyph.zip
 Source1: %{name}-LICENSE.txt
 URL: http://www.ctan.org/tex-archive/language/hyphenation/fahyph
@@ -20,7 +20,7 @@ Farsi hyphenation rules.
 
 %prep
 %setup -q -n fahyph
-%patch0 -p1 -b .clean
+%patch 0 -p1 -b .clean
 cp %{SOURCE1} ./LICENSE.txt
 
 %build
@@ -38,6 +38,9 @@ cp -p hyph_fa_IR.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20130404-15
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20130404-14
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

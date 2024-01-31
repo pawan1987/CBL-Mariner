@@ -2,7 +2,7 @@
 Summary:        Apache Maven Artifact Resolver library
 Name:           maven-resolver
 Version:        1.7.3
-Release:        7%{?dist}
+Release:        8%{?dist}
 License:        ASL 2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -32,7 +32,7 @@ artifact transports and artifact resolution.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 # requires internet connection
 rm maven-resolver-transport-http/src/test/java/org/eclipse/aether/transport/http/HttpTransporterTest.java
@@ -90,6 +90,9 @@ done
 %license LICENSE NOTICE
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.7.3-8
+- Updating the usage of the '%%patch' macro.
+
 * Fri Mar 24 2023 Riken Maharjan <rmaharjan@microsoft.com> - 1.7.3-7
 - Initial CBL-Mariner import from Fedora 36 (license: MIT)
 - License verified

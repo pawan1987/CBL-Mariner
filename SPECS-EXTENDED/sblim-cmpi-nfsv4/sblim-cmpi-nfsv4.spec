@@ -5,7 +5,7 @@ Distribution:   Mariner
 Name:           sblim-cmpi-nfsv4
 Summary:        SBLIM nfsv4 instrumentation
 Version:        1.1.0
-Release:        24%{?dist}
+Release:        25%{?dist}
 License:        EPL
 URL:            http://sourceforge.net/projects/sblim/
 Source0:        http://downloads.sourceforge.net/project/sblim/providers/%{name}/%{version}/%{name}-%{version}.tar.bz2
@@ -45,9 +45,9 @@ SBLIM Base Fsvol Testcase Files for SBLIM Testsuite
 
 %prep
 %setup -q
-%patch0 -p1 -b .docdir
-%patch1 -p1 -b .pegasus-interop
-%patch2 -p1 -b .prov-reg-sfcb-systemd
+%patch 0 -p1 -b .docdir
+%patch 1 -p1 -b .pegasus-interop
+%patch 2 -p1 -b .prov-reg-sfcb-systemd
 
 %build
 %ifarch s390 s390x ppc ppc64
@@ -99,6 +99,9 @@ mv $RPM_BUILD_ROOT/%{_libdir}/libLinux_NFSv4SystemConfigurationUtil.so $RPM_BUIL
 %postun -p /sbin/ldconfig
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.0-25
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.0-24
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

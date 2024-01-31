@@ -31,7 +31,7 @@ provides a number of basic algorithms for numerical algebra.
 Summary:        Numerical linear algebra package libraries
 Name:           lapack
 Version:        3.10.0
-Release:        6%{?dist}
+Release:        7%{?dist}
 License:        BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -102,7 +102,7 @@ This build has 64bit INTEGER support and a symbol name suffix.
 
 %prep
 %setup -q
-%patch0 -p1 -b .CVE-2021-4048
+%patch 0 -p1 -b .CVE-2021-4048
 
 %build
 %global optflags %{optflags} -frecursive --no-optimize-sibling-calls
@@ -251,6 +251,9 @@ rm -rf %{buildroot}%{_libdir}/*.def*
 %endif
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.10.0-7
+- Updating the usage of the '%%patch' macro.
+
 * Thu Mar 24 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.10.0-6
 - Initial CBL-Mariner import from Fedora 36 (license: MIT).
 - Removing manpages to fix build hangs.

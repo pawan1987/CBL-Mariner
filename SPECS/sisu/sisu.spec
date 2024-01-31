@@ -2,7 +2,7 @@
 Summary:        Eclipse dependency injection framework
 Name:           sisu
 Version:        0.3.5
-Release:        4%{?dist}
+Release:        5%{?dist}
 # sisu is EPL-1.0, the bundled asm is BSD
 License:        EPL-1.0 AND BSD
 Vendor:         Microsoft Corporation
@@ -39,10 +39,10 @@ cp %{SOURCE100} pom.xml
 cp %{SOURCE101} sisu-inject/pom.xml
 cp %{SOURCE102} sisu-plexus/pom.xml
 
-%patch0
-%patch2
-%patch3
-%patch4 -p1
+%patch 0
+%patch 2
+%patch 3
+%patch 4 -p1
 
 %pom_remove_dep :servlet-api sisu-inject
 
@@ -63,6 +63,9 @@ cp %{SOURCE102} sisu-plexus/pom.xml
 %license sisu-inject/LICENSE.txt
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.3.5-5
+- Updating the usage of the '%%patch' macro.
+
 * Fri Mar 24 2023 Riken Maharjan <rmaharjan@microsoft.com> - 0.3.5-4
 - Initial CBL-Mariner import from Fedora 36 (license: MIT)
 - License verified

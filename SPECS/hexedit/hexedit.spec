@@ -1,7 +1,7 @@
 Summary:        A hexadecimal file viewer and editor
 Name:           hexedit
 Version:        1.2.13
-Release:        19%{?dist}
+Release:        20%{?dist}
 License:        GPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -22,8 +22,8 @@ and search through it.
 %prep
 %setup -q -n %{name}
 
-%patch1 -p1 -b .config
-%patch2 -p1 -b .color
+%patch 1 -p1 -b .config
+%patch 2 -p1 -b .color
 
 %build
 %configure
@@ -42,6 +42,9 @@ make install \
 %{_mandir}/man1/hexedit.1*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.13-20
+- Updating the usage of the '%%patch' macro.
+
 * Fri Apr 01 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.13-19
 - Cleaning-up spec. License verified.
 

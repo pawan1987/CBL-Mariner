@@ -1,7 +1,7 @@
 Summary:        One-time password components
 Name:           oath-toolkit
 Version:        2.6.7
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv3+ and LGPLv2+
 URL:            https://www.nongnu.org/oath-toolkit/
 Vendor:         Microsoft Corporation
@@ -111,7 +111,7 @@ A PAM module for pluggable login authentication for OATH.
 
 %prep
 %setup -q
-%patch0 -p1 -b .lockfile
+%patch 0 -p1 -b .lockfile
 
 %build
 autoreconf -fi
@@ -186,6 +186,9 @@ mkdir -p -m 0600 %{buildroot}%{_sysconfdir}/liboath
 %{_libdir}/security/pam_oath.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6.7-3
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 2.6.7-2
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

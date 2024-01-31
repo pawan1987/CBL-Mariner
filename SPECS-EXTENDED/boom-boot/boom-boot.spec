@@ -5,7 +5,7 @@ Distribution:   Mariner
 
 Name:		boom-boot
 Version:	1.2
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	%{summary}
 
 License:	GPLv2
@@ -85,8 +85,8 @@ This package provides integration scripts for grub2 bootloader.
 %prep
 %setup -n boom-%{version}
 # NOTE: Do not use backup extension - MANIFEST.in is picking them
-%patch1 -p1
-%patch2 -p1
+%patch 1 -p1
+%patch 2 -p1
 
 %build
 %if 0%{?sphinx_docs}
@@ -159,6 +159,9 @@ rm doc/conf.py
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2-2
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -214,4 +217,3 @@ rm doc/conf.py
 
 * Thu Apr 26 2018 Marian Csontos <mcsontos@redhat.com> 0.8.5-6
 - Package upstream version 0.8-5.6
-

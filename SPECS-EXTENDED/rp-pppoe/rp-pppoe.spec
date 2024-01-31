@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name: rp-pppoe
 Version: 3.12
-Release: 16%{?dist}
+Release: 17%{?dist}
 Summary: A PPP over Ethernet client (for xDSL support).
 License: GPLv2+
 Url: https://dianne.skoll.ca/projects/rp-pppoe
@@ -47,13 +47,13 @@ the official PPPoE specification.
 
 %prep
 %setup -q
-%patch0 -p1 -b .config
-%patch1 -p1 -b .ip-allocation
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1 -b .pluginpath
-%patch5 -p1 -b .manpages
-%patch6 -p1 -b .bz#1469960-new-kernel-header
+%patch 0 -p1 -b .config
+%patch 1 -p1 -b .ip-allocation
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1 -b .pluginpath
+%patch 5 -p1 -b .manpages
+%patch 6 -p1 -b .bz#1469960-new-kernel-header
 
 %build
 cd src
@@ -104,6 +104,9 @@ rm -rf %{buildroot}/etc/ppp/pppoe.conf \
 %{_mandir}/man?/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.12-17
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.12-16
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

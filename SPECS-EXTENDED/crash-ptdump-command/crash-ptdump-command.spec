@@ -6,7 +6,7 @@ Distribution:   Mariner
 Summary: ptdump extension module for the crash utility
 Name: crash-ptdump-command
 Version: 1.0.7
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPLv2
 Group: Development/Debuggers
 Source: https://github.com/crash-utility/crash-extensions/blob/master/ptdump-%{version}.tar.gz
@@ -24,7 +24,7 @@ Trace facility
 
 %prep
 %setup -q -n ptdump-%{version}
-%patch0 -p1 -b rhel8_build.patch
+%patch 0 -p1 -b rhel8_build.patch
 
 %build
 make -f ptdump.mk ARCH=SUPPORTED TARGET=X86_64 TARGET_CFLAGS=
@@ -40,6 +40,9 @@ cp %{_builddir}/ptdump-%{version}/ptdump.so %{buildroot}%{_libdir}/crash/extensi
 %{_libdir}/crash/extensions/ptdump.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.7-4
+- Updating the usage of the '%%patch' macro.
+
 * Thu Dec 16 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.7-3
 - Removing the explicit %%clean stage.
 - License verified.

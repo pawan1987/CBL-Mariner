@@ -1,6 +1,6 @@
 Name:		perl-List-MoreUtils-XS
 Version:	0.428
-Release:	9%{?dist}
+Release:	10%{?dist}
 Summary:	Provide compiled List::MoreUtils functions
 # Code from List-MoreUtils < 0.417 is GPL+ or Artistic
 # Anything after that is ASL 2.0
@@ -53,7 +53,7 @@ This module provides accelerated versions of functions in List::MoreUtils.
 %setup -q -n List-MoreUtils-XS-%{version}
 
 # Unbundle bundled modules except private inc::Config::AutoConf::LMU
-%patch0
+%patch 0
 find inc/ -type f ! -name LMU.pm -print -delete
 
 %build
@@ -80,6 +80,9 @@ make test
 %{_mandir}/man3/List::MoreUtils::XS.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.428-10
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.428-9
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

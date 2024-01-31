@@ -9,7 +9,7 @@
 
 Name:		perl-Dist-CheckConflicts
 Version:	0.11
-Release:	18%{?dist}
+Release:	19%{?dist}
 Summary:	Declare version conflicts for your dist
 License:	GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -69,7 +69,7 @@ this manually.
 
 # Test suite needs patching if we have Test::More < 0.88
 %if %{old_test_more}
-%patch0
+%patch 0
 %endif
 
 %build
@@ -94,6 +94,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man3/Dist::CheckConflicts.3pm*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.11-19
+- Updating the usage of the '%%patch' macro.
+
 * Wed Apr 28 2021 Thomas Crain <thcrain@microsoft.com> - 0.11-18
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Remove colons from patchnames

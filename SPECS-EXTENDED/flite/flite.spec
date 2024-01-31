@@ -2,7 +2,7 @@
 
 Name:           flite
 Version:        1.3
-Release:        36%{?dist}
+Release:        37%{?dist}
 Summary:        Small, fast speech synthesis engine (text-to-speech)
 License:        MIT
 Vendor:         Microsoft Corporation
@@ -47,12 +47,12 @@ Development files for Flite, a small, fast speech synthesis engine.
 
 %prep
 %setup -q -n %{name}-%{version}-release
-%patch0 -p1 -b .flite-1.3-sharedlibs
-%patch1 -p1 -b .flite-1.3-doc_texinfo
-%patch2 -p1 -b .flite-1.3-alsa_support
-%patch3 -p1 -b .flite-1.3-implicit_dso_linking
-%patch4 -p1
-%patch5 -p1
+%patch 0 -p1 -b .flite-1.3-sharedlibs
+%patch 1 -p1 -b .flite-1.3-doc_texinfo
+%patch 2 -p1 -b .flite-1.3-alsa_support
+%patch 3 -p1 -b .flite-1.3-implicit_dso_linking
+%patch 4 -p1
+%patch 5 -p1
 cp -p %{SOURCE1} .
 
 
@@ -92,6 +92,9 @@ make install INSTALLBINDIR=%{buildroot}%{_bindir} INSTALLLIBDIR=%{buildroot}%{_l
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3-37
+- Updating the usage of the '%%patch' macro.
+
 * Mon Jun 14 2021 Thomas Crain <thcrain@microsoft.com> - 1.3-36
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Conditionally build documentation, and turn off documentation building by default

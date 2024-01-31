@@ -14,7 +14,7 @@ Distribution:   Mariner
 
 Name:           python-requests-mock
 Version:        1.7.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A requests mocking tool for python
 
 License:        ASL 2.0
@@ -109,9 +109,9 @@ python-requests layer.
 
 %prep
 %setup -q -n requests-mock-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
 
 # Remove bundled egg-info
 rm -rf requests_mock.egg-info
@@ -170,6 +170,9 @@ tox -e py%{python3_version_nodots}
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.7.0-5
+- Updating the usage of the '%%patch' macro.
+
 * Tue Jul 26 2022 Muhammad Falak <mwani@microsoft.com> - 1.7.0-4
 - Introduce patch to test using tox
 - License verified

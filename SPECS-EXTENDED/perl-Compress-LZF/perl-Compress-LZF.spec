@@ -1,7 +1,7 @@
 Summary:        Extremely light-weight Lempel-Ziv-Free compression
 Name:           perl-Compress-LZF
 Version:        3.8
-Release:        21%{?dist}
+Release:        22%{?dist}
 License:        GPL+ OR Artistic
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -42,8 +42,8 @@ This is Perl binding to the LZF compression library.
 
 %prep
 %setup -q -n Compress-LZF-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="%{optflags}"
@@ -66,6 +66,9 @@ make test
 %{_mandir}/man3/Compress::LZF.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.8-22
+- Updating the usage of the '%%patch' macro.
+
 * Wed Jan 26 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.8-21
 - Initial CBL-Mariner import from Fedora 36 (license: MIT).
 - License verified.

@@ -8,7 +8,7 @@ Distribution:   Mariner
 Summary:	A C++ port of Lucene
 Name:		clucene
 Version:	2.3.3.4
-Release:	38%{?dist}
+Release:	39%{?dist}
 # From 'COPYING':
 # - RSA license: src\CLucene\util\MD5Digester.cpp
 # - BSD license: cmake/MacroCheckGccVisibility.cmake, MacroEnsureVersion.cmake, and src/core/util/Compress.cpp
@@ -80,10 +80,10 @@ Requires:	%{name}-core%{?_isa} = %{version}-%{release}
 %prep
 %setup -n %{name}-core-%{version}
 
-%patch50 -p1 -b .pkgconfig
-%patch51 -p1 -b .install_contribs_lib
-%patch52 -p1 -b .CLuceneConfig
-%patch53 -p1 -b .usleep
+%patch 50 -p1 -b .pkgconfig
+%patch 51 -p1 -b .install_contribs_lib
+%patch 52 -p1 -b .CLuceneConfig
+%patch 53 -p1 -b .usleep
 
 # nuke bundled code
 rm -rfv src/ext/{boost/,zlib/}
@@ -145,6 +145,9 @@ time make -C %{_target_platform} test ARGS="--timeout 300 --output-on-failure" |
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.3.4-39
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.3.4-38
 - Updating source URLs.
 - License verified.

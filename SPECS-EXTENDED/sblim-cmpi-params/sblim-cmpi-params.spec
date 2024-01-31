@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name:           sblim-cmpi-params
 Version:        1.3.0
-Release:        24%{?dist}
+Release:        25%{?dist}
 Summary:        SBLIM params instrumentation
 
 License:        EPL
@@ -35,10 +35,10 @@ SBLIM Base Params Testcase Files for SBLIM Testsuite
 
 %prep
 %setup -q
-%patch0 -p1 -b .no-abi-params
-%patch1 -p1 -b .docdir
-%patch2 -p1 -b .pegasus-interop
-%patch3 -p1 -b .prov-reg-sfcb-systemd
+%patch 0 -p1 -b .no-abi-params
+%patch 1 -p1 -b .docdir
+%patch 2 -p1 -b .pegasus-interop
+%patch 3 -p1 -b .prov-reg-sfcb-systemd
 
 %build
 %configure \
@@ -74,6 +74,9 @@ rm -f $RPM_BUILD_ROOT/%{provider_dir}/*.la
 %sblim_preun
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3.0-25
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3.0-24
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

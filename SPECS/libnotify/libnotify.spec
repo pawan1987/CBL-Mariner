@@ -3,7 +3,7 @@
 Summary:        Desktop notification library
 Name:           libnotify
 Version:        0.7.9
-Release:        4%{?dist}
+Release:        5%{?dist}
 License:        LGPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -38,7 +38,7 @@ development of programs using %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %meson -Dman=false
@@ -64,6 +64,9 @@ development of programs using %{name}.
 %{_datadir}/gir-1.0/Notify-%{majmin}.gir
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.7.9-5
+- Updating the usage of the '%%patch' macro.
+
 * Wed Dec 08 2021 Thomas Crain <thcrain@microsoft.com> - 0.7.9-4
 - License verified
 - Lint spec

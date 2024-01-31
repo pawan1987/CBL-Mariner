@@ -3,7 +3,7 @@
 Summary: 		Common SGML catalog and DTD files
 Name: 			sgml-common
 Version: 		0.6.3
-Release: 		57%{?dist}
+Release: 		58%{?dist}
 License: 		GPLv3
 
 BuildArch: 		noarch
@@ -53,9 +53,9 @@ but that don't need to be included in main package.
 
 %prep
 %setup -q
-%patch0 -p1 -b .umask
-%patch1 -p1 -b .xmldir
-%patch2 -p1 -b .quotes
+%patch 0 -p1 -b .umask
+%patch 1 -p1 -b .xmldir
+%patch 2 -p1 -b .quotes
 
 # replace bogus links with files
 automakedir=`ls -1d /usr/share/automake* | head -n +1`
@@ -194,6 +194,9 @@ fi
 %{_datadir}/xml/datatypes.dtd
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.6.3-58
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 11 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.6.3-57
 - Fixing invalid source URL.
 - License verified.

@@ -6,7 +6,7 @@ Distribution:   Mariner
 Name: hyphen-sa
 Summary: Sanskrit hyphenation rules
 Version: 0.%{upstreamid}
-Release: 19%{?dist}
+Release: 20%{?dist}
 Source0: https://github.com/hyphenation/tex-hyphen/blob/%{upstream_commit}/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-sa.tex
 Source1: %{name}-LICENSE.txt
 URL: https://github.com/hyphenation/tex-hyphen
@@ -23,7 +23,7 @@ Sanskrit hyphenation rules.
 %prep
 %setup -T -q -c -n hyphen-sa
 cp -p %{SOURCE0} .
-%patch0 -p0 -b .clean
+%patch 0 -p0 -b .clean
 cp %{SOURCE1} ./LICENSE.txt
 
 %build
@@ -43,6 +43,9 @@ cp -p hyph_sa_IN.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/hyph_sa_IN.dic
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20110915-20
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20110915-19
 - Updating source URLs.
 - License verified.

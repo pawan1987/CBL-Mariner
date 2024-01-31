@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: Tools for certain user account management tasks
 Name: usermode
 Version: 1.112
-Release: 12%{?dist}
+Release: 13%{?dist}
 License: GPLv2+
 URL: https://pagure.io/usermode/
 Source: https://releases.pagure.org/usermode/usermode-%{version}.autotoolized.tar.xz
@@ -49,9 +49,9 @@ graphical tools for certain account management tasks.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
 
 %build
 %configure --with-selinux
@@ -106,6 +106,9 @@ done
 %{_datadir}/applications/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.112-13
+- Updating the usage of the '%%patch' macro.
+
 * Wed Feb 16 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.112-12
 - License verified.
 
@@ -516,7 +519,7 @@ done
 
 * Tue Sep 28 2004 Rik van Riel <riel@redhat.com> 1.72-2
 - add dependency on passwd (bz #125010)
-- make sure the Release: isn't part of the path name and tarball name
+- make sure the Release: 13%{?dist}
 
 * Mon Sep 27 2004 Ray Strode <rstrode@redhat.com> 1.72-1
 - remove X-Red-Hat-Base category from userinfo.desktop

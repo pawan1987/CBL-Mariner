@@ -5,7 +5,7 @@ Distribution:   Mariner
 
 Name:		mod_http2
 Version:	1.15.14
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	module implementing HTTP/2 for Apache 2
 License:	ASL 2.0
 URL:		https://icing.github.io/mod_h2/
@@ -22,7 +22,7 @@ top of libnghttp2 for httpd 2.4 servers.
 
 %prep
 %setup -q
-%patch1 -p1 -b .buildfix
+%patch 1 -p1 -b .buildfix
 
 %build
 %configure
@@ -46,6 +46,9 @@ echo "LoadModule proxy_http2_module modules/mod_proxy_http2.so" > %{buildroot}%{
 %{_httpd_moddir}/mod_proxy_http2.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.15.14-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.15.14-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 

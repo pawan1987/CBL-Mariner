@@ -12,7 +12,7 @@ Distribution:   Mariner
 Summary: A library for locking devices
 Name: lockdev
 Version: 1.0.4
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: LGPLv2.1
 URL: https://github.com/definesat/lockdev
 
@@ -53,8 +53,8 @@ package contains the development headers.
 %setup -q -n lockdev-scm-%{co_date}
 
 # Replace access() calls with euidaccess() (600636#c33)
-%patch1 -p1 -b .access
-%patch2 -p1
+%patch 1 -p1 -b .access
+%patch 2 -p1
 
 %build
 # Generate version information from git release tag
@@ -113,6 +113,9 @@ fi
 %{_includedir}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.4-3
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.4-2
 - Updating source URLs.
 - License verified.

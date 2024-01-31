@@ -5,7 +5,7 @@ Distribution:   Mariner
 Summary:        SBLIM fsvol instrumentation
 Name:           sblim-cmpi-fsvol
 Version:        1.5.1
-Release:        27%{?dist}
+Release:        28%{?dist}
 License:        EPL
 URL:            http://sourceforge.net/projects/sblim/
 Source0:        http://downloads.sourceforge.net/project/sblim/providers/%{name}/%{version}/%{name}-%{version}.tar.bz2
@@ -49,12 +49,12 @@ SBLIM Base Fsvol Testcase Files for SBLIM Testsuite
 
 %prep
 %setup -q
-%patch0 -p1 -b .ext4-support
-%patch1 -p0 -b .mounted-fs-shown-as-disabled
-%patch2 -p1 -b .docdir
-%patch3 -p1 -b .pegasus-interop
-%patch4 -p1 -b .prov-reg-sfcb-systemd
-%patch5 -p1 -b .mounted-dm-fs-shown-as-disabled
+%patch 0 -p1 -b .ext4-support
+%patch 1 -p0 -b .mounted-fs-shown-as-disabled
+%patch 2 -p1 -b .docdir
+%patch 3 -p1 -b .pegasus-interop
+%patch 4 -p1 -b .prov-reg-sfcb-systemd
+%patch 5 -p1 -b .mounted-dm-fs-shown-as-disabled
 
 %build
 %ifarch s390 s390x ppc ppc64
@@ -117,6 +117,9 @@ echo "%{_libdir}/cmpi" > $RPM_BUILD_ROOT/%{_sysconfdir}/ld.so.conf.d/%{name}-%{_
 %postun -p /sbin/ldconfig
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.1-28
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.1-27
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

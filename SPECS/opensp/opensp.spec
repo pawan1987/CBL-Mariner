@@ -1,7 +1,7 @@
 Summary:        SGML and XML parser
 Name:           opensp
 Version:        1.5.2
-Release:        36%{?dist}
+Release:        37%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -30,10 +30,10 @@ Header files and libtool library for developing applications that use OpenSP.
 
 %prep
 %setup -q -n OpenSP-%{version}
-%patch0 -p1 -b .multilib
-%patch1 -p1 -b .nodeids
-%patch2 -p1 -b .sigsegv
-%patch3 -p1 -b .manpage
+%patch 0 -p1 -b .multilib
+%patch 1 -p1 -b .nodeids
+%patch 2 -p1 -b .sigsegv
+%patch 3 -p1 -b .manpage
 # convert files to UTF-8
 iconv -f latin1 -t utf8 ChangeLog -o ChangeLog.tmp
 mv -f ChangeLog.tmp ChangeLog
@@ -94,6 +94,9 @@ make check || : # TODO: failures as of 1.5.2 :(
 %{_libdir}/libosp.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.2-37
+- Updating the usage of the '%%patch' macro.
+
 * Fri Sep 16 2022 Osama Esmail <osamaesmail@microsoft.com> - 1.5.2-36
 - Moved from SPECS-EXTENDED to SPECS
 - License verified

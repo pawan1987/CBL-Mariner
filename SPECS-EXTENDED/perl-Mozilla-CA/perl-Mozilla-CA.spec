@@ -5,7 +5,7 @@ Name:           perl-Mozilla-CA
 # certificates. They are taken from ca-certificates package instead
 # per bug #738383.
 Version:        20200520
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Mozilla's CA certificate bundle in PEM format
 # README:                       MPLv2.0
 ## Unbundled
@@ -38,7 +38,7 @@ and libraries based on OpenSSL.
 
 %prep
 %setup -q -n Mozilla-CA-%{version}
-%patch0 -p1
+%patch 0 -p1
 # Remove a bundled CA bundle for sure
 rm lib/Mozilla/CA/cacert.pem
 # Do not distribute Mozilla downloader, we take certificates from
@@ -63,6 +63,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 20200520-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 20200520-2
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

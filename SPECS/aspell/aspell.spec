@@ -1,7 +1,7 @@
 Summary:        Spell checker
 Name:           aspell
 Version:        0.60.8
-Release:        8%{?dist}
+Release:        9%{?dist}
 # LGPLv2+ .. common/gettext.h
 # LGPLv2  .. modules/speller/default/phonet.hpp,
 #            modules/speller/default/phonet.cpp,
@@ -45,10 +45,10 @@ and header files needed for Aspell development.
 
 %prep
 %setup -q
-%patch0 -p1 -b .fc
-%patch1 -p1 -b .mlib
-%patch2 -p1 -b .ai
-%patch3 -p1 -b .obs
+%patch 0 -p1 -b .fc
+%patch 1 -p1 -b .mlib
+%patch 2 -p1 -b .ai
+%patch 3 -p1 -b .obs
 iconv -f iso-8859-2 -t utf-8 < manual/aspell.info > manual/aspell.info.aux
 mv manual/aspell.info.aux manual/aspell.info
 
@@ -116,6 +116,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_mandir}/man1/pspell-config.1*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.60.8-9
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 0.60.8-8
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

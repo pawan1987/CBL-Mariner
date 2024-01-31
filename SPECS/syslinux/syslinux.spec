@@ -2,7 +2,7 @@
 Summary:        Simple kernel loader which boots from a FAT filesystem
 Name:           syslinux
 Version:        6.04
-Release:        10%{?dist}
+Release:        11%{?dist}
 License:        GPLv2+
 URL:            https://www.syslinux.org
 Group:          Applications/System
@@ -33,9 +33,9 @@ Headers and libraries for syslinux development.
 
 %prep
 %setup -q -n %{name}-%{version}-pre1
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
 
 %build
 # gcc 11.2.0 and above produce error: "cc1: error: '-fcf-protection' is not compatible with this target"
@@ -79,6 +79,9 @@ rm %{buildroot}/%{_bindir}/sha1pass
 %{_datadir}/syslinux/com32/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 6.04-11
+- Updating the usage of the '%%patch' macro.
+
 * Thu Nov 11 2021 Nicolas Guibourge <nicolasg@microsoft.com> 6.04-10
 - Fix build issue triggered by gcc 11.2.0 usage.
 * Thu Jun 11 2020 Henry Beberman <henry.beberman@microsoft.com> 6.04-9

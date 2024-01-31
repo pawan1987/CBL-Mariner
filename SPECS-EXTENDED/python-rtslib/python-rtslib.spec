@@ -7,7 +7,7 @@ Name:             python-rtslib
 License:          ASL 2.0
 Summary:          API for Linux kernel LIO SCSI target
 Version:          2.1.fb69
-Release:          9%{?dist}
+Release:          10%{?dist}
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:              https://github.com/open-iscsi/%{oname}
@@ -72,7 +72,7 @@ on system restart.
 
 %prep
 %setup -q -n %{oname}-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 
 %build
@@ -129,6 +129,9 @@ install -m 644 doc/saveconfig.json.5 %{buildroot}%{_mandir}/man5/
 %endif
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1.fb69-10
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1.fb69-9
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

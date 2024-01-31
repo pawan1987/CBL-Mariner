@@ -3,7 +3,7 @@ Distribution:   Mariner
 Name:           pyflakes
 # WARNING: When updating pyflakes, check not to break flake8!
 Version:        2.5.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A simple program which checks Python source files for errors
 
 License:        MIT
@@ -39,7 +39,7 @@ Requires:       python%{python3_pkgversion}-setuptools
 
 %prep
 %setup -q -a 1
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %py3_build
@@ -75,6 +75,9 @@ ln -s pyflakes-3.1 %{buildroot}%{_mandir}/man1/pyflakes.1
 %{_mandir}/man1/pyflakes.1*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.5.0-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Sep 22 2022 Muhammad Falak <mwani@microsoft.com> - 2.5.0-1
 - Bump version to 2.5.0
 - License verified

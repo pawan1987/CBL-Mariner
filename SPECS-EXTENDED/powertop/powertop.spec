@@ -1,6 +1,6 @@
 Name:             powertop
 Version:          2.13
-Release:          3%{?dist}
+Release:          4%{?dist}
 Summary:          Power consumption monitor
 
 License:          GPLv2
@@ -27,8 +27,8 @@ computer use more power than necessary while it is idle.
 
 %prep
 %setup -q
-%patch0 -p1 -b .always-create-params
-%patch1 -p1
+%patch 0 -p1 -b .always-create-params
+%patch 1 -p1
 
 echo "v%{version}" > version-long
 echo '"v%{version}"' > version-short
@@ -71,6 +71,9 @@ touch %{_localstatedir}/cache/powertop/{saved_parameters.powertop,saved_results.
 %{_datadir}/bash-completion/completions/powertop
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.13-4
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jun 23 2022 Ahmed Badawi <ahmedbadawi@microsoft.com> - 2.13-3
 - Added patch to fix compilation with ncurses 6.3
 - License verified

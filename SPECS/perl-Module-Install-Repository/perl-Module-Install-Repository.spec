@@ -1,7 +1,7 @@
 Summary:        Automatically sets repository URL from Svn/Svk/Git checkout
 Name:           perl-Module-Install-Repository
 Version:        0.06
-Release:        25%{?dist}
+Release:        26%{?dist}
 License:        GPL+ OR Artistic
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -40,7 +40,7 @@ added to resources under META.yml.
 
 %prep
 %setup -q -n Module-Install-Repository-%{version}
-%patch0 -p1
+%patch 0 -p1
 find -type f -exec chmod -x {} +
 cp %{SOURCE1} .
 
@@ -63,6 +63,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.06-26
+- Updating the usage of the '%%patch' macro.
+
 * Tue May 31 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.06-25
 - License verified.
 

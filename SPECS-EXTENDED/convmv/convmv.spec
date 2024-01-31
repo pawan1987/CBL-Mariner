@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: Convert filename encodings
 Name: convmv
 Version: 2.05
-Release: 7%{?dist}
+Release: 8%{?dist}
 
 License: GPLv2 or GPLv3
 URL: http://j3e.de/linux/convmv
@@ -22,7 +22,7 @@ of filenames, e.g. from Latin1 to UTF-8.
 
 %prep
 %setup -q
-%patch0 -p1 -b .preserve-timestamps
+%patch 0 -p1 -b .preserve-timestamps
 tar -xf testsuite.tar
 
 %build
@@ -41,6 +41,9 @@ make PREFIX=%{_prefix} DESTDIR=%{buildroot} install
 %{_mandir}/man*/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.05-8
+- Updating the usage of the '%%patch' macro.
+
 * Wed Apr 20 2022 Muhammad Falak <mwani@microsoft.com> - 2.05-7
 - Add an explicit BR on `perl(File::Find)` to enable ptest
 - License verified

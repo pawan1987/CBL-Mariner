@@ -1,6 +1,6 @@
 Name:           ladspa
 Version:        1.13
-Release:        25%{?dist}
+Release:        26%{?dist}
 
 Summary:        Linux Audio Developer's Simple Plug-in API, examples and tools
 
@@ -37,7 +37,7 @@ header file.
 
 %prep
 %setup -q -n ladspa_sdk
-%patch1 -p0 -b .plugindir
+%patch 1 -p0 -b .plugindir
 # respect RPM_OPT_FLAGS
 perl -pi -e 's/^(CFLAGS.*)-O3(.*)/$1\$\(RPM_OPT_FLAGS\)$2 -DPLUGINDIR=\$\(PLUGINDIR\)/' src/makefile
 # avoid X.org dependency
@@ -85,6 +85,9 @@ mkdir -p $RPM_BUILD_ROOT%{_datadir}/ladspa/rdf
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.13-26
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.13-25
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

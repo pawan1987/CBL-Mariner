@@ -1,7 +1,7 @@
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
 Version:          2.3.0
-Release:          3%{?dist}
+Release:          4%{?dist}
 License:          (GPLv2+ or LGPLv3+) and GPLv3+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -47,7 +47,7 @@ IDNA2008 conversions.
 %prep
 gpgv2 --keyring %{SOURCE2} %{SOURCE1} %{SOURCE0}
 %setup -q
-%patch0 -p1 -b .rpath
+%patch 0 -p1 -b .rpath
 touch -c -r configure.rpath configure
 touch -c -r m4/libtool.m4.rpath m4/libtool.m4
 
@@ -104,6 +104,9 @@ fi
 %{_infodir}/%{name}.info*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.0-4
+- Updating the usage of the '%%patch' macro.
+
 * Fri Apr 30 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.0-3
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Making binaries paths compatible with CBL-Mariner's paths.

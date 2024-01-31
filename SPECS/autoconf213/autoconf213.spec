@@ -1,7 +1,7 @@
 Summary:    A GNU tool for automatically configuring source code
 Name:       autoconf213
 Version:    2.13
-Release:    49%{?dist}
+Release:    50%{?dist}
 License:    GPLv2+
 URL:        http://www.gnu.org/software/autoconf/
 Source:     https://ftp.gnu.org/gnu/autoconf/autoconf-%{version}.tar.gz
@@ -33,9 +33,9 @@ use.
 
 %prep
 %setup -q -n autoconf-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
 
 mv autoconf.texi autoconf213.texi
 rm -f autoconf.info
@@ -79,6 +79,9 @@ fi
 %{_datadir}/autoconf-%{version}/
  
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.13-50
+- Updating the usage of the '%%patch' macro.
+
 * Fri Jul 1 2022 Jamie Magee <jamagee@microsoft.com> - 2.13-49
 - Switch from FTP to HTTPS source
 

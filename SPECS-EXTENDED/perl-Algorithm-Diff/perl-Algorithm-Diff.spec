@@ -1,6 +1,6 @@
 Name:           perl-Algorithm-Diff
 Version:        1.1903
-Release:        16%{?dist}
+Release:        17%{?dist}
 Summary:        Compute `intelligent' differences between two files/lists
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -37,7 +37,7 @@ find the *smallest possible* set of differences.
 %setup -q -n Algorithm-Diff-%{version}
 
 # Generate provide for perl(Algorithm::DiffOld)
-%patch0
+%patch 0
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor
@@ -62,6 +62,9 @@ make test
 %{_mandir}/man3/Algorithm::DiffOld.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1903-17
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1903-16
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

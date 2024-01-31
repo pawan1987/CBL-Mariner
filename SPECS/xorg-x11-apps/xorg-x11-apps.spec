@@ -20,7 +20,7 @@
 Summary:        X.Org X11 applications
 Name:           xorg-x11-apps
 Version:        7.7
-Release:        29%{?dist}
+Release:        30%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -85,7 +85,7 @@ A collection of common X Window System applications.
 
 %prep
 %setup -q -c %{name}-%{version} -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16
-%patch0  -b .x11perf-datadir-cleanup
+%patch 0  -b .x11perf-datadir-cleanup
 
 %build
 # Build all apps
@@ -150,6 +150,9 @@ rm -r %{buildroot}%{_mandir}/man1
 %{_datadir}/X11/x11perfcomp
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 7.7-30
+- Updating the usage of the '%%patch' macro.
+
 * Mon Jan 18 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 7.7-29
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.

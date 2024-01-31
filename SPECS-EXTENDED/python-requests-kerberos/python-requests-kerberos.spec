@@ -8,7 +8,7 @@ Distribution:   Mariner
 
 Name:           python-%{upstream_name}
 Version:        0.12.0
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        A Kerberos authentication handler for python-requests
 License:        MIT
 URL:            https://github.com/requests/requests-kerberos
@@ -50,7 +50,7 @@ authentication.
 
 %prep
 %setup -q -n %{upstream_name}-%{commit0}
-%patch1 -p1
+%patch 1 -p1
 
 %build
 %py3_build
@@ -69,6 +69,9 @@ py.test tests/
 %{python3_sitelib}/%{module_name}*.egg-info
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.12.0-12
+- Updating the usage of the '%%patch' macro.
+
 * Thu Apr 28 2022 Muhammad Falak <mwani@microsoft.com> - 0.12.0-11
 - Use `py.test` instead of `py.test-3` to enable ptest
 - License verified

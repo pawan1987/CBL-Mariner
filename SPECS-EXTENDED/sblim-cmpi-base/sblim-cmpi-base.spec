@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           sblim-cmpi-base
 Version:        1.6.4
-Release:        17%{?dist}
+Release:        18%{?dist}
 Summary:        SBLIM CMPI Base Providers
 
 License:        EPL-1.0
@@ -59,16 +59,16 @@ Testcase Files for the SBLIM Testsuite.
 %prep
 %setup -q
 autoreconf --install --force
-%patch0 -p0 -b .missing-fclose
-%patch1 -p0 -b .methods-enable
-%patch2 -p1 -b .double-fclose
-%patch3 -p1 -b .docdir
-%patch4 -p1 -b .pegasus-interop
-%patch5 -p1 -b .prov-reg-sfcb-systemd
-%patch6 -p1 -b .list-lib-dependencies
-%patch7 -p1 -b .dont-install-license
-%patch8 -p1 -b .fix-get-os-install-date
-%patch9 -p1 -b .fix-possible-null-dereference.patch
+%patch 0 -p0 -b .missing-fclose
+%patch 1 -p0 -b .methods-enable
+%patch 2 -p1 -b .double-fclose
+%patch 3 -p1 -b .docdir
+%patch 4 -p1 -b .pegasus-interop
+%patch 5 -p1 -b .prov-reg-sfcb-systemd
+%patch 6 -p1 -b .list-lib-dependencies
+%patch 7 -p1 -b .dont-install-license
+%patch 8 -p1 -b .fix-get-os-install-date
+%patch 9 -p1 -b .fix-possible-null-dereference.patch
 
 %build
 %configure TESTSUITEDIR=%{_datadir}/sblim-testsuite --disable-static
@@ -121,6 +121,9 @@ rm -f $RPM_BUILD_ROOT/%{_libdir}/cmpi/*a
 %postun -p /sbin/ldconfig
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.6.4-18
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.6.4-17
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

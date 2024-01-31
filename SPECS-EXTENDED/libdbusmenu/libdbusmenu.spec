@@ -11,7 +11,7 @@ Distribution:   Mariner
 
 Name:       libdbusmenu
 Version:    %{ubuntu_release}.0
-Release:    18%{?dist}
+Release:    19%{?dist}
 Summary:    Library for passing menus over DBus
 
 # All files installed in final rpms use C sources with dual licensing headers.
@@ -143,7 +143,7 @@ that use %{name}.
 %setup -q -n %{name}-%{version} -c
 
 pushd %{name}-%{version}
-%patch0 -p1
+%patch 0 -p1
 popd
 
 cp -a %{name}-%{version}/{README,COPYING,COPYING.2.1,COPYING-GPL3,AUTHORS,ChangeLog} .
@@ -263,6 +263,9 @@ done
 %{_datadir}/%{name}/json/test-gtk-label.json
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 16.04.0-19
+- Updating the usage of the '%%patch' macro.
+
 * Wed Feb 16 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 16.04.0-18
 - License verified.
 

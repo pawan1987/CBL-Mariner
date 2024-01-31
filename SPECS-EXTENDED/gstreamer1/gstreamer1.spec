@@ -8,7 +8,7 @@
 Summary:        GStreamer streaming media framework runtime
 Name:           gstreamer1
 Version:        1.20.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        LGPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -57,7 +57,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n gstreamer-%{version}
-%patch0 -p1 -b .rpm-provides
+%patch 0 -p1 -b .rpm-provides
 
 %build
 %meson	\
@@ -158,6 +158,9 @@ install -m0644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_rpmconfigdir}/fileattrs/gstreamer
 %{_libdir}/pkgconfig/gstreamer-net-%{majorminor}.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.0-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Mar 03 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20.0-1
 - Updating to version 1.20.0 using Fedora 36 spec (license: MIT) for guidance.
 
@@ -500,4 +503,3 @@ install -m0644 -D %{SOURCE2} $RPM_BUILD_ROOT%{_rpmconfigdir}/fileattrs/gstreamer
 
 * Tue Jul 17 2012 Brian Pepple <bpepple@fedoraproject.org> - 0.11.92-1
 - Initial Fedora spec file.
-

@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           libmodplug
 Version:        0.8.9.0
-Release:        12%{?dist}
+Release:        13%{?dist}
 Summary:        Modplug mod music file format library
 License:        Public Domain
 URL:            http://modplug-xmms.sourceforge.net/
@@ -27,7 +27,7 @@ Requires:       gcc-c++
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 sed -i -e 's/\r//g' ChangeLog
 
 %build
@@ -54,6 +54,9 @@ make check
 %{_libdir}/pkgconfig/libmodplug.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.8.9.0-13
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 01 2021 Muhammad Falak <mwani@microsft.com> - 0.8.9.0-12
 - Remove epoch
 

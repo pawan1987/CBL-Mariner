@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name:		tcl-pgtcl
 Version:	2.1.1
-Release:	12%{?dist}
+Release:	13%{?dist}
 Summary:	A Tcl client library for PostgreSQL
 
 URL:		http://sourceforge.net/projects/pgtclng/
@@ -48,7 +48,7 @@ unzip %{SOURCE1}
 PGTCLDOCDIR=`basename %{SOURCE1} .zip`
 mv $PGTCLDOCDIR Pgtcl-docs
 
-%patch1 -p1
+%patch 1 -p1
 
 autoconf
 
@@ -71,6 +71,9 @@ rm -f $RPM_BUILD_ROOT%{_includedir}/libpgtcl.h
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1.1-13
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1.1-12
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

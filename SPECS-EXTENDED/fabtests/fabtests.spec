@@ -3,7 +3,7 @@ Distribution:   Mariner
 Name:           fabtests
 Version:        1.12.0
 %global         __rc  rc1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Test suite for libfabric API
 # include/jsmn.h and common/jsmn.c are licensed under MIT.
 # All other source files permit distribution under BSD. Some of them
@@ -24,7 +24,7 @@ fabric software library.
 
 %prep
 %setup -q -n %{name}-%{version}%{__rc}
-%patch0 -p2
+%patch 0 -p2
 
 %build
 %configure --with-valgrind
@@ -44,6 +44,9 @@ rm -f %{buildroot}%{_libdir}/*.la
 %license COPYING
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.12.0-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.12.0-1
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Converting the 'Release' tag to the '[number].[distribution]' format.

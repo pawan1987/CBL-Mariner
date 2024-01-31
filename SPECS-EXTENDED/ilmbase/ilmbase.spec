@@ -5,7 +5,7 @@ Distribution:   Mariner
 Name:    ilmbase
 Summary: Abstraction/convenience libraries
 Version: 2.3.0
-Release: 5%{?dist}
+Release: 6%{?dist}
 
 License: BSD
 URL:	 http://www.openexr.com/
@@ -51,8 +51,8 @@ Requires: %{name}%{?_isa} = %{version}-%{release}
 %prep
 %setup -q
 
-%patch51 -p1 -b .no_undefined
-%patch53 -p1 -b .pkgconfig
+%patch 51 -p1 -b .no_undefined
+%patch 53 -p1 -b .pkgconfig
 #patch54 -p1 -b .glibc_iszero
 
 #/bootstrap
@@ -116,6 +116,9 @@ test "$(pkg-config --modversion IlmBase)" = "%{version}"
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.0-6
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.0-5
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -257,4 +260,3 @@ test "$(pkg-config --modversion IlmBase)" = "%{version}"
 
 * Thu Aug 09 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 1.0.0-1
 - ilmbase-1.0.0 (first try)
-

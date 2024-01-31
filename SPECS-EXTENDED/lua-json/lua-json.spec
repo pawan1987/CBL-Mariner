@@ -7,7 +7,7 @@ Distribution:   Mariner
 
 Name:           lua-json
 Version:        1.3.2
-Release:        16%{?dist}
+Release:        17%{?dist}
 Summary:        JSON Parser/Constructor for Lua
 License:        MIT
 URL:            https://github.com/harningt/luajson
@@ -24,7 +24,7 @@ LuaJSON is a customizable JSON decoder/encoder, using LPEG for parsing.
 
 %prep
 %setup -q -n luajson-%{commit}
-%patch0 -p1 -b .lua-52
+%patch 0 -p1 -b .lua-52
 
 %build
 
@@ -44,6 +44,9 @@ make check-regression
 %{luapkgdir}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3.2-17
+- Updating the usage of the '%%patch' macro.
+
 * Mon Feb 28 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3.2-16
 - Fixing run-time dependencies.
 - License verified.

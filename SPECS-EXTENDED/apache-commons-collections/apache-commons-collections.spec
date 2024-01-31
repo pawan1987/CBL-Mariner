@@ -22,7 +22,7 @@ Distribution:   Mariner
 %define short_name      commons-%{base_name}
 Name:           apache-commons-collections
 Version:        3.2.2
-Release:        7%{?dist}
+Release:        8%{?dist}
 Summary:        Commons Collections Package
 License:        Apache-2.0
 Group:          Development/Libraries/Java
@@ -93,12 +93,12 @@ find . -name "*.class" -delete
 # Fix file eof
 sed -i 's/\r//' LICENSE.txt PROPOSAL.html README.txt NOTICE.txt
 
-%patch0 -p1
-%patch1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%patch 0 -p1
+%patch 1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
+%patch 5 -p1
 
 # Substitute version into testframework pom
 cp -p %{SOURCE1} pom-testframework.xml
@@ -144,6 +144,9 @@ cp -pr build/docs/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.2.2-8
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.2.2-7
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

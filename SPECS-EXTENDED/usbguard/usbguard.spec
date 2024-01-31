@@ -13,7 +13,7 @@ Distribution:   Mariner
 
 Name:           usbguard
 Version:        1.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A tool for implementing USB device usage policy
 License:        GPLv2+
 ## Not installed
@@ -121,7 +121,7 @@ daemon.
 %setup -q -D -T -a 1
 %endif
 
-%patch1 -p1 -b .libqb
+%patch 1 -p1 -b .libqb
 
 # Remove bundled library sources before build
 rm -rf src/ThirdParty/{Catch,PEGTL}
@@ -267,6 +267,9 @@ fi
 %endif
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.0-2
+- Updating the usage of the '%%patch' macro.
+
 * Tue Sep 05 2023 Archana Choudhary <archana1@microsoft.com> - 1.1.0-1
 - Upgrade to 1.1.0 - CVE-2019-25058
 - Update build requirement catch1 -> catch

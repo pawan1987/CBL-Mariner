@@ -23,7 +23,7 @@ Distribution:   Mariner
 Summary: SIP - Python/C++ Bindings Generator
 Name: sip
 Version: 4.19.21
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 # sipgen/parser.{c.h} is GPLv3+ with exceptions (bison)
 License: GPLv2 or GPLv3 and (GPLv3+ with exceptions)
@@ -177,9 +177,9 @@ This is the Python 3 build of wx-siplib.
 
 %setup -q -n %{name}-%{version}%{?snap:.%{snap}}
 
-%patch50 -p1 -b .no_strip
-%patch51 -p1 -b .no_rpath
-%patch53 -p1 -b .no_sip_so
+%patch 50 -p1 -b .no_strip
+%patch 51 -p1 -b .no_rpath
+%patch 53 -p1 -b .no_sip_so
 
 
 %build
@@ -406,6 +406,9 @@ install -D -p -m644 %{SOURCE1} %{buildroot}%{rpm_macros_dir}/macros.sip
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.19.21-3
+- Updating the usage of the '%%patch' macro.
+
 * Tue Feb 23 2021 Henry Li <lihl@microsoft.com> - 4.19.21-2
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Remove conditions that do not apply

@@ -20,7 +20,7 @@ Distribution:   Mariner
 
 Name:           bcel
 Version:        5.2
-Release:        37%{?dist}
+Release:        38%{?dist}
 Summary:        Byte Code Engineering Library
 License:        Apache-2.0
 Group:          Development/Libraries/Java
@@ -62,7 +62,7 @@ standard JVM message.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
 # very broken build
@@ -97,6 +97,9 @@ install -m 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/%{name}-%{version}.pom
 %{_javadir}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.2-38
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.2-37
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

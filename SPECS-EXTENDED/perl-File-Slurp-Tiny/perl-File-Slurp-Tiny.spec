@@ -5,7 +5,7 @@ Distribution:   Mariner
 
 Name:		perl-File-Slurp-Tiny
 Version:	0.004
-Release:	15%{?dist}
+Release:	16%{?dist}
 Summary:	A simple, sane and efficient file slurper
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/File-Slurp-Tiny
@@ -41,7 +41,7 @@ of files.
 
 # Test suite needs patching if we have Test::More < 0.88
 %if %{old_test_more}
-%patch0
+%patch 0
 %endif
 
 %build
@@ -68,6 +68,9 @@ make test
 %{_mandir}/man3/File::Slurp::Tiny.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.004-16
+- Updating the usage of the '%%patch' macro.
+
 * Mon Jan 10 2022 Nicolas Guibourge <nicolasg@microsoft.com> - 0.004-15
 - Rename File-Slurp-Tiny-0.003-old-Test::More.patch to accomodate git clone from Windows.
 - License verified.

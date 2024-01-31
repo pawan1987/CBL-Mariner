@@ -19,7 +19,7 @@
 
 Name:           xml-commons-resolver
 Version:        1.2
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Resolver subproject of xml-commons
 License:        Apache-2.0
 Group:          Development/Libraries/Java
@@ -68,8 +68,8 @@ Javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 cp %{SOURCE1} pom.xml
 
@@ -134,6 +134,9 @@ install -m 0644 %{SOURCE5} %{buildroot}%{resolverdir}/CatalogManager.properties
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2-6
+- Updating the usage of the '%%patch' macro.
+
 * Mon Mar 28 2022 Cameron Baird <cameronbaird@microsoft.com> - 1.2-5
 - Move to SPECS
 - License verified

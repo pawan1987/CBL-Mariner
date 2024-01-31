@@ -10,7 +10,7 @@
 
 Name:		libpfm
 Version:	4.10.1
-Release:	11%{?dist}
+Release:	12%{?dist}
 
 Summary:	Library to encode performance events for use by perf tool
 
@@ -67,7 +67,7 @@ Python bindings for libpfm4 and perf_event_open system call.
 
 %prep
 %setup -q
-%patch2 -p1 -b .python3
+%patch 2 -p1 -b .python3
 
 %build
 %if %{with python}
@@ -115,6 +115,9 @@ make \
 %endif
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.10.1-12
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.10.1-11
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

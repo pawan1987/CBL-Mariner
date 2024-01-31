@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           perl-Sys-CPU
 Version:        0.61
-Release:        22%{?dist}
+Release:        23%{?dist}
 Summary:        Getting CPU information
 
 # Some code was copied from Unix::Processors, which is LGPLv3 or Artistic 2.0
@@ -36,8 +36,8 @@ Currently only number of CPU's supported.
 
 %prep
 %setup -q -n Sys-CPU-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
@@ -60,6 +60,9 @@ find %{buildroot} -type f -name CPU.bs -exec rm -f {} ';'
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.61-23
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.61-22
 - Removing readme file modification.
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).

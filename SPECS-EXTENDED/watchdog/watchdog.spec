@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary:          Software and/or Hardware watchdog daemon
 Name:             watchdog
 Version:          5.15
-Release:          8%{?dist}
+Release:          9%{?dist}
 License:          GPLv2+
 
 URL:              http://sourceforge.net/projects/watchdog/
@@ -59,17 +59,17 @@ expiration) initiated by the BMC.
  
 %prep
 %setup -q -n %{name}-%{version}
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch99 -p1 -b .rhseldoc
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
+%patch 5 -p1
+%patch 6 -p1
+%patch 7 -p1
+%patch 8 -p1
+%patch 9 -p1
+%patch 10 -p1
+%patch 99 -p1 -b .rhseldoc
 autoreconf -i
 
 cp %{SOURCE2} .
@@ -144,6 +144,9 @@ rm %{name}.sysconfig
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.15-9
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.15-8
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

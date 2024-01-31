@@ -6,7 +6,7 @@ Distribution:   Mariner
 
 Name:           sblim-cim-client2
 Version:        2.2.5
-Release:        16%{?dist}
+Release:        17%{?dist}
 Summary:        Java CIM Client library
 
 License:        EPL
@@ -49,7 +49,7 @@ Manual and sample code for %{name}.
 
 %prep
 %setup -q -n %{project_folder}
-%patch0 -p1 -b .fix-for-java-11-openjdk
+%patch 0 -p1 -b .fix-for-java-11-openjdk
 
 dos2unixConversion() {
         fileName=$1
@@ -114,6 +114,9 @@ cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_pkgdocdir}/org
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.2.5-17
+- Updating the usage of the '%%patch' macro.
+
 * Thu Feb 17 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.2.5-16
 - Updating used version of Java.
 

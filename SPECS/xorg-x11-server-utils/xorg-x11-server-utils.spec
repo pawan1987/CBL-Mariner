@@ -20,7 +20,7 @@
 Summary:        X.Org X11 X server utilities
 Name:           xorg-x11-server-utils
 Version:        7.7
-Release:        37%{?dist}
+Release:        38%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -104,13 +104,13 @@ Utility to perform keystone adjustments on X screens.
 
 %prep
 %setup -q -c %{name}-%{version} -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a13 -a14 -a15 -a16
-%patch0
+%patch 0
 pushd sessreg-%{sessreg}
-%patch2 -p1
+%patch 2 -p1
 popd
 pushd xrandr-%{xrandr}
-%patch3 -p1
-%patch4 -p1
+%patch 3 -p1
+%patch 4 -p1
 popd
 
 %build
@@ -206,6 +206,9 @@ rm -f %{buildroot}%{_bindir}/xkeystone
 %endif
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 7.7-38
+- Updating the usage of the '%%patch' macro.
+
 * Wed Dec 08 2021 Thomas Crain <thcrain@microsoft.com> - 7.7-37
 - License verified
 

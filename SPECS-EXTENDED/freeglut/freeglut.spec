@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary:        A freely licensed alternative to the GLUT library
 Name:           freeglut
 Version:        3.2.1
-Release:        4%{?dist}
+Release:        5%{?dist}
 URL:            http://freeglut.sourceforge.net
 Source0:        https://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 # For the manpages
@@ -52,7 +52,7 @@ license.
 
 %prep
 %setup -q -a 1
-%patch0 -p0
+%patch 0 -p0
 
 %build
 %{cmake} -DFREEGLUT_BUILD_STATIC_LIBS=OFF .
@@ -82,6 +82,9 @@ install -p -m 644 doc/man/*.3 $RPM_BUILD_ROOT/%{_mandir}/man3
 %{_libdir}/cmake/FreeGLUT/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.2.1-5
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.2.1-4
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

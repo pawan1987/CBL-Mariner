@@ -1,7 +1,7 @@
 Summary:        Programs for handling passwords in a secure way
 Name:           shadow-utils
 Version:        4.9
-Release:        13%{?dist}
+Release:        14%{?dist}
 License:        BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -69,9 +69,9 @@ Libraries and headers for libsubid
 
 %prep
 %setup -q -n shadow-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
 
 autoreconf -fiv
 
@@ -178,6 +178,9 @@ chmod 000 %{_sysconfdir}/shadow
 %{_libdir}/libsubid.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.9-14
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Kanika Nema <kanikanema@microsoft.com> - 4.9-13
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 - Address CVE-2023-29383

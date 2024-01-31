@@ -3,7 +3,7 @@ Distribution:   Mariner
 Name:           perl-FCGI
 Summary:        FastCGI Perl bindings
 Version:        0.79
-Release:        4%{?dist}
+Release:        5%{?dist}
 # same as fcgi
 License:        OML
 
@@ -47,7 +47,7 @@ Provides:       bundled(fcgi)
 
 %prep
 %setup -q -n FCGI-%{version}
-%patch0 -p1
+%patch 0 -p1
 find . -type f -exec chmod -c -x {} +
 
 %build
@@ -69,6 +69,9 @@ make test
 %{_mandir}/man3/*.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.79-5
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 01 2021 Muhammad Falak <mwani@microsft.com> - 0.79-4
 - Remove epoch
 
@@ -212,5 +215,3 @@ make test
 
 * Sat May 08 2010 Chris Weyl <cweyl@alumni.drew.edu> 1:0.71-1
 - specfile by Fedora::App::MaintainerTools 0.006
-
-

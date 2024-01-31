@@ -20,7 +20,7 @@ Distribution:   Mariner
 
 Name:           xbean
 Version:        4.18
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Java plugin based web server
 License:        ASL 2.0
 Group:          Development/Libraries/Java
@@ -69,11 +69,11 @@ This package provides API documentation for xbean.
 # build failing on this due to doxia-sitetools problems
 rm src/site/site.xml
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
+%patch 5 -p1
 
 %pom_remove_parent
 %pom_remove_dep mx4j:mx4j
@@ -160,6 +160,9 @@ cp -aL build/apidoc/* %{buildroot}/%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.18-2
+- Updating the usage of the '%%patch' macro.
+
 * Mon Jan 31 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.18-1
 - Updating to version 4.18.
 - Removing dependency on "log4j12".

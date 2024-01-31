@@ -3,7 +3,7 @@
 Summary:        Apache Commons Validator
 Name:           apache-%{short_name}
 Version:        1.5.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        Apache-2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -62,8 +62,8 @@ Validator Package.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 sed -i 's/\r//' LICENSE.txt
 sed -i 's/\r//' RELEASE-NOTES.txt
@@ -121,6 +121,9 @@ ant \
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.0-2
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 14 2022 Sumedh Sharma <sumsharma@microsoft.com> - 1.5.0-1
 - Initial CBL-Mariner import from openSUSE Tumbleweed (license: same as "License" tag).
 - Use javapackages-local-bootstrap to avoid build cycle.

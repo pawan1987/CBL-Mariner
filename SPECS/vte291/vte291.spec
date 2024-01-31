@@ -11,7 +11,7 @@
 Summary:        Terminal emulator library
 Name:           vte291
 Version:        0.66.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        CC-BY AND GPLv2+ AND LGPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -76,7 +76,7 @@ emulator library.
 
 %prep
 %setup -q -n vte-%{version}
-%patch100 -p1 -b .cntnr-precmd-preexec-scroll
+%patch 100 -p1 -b .cntnr-precmd-preexec-scroll
 %if 0%{?flatpak}
 # Install user units where systemd macros expect them
 sed -i -e "/^vte_systemduserunitdir =/s|vte_prefix|'/usr'|" meson.build
@@ -119,6 +119,9 @@ sed -i -e "/^vte_systemduserunitdir =/s|vte_prefix|'/usr'|" meson.build
 %{_sysconfdir}/profile.d/vte.sh
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.66.2-3
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 0.66.2-2
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

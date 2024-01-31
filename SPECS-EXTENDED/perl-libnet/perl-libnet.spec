@@ -7,7 +7,7 @@
 Summary:        Perl clients for various network protocols
 Name:           perl-libnet
 Version:        3.11
-Release:        443%{?dist}
+Release:        444%{?dist}
 # other files:  GPL+ or Artistic
 ## Not in binary packages
 # repackage.sh: GPLv2+
@@ -104,8 +104,8 @@ protocols used in the internet community.
 %setup -q -n libnet-%{version}
 # Provide dummy Net::libnetFAQ document, CPAN RT#117888
 install -m 0644 %{SOURCE1} lib/Net
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 </dev/null
@@ -125,6 +125,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.11-444
+- Updating the usage of the '%%patch' macro.
+
 * Tue Mar 07 2023 Muhammad Falak <mwani@microsoft.com> - 3.11-443
 - License verified
 

@@ -1,6 +1,6 @@
 Name:           perl-Test-Inter
 Version:        1.09
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Framework for more readable interactive test scripts
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -41,7 +41,7 @@ replacement.
 
 %prep
 %setup -q -n Test-Inter-%{version}
-%patch0 -p1
+%patch 0 -p1
 chmod -x examples/*
 
 %build
@@ -64,6 +64,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.09-6
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.09-5
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

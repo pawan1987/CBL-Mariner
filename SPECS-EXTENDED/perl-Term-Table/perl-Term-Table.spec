@@ -5,7 +5,7 @@
 
 Name:           perl-Term-Table
 Version:        0.015
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Format a header and rows into a table
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -63,7 +63,7 @@ This Perl module is able to format rows of data into tables.
 
 %prep
 %setup -q -n Term-Table-%{version}
-%patch0 -p1
+%patch 0 -p1
 # Delete bundled Object::HashBase
 for F in lib/Term/Table/HashBase.pm t/HashBase.t; do
     perl -e 'unlink $ARGV[0] or die $!' "$F"
@@ -89,6 +89,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.015-5
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.015-4
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

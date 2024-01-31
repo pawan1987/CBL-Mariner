@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           perl-Business-ISBN-Data
 Version:        20191107
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        The data pack for Business::ISBN
 License:        Artistic 2.0
 URL:            https://metacpan.org/release/Business-ISBN-Data
@@ -41,7 +41,7 @@ Most of the interesting stuff is in Business::ISBN.
 %setup -q -n Business-ISBN-Data-%{version}
 
 # Fix shellbang and script permissions for make_data.pl
-%patch0
+%patch 0
 chmod -c +x make_data.pl
 
 %build
@@ -62,6 +62,9 @@ make test
 %{_mandir}/man3/Business::ISBN::Data.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 20191107-4
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 20191107-3
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

@@ -4,7 +4,7 @@ Name:           targetcli
 License:        ASL 2.0
 Summary:        An administration shell for storage targets
 Version:        2.1.53
-Release:        2%{?dist}
+Release:        3%{?dist}
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL:            https://github.com/open-iscsi/%{oname}
@@ -24,7 +24,7 @@ users will also need to install and use fcoe-utils.
 
 %prep
 %setup -q -n %{oname}-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %py3_build
@@ -49,6 +49,9 @@ install -m 644 systemd/* %{buildroot}%{_unitdir}/
 %dir %{_sysconfdir}/target/backup
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1.53-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1.53-2
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

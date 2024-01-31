@@ -3,7 +3,7 @@
 Summary:        Plexus Security Dispatcher Component
 Name:           plexus-sec-dispatcher
 Version:        1.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        Apache-2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -35,7 +35,7 @@ Plexus Security Dispatcher Component
  
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
  
 cp %{SOURCE1} .
  
@@ -52,6 +52,9 @@ cp %{SOURCE1} .
 %license LICENSE-2.0.txt
  
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4-2
+- Updating the usage of the '%%patch' macro.
+
 * Mon Mar 22 2023 Mykhailo Bykhovtsev <mbykhovtsev@microsoft.com> - 1.4-1
 - Initial CBL-Mariner import from Fedora 35 (license: MIT)
 - License verified

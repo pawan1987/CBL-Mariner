@@ -3,7 +3,7 @@ Distribution:   Mariner
 
 Name:		console-setup
 Version:	1.194
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	Tools for configuring the console using X Window System key maps
 
 # For a breakdown of the licensing, see COPYRIGHT, copyright, copyright.fonts and copyright.xkb
@@ -48,9 +48,9 @@ not wasted but used for another symbol.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .paths
-%patch1 -p1 -b .fsf-address
-%patch2 -p1 -b .ctrll-lock
+%patch 0 -p1 -b .paths
+%patch 1 -p1 -b .fsf-address
+%patch 2 -p1 -b .ctrll-lock
 
 
 %build
@@ -95,6 +95,9 @@ cp -a Fonts/fontsets Fonts/*.equivalents Fonts/*.set \
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.194-4
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.194-3
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

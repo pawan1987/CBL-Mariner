@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           pkcs11-helper
 Version:        1.22
-Release:        11%{?dist}
+Release:        12%{?dist}
 Summary:        A library for using PKCS#11 providers
 
 License:        GPLv2 or BSD
@@ -37,7 +37,7 @@ programs using the pkcs11-helper library.
 
 %prep
 %setup -q
-%patch2 -p1
+%patch 2 -p1
 
 %build
 %configure --disable-static --enable-doc
@@ -74,6 +74,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.22-12
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.22-11
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

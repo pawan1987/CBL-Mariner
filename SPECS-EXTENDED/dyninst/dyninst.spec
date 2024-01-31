@@ -1,7 +1,7 @@
 Summary: An API for Run-time Code Generation
 License: LGPLv2+
 Name: dyninst
-Release: 11%{?dist}
+Release: 12%{?dist}
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
 URL: http://www.dyninst.org
@@ -87,11 +87,11 @@ making sure that dyninst works properly.
 %setup -q -n %{name}-%{version} -c
 %setup -q -T -D -a 1
 
-%patch1 -p1 -b.result
-%patch2 -p1 -b.gettid
-%patch3 -p1 -b.386
-%patch4 -p1 -b.aarch
-%patch5 -p1
+%patch 1 -p1 -b.result
+%patch 2 -p1 -b.gettid
+%patch 3 -p1 -b.386
+%patch 4 -p1 -b.aarch
+%patch 5 -p1
 
 # cotire seems to cause non-deterministic gcc errors
 # https://bugzilla.redhat.com/show_bug.cgi?id=1420551
@@ -194,6 +194,9 @@ echo "%{_libdir}/dyninst" > %{buildroot}/etc/ld.so.conf.d/%{name}-%{_arch}.conf
 %attr(644,root,root) %{_libdir}/dyninst/testsuite/*.a
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 10.1.0-12
+- Updating the usage of the '%%patch' macro.
+
 * Wed Oct 04 2023 Minghe Ren <mingheren@microsoft.com> - 10.1.0-11
 - Bump release to rebuild against glibc 2.35-6
 

@@ -33,7 +33,7 @@
 Name:         qt5-qtbase
 Summary:      Qt5 - QtBase components
 Version:      5.12.11
-Release:      10%{?dist}
+Release:      11%{?dist}
 # See LICENSE.GPL3-EXCEPT.txt, for exception details
 License:      GFDL AND LGPLv3 AND GPLv2 AND GPLv3 with exceptions AND QT License Agreement 4.0
 Vendor:       Microsoft Corporation
@@ -235,28 +235,28 @@ Qt5 libraries used for drawing widgets and OpenGL items.
 
 ## upstream fixes
 
-%patch4 -p1 -b .QTBUG-35459
+%patch 4 -p1 -b .QTBUG-35459
 # omit '-b .tell-the-truth-about-private-api' so it doesn't end up in installed files -- rdieter
-%patch8 -p1
+%patch 8 -p1
 
-%patch50 -p1 -b .QT_VERSION_CHECK
-%patch51 -p1 -b .hidpi_scale_at_192
-%patch52 -p1 -b .moc_macros
-%patch53 -p1 -b .qt5gui_cmake_isystem_includes
-%patch54 -p1 -b .qmake_LFLAGS
-%patch61 -p1 -b .qt5-qtbase-cxxflag
-%patch64 -p1 -b .firebird
-%patch65 -p1 -b .mysql
-%patch68 -p1
+%patch 50 -p1 -b .QT_VERSION_CHECK
+%patch 51 -p1 -b .hidpi_scale_at_192
+%patch 52 -p1 -b .moc_macros
+%patch 53 -p1 -b .qt5gui_cmake_isystem_includes
+%patch 54 -p1 -b .qmake_LFLAGS
+%patch 61 -p1 -b .qt5-qtbase-cxxflag
+%patch 64 -p1 -b .firebird
+%patch 65 -p1 -b .mysql
+%patch 68 -p1
 
-%patch80 -p1 -b .use-wayland-on-gnome.patch
-%patch81 -p1
-%patch82 -p1
-%patch83 -p1
-%patch84 -p1
-%patch86 -p1
-%patch87 -p1
-%patch88 -p1
+%patch 80 -p1 -b .use-wayland-on-gnome.patch
+%patch 81 -p1
+%patch 82 -p1
+%patch 83 -p1
+%patch 84 -p1
+%patch 86 -p1
+%patch 87 -p1
+%patch 88 -p1
 
 ## upstream patches
 
@@ -762,6 +762,9 @@ fi
 %{_qt5_libdir}/cmake/Qt5Gui/Qt5Gui_QXdgDesktopPortalThemePlugin.cmake
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.12.11-11
+- Updating the usage of the '%%patch' macro.
+
 * Fri Jan 05 2024 Henry Beberman <henry.beberman@microsoft.com> - 5.12.11-10
 - Add patch to resolve CVE-2023-51714
 
@@ -1306,7 +1309,7 @@ fi
 - Crash in QXcbWindow::setParent() due to NULL xcbScreen (QTBUG-50081, #1291003)
 
 * Mon Dec 21 2015 Rex Dieter <rdieter@fedoraproject.org> 5.6.0-0.17.beta
-- fix/update Release: 1%%{?dist}
+- fix/update Release: 11%{?dist}
 
 * Fri Dec 18 2015 Rex Dieter <rdieter@fedoraproject.org> 5.6.0-0.16
 - 5.6.0-beta (final)

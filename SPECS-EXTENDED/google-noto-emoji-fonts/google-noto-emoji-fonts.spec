@@ -14,7 +14,7 @@ Distribution:   Mariner
 
 Name:           %{fontname}-fonts
 Version:        20200723
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Google “Noto Emoji” Black-and-White emoji font
 
 # In noto-emoji-fonts source
@@ -70,10 +70,10 @@ This package provides the Google “Noto Color Emoji” colored emoji font.
 
 %prep
 %setup -n noto-emoji-%{commit0}
-%patch0 -p1 -b .noto-emoji-build-all-flags
-%patch1 -p1 -b .noto-emoji-use-gm.patch
-%patch2 -p1 -b .noto-emoji-use-system-pngquant
-%patch3 -p1 -b .noto-emoji-check-sequence
+%patch 0 -p1 -b .noto-emoji-build-all-flags
+%patch 1 -p1 -b .noto-emoji-use-gm.patch
+%patch 2 -p1 -b .noto-emoji-use-system-pngquant
+%patch 3 -p1 -b .noto-emoji-check-sequence
 
 rm -rf third_party/pngquant
 
@@ -115,6 +115,9 @@ install -m 0644 -p %{SOURCE3} %{buildroot}%{_datadir}/appdata
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 20200723-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 20200723-2
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

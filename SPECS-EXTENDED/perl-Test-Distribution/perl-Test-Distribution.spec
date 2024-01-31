@@ -1,6 +1,6 @@
 Name:		perl-Test-Distribution
 Version:	2.00
-Release:	34%{?dist}
+Release:	35%{?dist}
 Summary:	Perform tests on all modules of a distribution
 License:	GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -47,7 +47,7 @@ that they all define a $VERSION.
 %setup -q -n Test-Distribution-%{version}
 
 # Fix character encoding of documentation
-%patch0
+%patch 0
 
 %build
 perl Build.PL --installdirs=vendor
@@ -66,6 +66,9 @@ perl Build.PL --installdirs=vendor
 %{_mandir}/man3/Test::Distribution.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.00-35
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.00-34
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

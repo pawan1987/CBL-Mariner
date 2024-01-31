@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           libid3tag
 Version:        0.15.1b
-Release:        33%{?dist}
+Release:        34%{?dist}
 Summary:        ID3 tag manipulation library
 
 License:        GPLv2+
@@ -37,11 +37,11 @@ ID3 tag library development files.
 
 %prep
 %setup -q
-%patch0 -p0 -b .CVE-2008-2109
-%patch1 -p1 -b .zero-padding
-%patch2 -p1 -b .unknown-encoding
-%patch3 -p0 -b .endless-loop
-%patch4 -p1 -b .gperf
+%patch 0 -p0 -b .CVE-2008-2109
+%patch 1 -p1 -b .zero-padding
+%patch 2 -p1 -b .unknown-encoding
+%patch 3 -p0 -b .endless-loop
+%patch 4 -p1 -b .gperf
 
 touch NEWS AUTHORS ChangeLog
 
@@ -90,6 +90,9 @@ install -Dpm 644 %{name}.pc $RPM_BUILD_ROOT%{_libdir}/pkgconfig/id3tag.pc
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.15.1b-34
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.15.1b-33
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

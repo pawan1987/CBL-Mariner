@@ -2,7 +2,7 @@
 Summary:        NIS (or YP) client programs
 Name:           yp-tools
 Version:        4.2.3
-Release:        15%{?dist}
+Release:        16%{?dist}
 License:        GPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -52,11 +52,11 @@ Install yp-tools-devel package for developing applications that use yp-tools
 
 %prep
 %setup -q
-%patch1 -p1 -b .hash
-%patch2 -p1 -b .crypt
-%patch3 -p1 -b .adjunct
-%patch4 -p1 -b .strict-prototypes
-%patch5 -p1
+%patch 1 -p1 -b .hash
+%patch 2 -p1 -b .crypt
+%patch 3 -p1 -b .adjunct
+%patch 4 -p1 -b .strict-prototypes
+%patch 5 -p1
 
 
 autoreconf -i -f -v
@@ -85,6 +85,9 @@ make DESTDIR=%{buildroot} INSTALL_PROGRAM=install install
 %{_var}/yp/nicknames
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.2.3-16
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 4.2.3-15
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

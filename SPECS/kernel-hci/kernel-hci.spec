@@ -18,7 +18,7 @@
 Summary:        Linux Kernel for HCI
 Name:           kernel-hci
 Version:        5.15.147.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -230,92 +230,92 @@ manipulation of eBPF programs and maps.
 
 %prep
 %setup -q -n CBL-Mariner-Linux-Kernel-rolling-lts-mariner-2-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
-%patch36 -p1
-%patch37 -p1
-%patch38 -p1
-%patch39 -p1
-%patch40 -p1
-%patch41 -p1
-%patch42 -p1
-%patch43 -p1
-%patch44 -p1
-%patch45 -p1
-%patch46 -p1
-%patch47 -p1
-%patch48 -p1
-%patch49 -p1
-%patch50 -p1
-%patch51 -p1
-%patch52 -p1
-%patch53 -p1
-%patch54 -p1
-%patch55 -p1
-%patch56 -p1
-%patch57 -p1
-%patch58 -p1
-%patch59 -p1
-%patch60 -p1
-%patch61 -p1
-%patch62 -p1
-%patch63 -p1
-%patch64 -p1
-%patch65 -p1
-%patch66 -p1
-%patch67 -p1
-%patch68 -p1
-%patch69 -p1
-%patch70 -p1
-%patch71 -p1
-%patch72 -p1
-%patch73 -p1
-%patch74 -p1
-%patch75 -p1
-%patch76 -p1
-%patch77 -p1
-%patch78 -p1
-%patch79 -p1
-%patch80 -p1
-%patch81 -p1
-%patch82 -p1
-%patch83 -p1
-%patch84 -p1
-%patch85 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
+%patch 5 -p1
+%patch 6 -p1
+%patch 7 -p1
+%patch 8 -p1
+%patch 9 -p1
+%patch 10 -p1
+%patch 11 -p1
+%patch 12 -p1
+%patch 13 -p1
+%patch 14 -p1
+%patch 15 -p1
+%patch 16 -p1
+%patch 17 -p1
+%patch 18 -p1
+%patch 19 -p1
+%patch 20 -p1
+%patch 21 -p1
+%patch 22 -p1
+%patch 23 -p1
+%patch 24 -p1
+%patch 25 -p1
+%patch 26 -p1
+%patch 27 -p1
+%patch 28 -p1
+%patch 29 -p1
+%patch 30 -p1
+%patch 31 -p1
+%patch 32 -p1
+%patch 33 -p1
+%patch 34 -p1
+%patch 35 -p1
+%patch 36 -p1
+%patch 37 -p1
+%patch 38 -p1
+%patch 39 -p1
+%patch 40 -p1
+%patch 41 -p1
+%patch 42 -p1
+%patch 43 -p1
+%patch 44 -p1
+%patch 45 -p1
+%patch 46 -p1
+%patch 47 -p1
+%patch 48 -p1
+%patch 49 -p1
+%patch 50 -p1
+%patch 51 -p1
+%patch 52 -p1
+%patch 53 -p1
+%patch 54 -p1
+%patch 55 -p1
+%patch 56 -p1
+%patch 57 -p1
+%patch 58 -p1
+%patch 59 -p1
+%patch 60 -p1
+%patch 61 -p1
+%patch 62 -p1
+%patch 63 -p1
+%patch 64 -p1
+%patch 65 -p1
+%patch 66 -p1
+%patch 67 -p1
+%patch 68 -p1
+%patch 69 -p1
+%patch 70 -p1
+%patch 71 -p1
+%patch 72 -p1
+%patch 73 -p1
+%patch 74 -p1
+%patch 75 -p1
+%patch 76 -p1
+%patch 77 -p1
+%patch 78 -p1
+%patch 79 -p1
+%patch 80 -p1
+%patch 81 -p1
+%patch 82 -p1
+%patch 83 -p1
+%patch 84 -p1
+%patch 85 -p1
 
 make mrproper
 
@@ -551,6 +551,9 @@ ln -sf linux-%{uname_r}.cfg /boot/mariner.cfg
 %{_sysconfdir}/bash_completion.d/bpftool
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.15.147.1-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jan 25 2024 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 5.15.147.1-1
 - Auto-upgrade to 5.15.147.1
 

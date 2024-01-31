@@ -1,6 +1,6 @@
 Name:		perl-Test-CPAN-Meta-JSON
 Version:	0.16
-Release:	17%{?dist}
+Release:	18%{?dist}
 Summary:	Validate a META.json file within a CPAN distribution
 License:	Artistic 2.0
 Vendor:         Microsoft Corporation
@@ -45,7 +45,7 @@ See CPAN::Meta for further details of the CPAN Meta Specification.
 %setup -q -n Test-CPAN-Meta-JSON-%{version}
 
 # Recode LICENSE as UTF-8
-%patch0
+%patch 0
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor
@@ -71,6 +71,9 @@ make test AUTOMATED_TESTING=1
 %{_mandir}/man3/Test::CPAN::Meta::JSON::Version.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.16-18
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.16-17
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

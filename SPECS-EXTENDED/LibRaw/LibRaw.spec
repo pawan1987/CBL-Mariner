@@ -9,7 +9,7 @@ Distribution:   Mariner
 Summary: Library for reading RAW files obtained from digital photo cameras
 Name: LibRaw
 Version: 0.19.5
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: BSD and (CDDL or LGPLv2)
 URL: http://www.libraw.org
 
@@ -58,8 +58,8 @@ LibRaw sample programs
 %prep
 %setup -q
 
-%patch0 -p0 -b .pkgconfig
-%patch1 -p1 -b .cve-2020-15503
+%patch 0 -p0 -b .pkgconfig
+%patch 1 -p1 -b .cve-2020-15503
 
 %build
 autoreconf -if
@@ -121,6 +121,9 @@ rm -fv %{buildroot}%{_libdir}/lib*.la
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.19.5-6
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.19.5-5
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -388,4 +391,3 @@ rm -fv %{buildroot}%{_libdir}/lib*.la
 
 * Fri Jun 04 2010 Siddhesh Poyarekar <siddhesh.poyarekar@gmail.com> 0.9.1-1
 - New package
-

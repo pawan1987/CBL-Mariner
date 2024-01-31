@@ -1,7 +1,7 @@
 Summary:        A DSSSL implementation
 Name:           openjade
 Version:        1.3.2
-Release:        64%{?dist}
+Release:        65%{?dist}
 License:        DMIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -42,12 +42,12 @@ XML, RTF, TeX, MIF (FrameMaker), SGML, or XML.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1 -b .deplibs
-%patch3 -p1 -b .nola
-%patch4 -p1 -b .gcc46
-%patch5 -p1 -b .getopt
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1 -b .deplibs
+%patch 3 -p1 -b .nola
+%patch 4 -p1 -b .gcc46
+%patch 5 -p1 -b .getopt
 
 
 %build
@@ -103,6 +103,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.so $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/sgml/%{name}-%{version}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3.2-65
+- Updating the usage of the '%%patch' macro.
+
 * Fri Sep 16 2022 Osama Esmail <osamaesmail@microsoft.com> - 1.3.2-64
 - Moved from SPECS-EXTENDED to SPECS
 - License verified

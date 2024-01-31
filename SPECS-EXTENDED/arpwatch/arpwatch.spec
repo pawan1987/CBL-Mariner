@@ -5,7 +5,7 @@ Distribution:   Mariner
 
 Name: arpwatch
 Version: 2.1a15
-Release: 51%{?dist}
+Release: 52%{?dist}
 Summary: Network monitoring tools for tracking IP addresses on a network
 License: BSD with advertising
 URL: http://ee.lbl.gov/
@@ -59,25 +59,25 @@ network.
 %prep
 %setup -q
 
-%patch1 -p1 -b .fhs
-%patch2 -p1 -b .arpsnmpman
-%patch3 -p1 -b .droproot
-%patch4 -p0 -b .droprootman
-%patch5 -p1 -b .mailuser
-%patch6 -p1 -b .dirman
-%patch7 -p1 -b .scripts
-%patch8 -p1 -b .nolocalpcap
-%patch9 -p1 -b .bogon
-%patch10 -p1 -b .extraman
-%patch11 -p1 -b .exitcode
-%patch12 -p1 -b .dropgroup
-%patch13 -p1 -b .devlookup
-%patch14 -p1 -b .iselect
-%patch16 -p1 -b .ethcode
-%patch17 -p1 -b .pie
-%patch18 -p1 -b .aarch64
-%patch19 -p1 -b .promisc
-%patch20 -p1 -b .overflow
+%patch 1 -p1 -b .fhs
+%patch 2 -p1 -b .arpsnmpman
+%patch 3 -p1 -b .droproot
+%patch 4 -p0 -b .droprootman
+%patch 5 -p1 -b .mailuser
+%patch 6 -p1 -b .dirman
+%patch 7 -p1 -b .scripts
+%patch 8 -p1 -b .nolocalpcap
+%patch 9 -p1 -b .bogon
+%patch 10 -p1 -b .extraman
+%patch 11 -p1 -b .exitcode
+%patch 12 -p1 -b .dropgroup
+%patch 13 -p1 -b .devlookup
+%patch 14 -p1 -b .iselect
+%patch 16 -p1 -b .ethcode
+%patch 17 -p1 -b .pie
+%patch 18 -p1 -b .aarch64
+%patch 19 -p1 -b .promisc
+%patch 20 -p1 -b .overflow
 
 cp %{SOURCE2} ./LICENSE.txt
 
@@ -157,6 +157,9 @@ fi
 %attr(0644,-,arpwatch) %verify(not md5 size mtime) %config(noreplace) %{_vararpwatch}/ethercodes.dat
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1a15-52
+- Updating the usage of the '%%patch' macro.
+
 * Fri Dec 10 2021 Thomas Crain <thcrain@microsoft.com> - 2.1a15-51
 - License verified
 

@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:		ibus-kkc
 Version:	1.5.22
-Release:	16%{?dist}
+Release:	17%{?dist}
 Summary:	Japanese Kana Kanji input method for ibus
 
 License:	GPLv2+
@@ -30,8 +30,8 @@ rm src/*vala.stamp
 # don't touch XKB layout under Fedora
 sed -i 's!<layout>jp</layout>!<layout>default</layout>!' src/kkc.xml.in.in
 # for ibus 1.5.4 or later
-%patch0 -p1 -b .content-type
-%patch1 -p1 -b .orig
+%patch 0 -p1 -b .content-type
+%patch 1 -p1 -b .orig
 
 
 %build
@@ -105,6 +105,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/ibus-setup-kkc.deskt
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.22-17
+- Updating the usage of the '%%patch' macro.
+
 * Wed Feb 16 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.22-16
 - License verified.
 
@@ -233,4 +236,3 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/ibus-setup-kkc.deskt
 
 * Thu Jan 24 2013 Daiki Ueno <dueno@redhat.com> - 1.5.0-1
 - initial packaging
-

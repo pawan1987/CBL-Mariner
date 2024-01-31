@@ -3,7 +3,7 @@ Distribution:   Mariner
 Name: hunspell-it
 Summary: Italian hunspell dictionaries
 Version: 2.4
-Release: 1%{?dist}
+Release: 2%{?dist}
 Source: http://downloads.sourceforge.net/sourceforge/linguistico/italiano_2_4_2007_09_01.zip
 URL: http://linguistico.sourceforge.net
 License: GPLv3+
@@ -19,7 +19,7 @@ Italian hunspell dictionaries.
 
 %prep
 %setup -q -c -n hunspell-it
-%patch0 -p0 -b .cleandic
+%patch 0 -p0 -b .cleandic
 
 %build
 chmod -x *
@@ -41,6 +41,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.4-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.4-1
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Converting the 'Release' tag to the '[number].[distribution]' format.

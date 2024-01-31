@@ -3,7 +3,7 @@
 
 Name:           cppcheck
 Version:        2.7
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Tool for static C/C++ code analysis
 License:        GPLv3+
 Vendor:         Microsoft Corporation
@@ -66,10 +66,10 @@ from xml files first generated using cppcheck.
 
 %prep
 %setup -q
-%patch0 -p1 -b .translations
-%patch1 -p1 -b .python3
-%patch2 -p1 -b .array7
-%patch3 -p1 -b .tinyxml2
+%patch 0 -p1 -b .translations
+%patch 1 -p1 -b .python3
+%patch 2 -p1 -b .array7
+%patch 3 -p1 -b .tinyxml2
 # Make sure bundled tinyxml2 is not used
 rm -r externals/tinyxml2
 
@@ -120,6 +120,9 @@ install -D -p -m 755 htmlreport/cppcheck-htmlreport %{buildroot}%{_bindir}/cppch
 %{_bindir}/cppcheck-htmlreport
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.7-3
+- Updating the usage of the '%%patch' macro.
+
 * Mon Aug 22 2022 Muhammad Falak <mwani@microsoft.com> - 2.7-2
 - Fix `testrunner` binary path to enable ptest
 

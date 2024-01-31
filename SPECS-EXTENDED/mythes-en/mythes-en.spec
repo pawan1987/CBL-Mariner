@@ -3,7 +3,7 @@ Distribution:   Mariner
 Name: mythes-en
 Summary: English thesaurus
 Version: 3.0
-Release: 34%{?dist}
+Release: 35%{?dist}
 # https source does not exist
 Source: http://www.danielnaber.de/wn2ooo/wn2ooo20050723.tgz#/%{name}-%{version}.tgz
 URL: http://www.danielnaber.de/wn2ooo/
@@ -24,7 +24,7 @@ English thesaurus.
 
 %prep
 %setup -q -c %{name}-%{version}
-%patch0 -p1 -b .python3
+%patch 0 -p1 -b .python3
 
 %build
 export WNHOME=/usr/share/wordnet-%{version}
@@ -51,6 +51,9 @@ popd
 %{_datadir}/mythes/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.0-35
+- Updating the usage of the '%%patch' macro.
+
 * Thu Mar 09 2023 Muhammad Falak R Wani <mwani@microsoft.com> - 3.0-34
 - Initial CBL-Mariner import from Fedora 36 (license: MIT)
 - License verified.

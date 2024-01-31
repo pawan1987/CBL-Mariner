@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: Tools to manage the Linux NetLabel subsystem
 Name: netlabel_tools
 Version: 0.30.0
-Release: 10%{?dist}
+Release: 11%{?dist}
 License: GPLv2
 URL: https://github.com/netlabel/netlabel_tools
 Source: https://github.com/netlabel/netlabel_tools/releases/download/v%{version}/%{name}-%{version}.tar.gz
@@ -29,7 +29,7 @@ kernel subsystem.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %configure
@@ -69,6 +69,9 @@ make V=1 DESTDIR="%{buildroot}" install
 %attr(0644,root,root) %config(noreplace) /etc/netlabel.rules
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.30.0-11
+- Updating the usage of the '%%patch' macro.
+
 * Mon Jun 07 2021 Thomas Crain <thcrain@microsoft.com> - 0.30.0-10
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Add BR:systemd-devel for the systemd *.pc files
@@ -226,4 +229,3 @@ make V=1 DESTDIR="%{buildroot}" install
 
 * Fri Jun 23 2006 Steve Grubb <sgrubb@redhat.com> 0.13-1
 - Initial build.
-

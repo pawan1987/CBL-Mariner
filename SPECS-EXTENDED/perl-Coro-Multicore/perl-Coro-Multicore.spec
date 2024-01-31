@@ -4,7 +4,7 @@
 Summary:        Make Coro threads on multiple cores with specially supported modules
 Name:           perl-Coro-Multicore
 Version:        1.07
-Release:        3%{?dist}
+Release:        4%{?dist}
 # COPYING:          GPL+ or Artistic
 # perlmulticore.h:  Public Domain or CC0
 License:        (GPL+ OR Artistic) AND (Public Domain OR CC0)
@@ -86,8 +86,8 @@ with "%{_libexecdir}/%{name}/test".
 
 %prep
 %setup -q -n Coro-Multicore-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 %build
 export CORO_MULTICORE_CHECK=0 PERL_CANARY_STABILITY_NOPROMPT=1
@@ -139,6 +139,9 @@ make test
 %{_libexecdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.07-4
+- Updating the usage of the '%%patch' macro.
+
 * Wed Jan 26 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.07-3
 - Initial CBL-Mariner import from Fedora 36 (license: MIT).
 - License verified.

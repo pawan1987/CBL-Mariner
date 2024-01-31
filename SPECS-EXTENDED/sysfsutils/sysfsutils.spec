@@ -1,6 +1,6 @@
 Name:           sysfsutils
 Version:        2.1.0
-Release:        29%{?dist}
+Release:        30%{?dist}
 Summary:        Utilities for interfacing with sysfs
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -38,11 +38,11 @@ to build programs using the libsysfs API.
 
 %prep
 %setup -q
-%patch0 -p1 -b .redhatify
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch 0 -p1 -b .redhatify
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
 
 %build
 %configure --disable-static --libdir=/%{_lib}
@@ -75,6 +75,9 @@ find %{buildroot} -type f -name "*.la" -delete
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1.0-30
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1.0-29
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

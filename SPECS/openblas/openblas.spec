@@ -21,7 +21,7 @@ Summary:        An optimized BLAS library based on GotoBLAS2
 # "obsoleted" features are still kept in the spec.
 Name:           openblas
 Version:        0.3.21
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -194,12 +194,12 @@ This package contains the static libraries.
 tar zxf %{SOURCE0}
 cd OpenBLAS-%{version}
 %if %{with system_lapack}
-%patch0 -p1 -b .system_lapack
+%patch 0 -p1 -b .system_lapack
 %endif
-%patch1 -p1 -b .libname
-%patch3 -p1 -b .sbgem
-%patch4 -p1 -b .tests
-%patch5 -p1
+%patch 1 -p1 -b .libname
+%patch 3 -p1 -b .sbgem
+%patch 4 -p1 -b .tests
+%patch 5 -p1
 
 # Fix source permissions
 find -name \*.f -exec chmod 644 {} \;
@@ -561,6 +561,9 @@ rm -rf %{buildroot}%{_libdir}/pkgconfig
 %{_libdir}/lib%{name}p64_.a
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.3.21-4
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 0.3.21-3
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

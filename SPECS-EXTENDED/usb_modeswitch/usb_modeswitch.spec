@@ -2,7 +2,7 @@
 
 Name:		usb_modeswitch
 Version:	2.6.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	USB Modeswitch gets mobile broadband cards in operational mode
 Summary(de):	USB Modeswitch aktiviert UMTS-Karten
 License:	GPLv2+
@@ -43,8 +43,8 @@ Vodafone, Option, ZTE und Novatell werden unterstützt.
 %setup -q -n %{source_name}-%{version}
 cp -f %{SOURCE1} device_reference.txt
 
-%patch0 -p0
-%patch1 -p1
+%patch 0 -p0
+%patch 1 -p1
 
 
 %build
@@ -72,6 +72,9 @@ make install \
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6.0-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6.0-2
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

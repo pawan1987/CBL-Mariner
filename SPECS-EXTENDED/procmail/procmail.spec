@@ -10,7 +10,7 @@ Distribution:   Mariner
 Summary: Mail processing program
 Name: procmail
 Version: 3.22
-Release: 53%{?dist}
+Release: 54%{?dist}
 License: GPLv2+ or Artistic
 # Source: ftp://ftp.procmail.org/pub/procmail/procmail-%{version}.tar.gz
 # The original source doesn't seem to be available anymore, using mirror
@@ -41,16 +41,16 @@ forward certain incoming mail automatically to someone.
 
 %prep
 %setup -q
-%patch0 -p1 -b .rhconfig
-%patch1 -p1
-%patch2 -p1
-%patch4 -p1 -b .truncate
-%patch5 -p1 -b .ipv6
-%patch6 -p1 -b .getline
-%patch7 -p1 -b .CVE-2014-3618
-%patch8 -p1 -b .crash-fix
-%patch9 -p1 -b .CVE-2017-16844
-%patch10 -p1 -b .coverity-scan-fixes
+%patch 0 -p1 -b .rhconfig
+%patch 1 -p1
+%patch 2 -p1
+%patch 4 -p1 -b .truncate
+%patch 5 -p1 -b .ipv6
+%patch 6 -p1 -b .getline
+%patch 7 -p1 -b .CVE-2014-3618
+%patch 8 -p1 -b .crash-fix
+%patch 9 -p1 -b .CVE-2017-16844
+%patch 10 -p1 -b .coverity-scan-fixes
 
 find examples -type f | xargs chmod 644
 
@@ -82,6 +82,9 @@ cp -p %{SOURCE2} telsas_procmailrc
 %{_mandir}/man[15]/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.22-54
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.22-53
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

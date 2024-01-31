@@ -3,7 +3,7 @@ Distribution:   Mariner
 Name: hunspell-no
 Summary: Norwegian hunspell dictionaries
 Version: 2.0.10
-Release: 13%{?dist}
+Release: 14%{?dist}
 
 Source0: https://alioth-archive.debian.org/releases/spell-norwegian/spell-norwegian/%{version}/no_NO-pack2-%{version}.zip
 Source1: %{name}-LICENSE.txt
@@ -72,7 +72,7 @@ unzip -q hyph_nb_NO.zip
 unzip -q hyph_nn_NO.zip
 unzip -q th_nb_NO_v2.zip
 unzip -q th_nn_NO_v2.zip
-%patch1 -p0 -b .rhbz959989
+%patch 1 -p0 -b .rhbz959989
 
 cp %{SOURCE1} ./LICENSE.txt
 
@@ -129,6 +129,9 @@ cp -p th_nb_NO_v2.dat th_nb_NO_v2.idx th_nn_NO_v2.dat th_nn_NO_v2.idx $RPM_BUILD
 %{_datadir}/mythes/th_nn_NO_v2.*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0.10-14
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 01 2021 Muhammad Falak <mwani@microsft.com> - 2.0.10-13
 - Remove epoch
 

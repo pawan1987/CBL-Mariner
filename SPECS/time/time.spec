@@ -1,7 +1,7 @@
 Summary:        A GNU utility for monitoring a program's use of system resources
 Name:           time
 Version:        1.9
-Release:        10%{?dist}
+Release:        11%{?dist}
 # src/time.c:               GPLv3+
 # COPYING:                  GPLv3 text
 # doc/time.texi:            GFDL
@@ -65,8 +65,8 @@ the results.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 autoreconf -fi
 
 %build
@@ -89,6 +89,9 @@ make %{?_smp_mflags} check
 # time(1) manual page lives in man-pages package, bug #1612294.
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.9-11
+- Updating the usage of the '%%patch' macro.
+
 * Tue Nov 01 2022 Riken Maharjan <rmaharjan@microsoft.com> - 1.9-10
 - License verified
 - Move to core

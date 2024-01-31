@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name: fxload
 Version: 2008_10_13
-Release: 16%{?dist}
+Release: 17%{?dist}
 Summary: A helper program to download firmware into FX and FX2 EZ-USB devices
 
 License: GPLv2+
@@ -31,8 +31,8 @@ appears on the bus.
 
 %prep
 %setup -q 
-%patch0 -p1 -b .fxload-noa3load
-%patch1 -p1 -b .cflags
+%patch 0 -p1 -b .fxload-noa3load
+%patch 1 -p1 -b .cflags
 
 %build 
 make CC=gcc CFLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
@@ -50,6 +50,9 @@ install -m 644 fxload.8 %{buildroot}/%{_mandir}/man8/
 %{_mandir}/*/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2008_10_13-17
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 2008_10_13-16
 - Updating source URLs.
 - License verified.
@@ -159,4 +162,3 @@ install -m 644 fxload.8 %{buildroot}/%{_mandir}/man8/
 
 * Wed Apr 12 2006 Bart Vanbrabant <bart.vanbrabant@zoeloelip.be> - 2002_04_11-1
 - First version of fxload spec based on hotplug spec
-

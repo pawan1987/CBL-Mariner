@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary:        A straightforward implementation of DBM
 Name:           kyotocabinet
 Version:        1.2.78
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv3
 URL:            https://dbmx.net/%{name}/
 Source:         https://dbmx.net/%{name}/pkg/%{name}-%{version}.tar.gz
@@ -52,9 +52,9 @@ applications that use Kyoto Cabinet.
 
 %prep
 %setup -q
-%patch0 -p1 -b .cflags
-%patch1 -p1 -b .8-byte-atomics
-%patch2 -p1 -b .random-failures
+%patch 0 -p1 -b .cflags
+%patch 1 -p1 -b .8-byte-atomics
+%patch 2 -p1 -b .random-failures
 
 %build
 %configure --disable-opt --enable-lzo --enable-lzma
@@ -144,6 +144,9 @@ make check
 %doc COPYING doc/api/* kyotocabinet.idl
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.78-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.78-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 

@@ -5,7 +5,7 @@ Distribution:   Mariner
 Name:           perl-Crypt-PasswdMD5
 # Keep 1-digit version because of history
 Version:        %(echo '%{cpan_version}' | sed 's/\.\(.\)/.\1./')
-Release:        19%{?dist}
+Release:        20%{?dist}
 Summary:        Provides interoperable MD5-based crypt() functions
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Crypt-PasswdMD5
@@ -38,7 +38,7 @@ This package provides MD5-based crypt() functions.
 # Specify version requirement for Digest::MD5
 # This avoids the need to add an explicit dependency in the spec file
 # and the need to filter the underspecified auto-generated dependency
-%patch0
+%patch 0
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor
@@ -58,6 +58,9 @@ make test
 %{_mandir}/man3/Crypt::PasswdMD5.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.0-20
+- Updating the usage of the '%%patch' macro.
+
 * Wed Apr 28 2021 Thomas Crain <thcrain@microsoft.com> - 1.4.0-19
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Remove colons from patchnames

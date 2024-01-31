@@ -3,7 +3,7 @@ Distribution:   Mariner
 
 Name: rarian
 Version: 0.8.1
-Release: 25%{?dist}
+Release: 26%{?dist}
 License: LGPLv2+
 Summary: Documentation meta-data library
 URL: http://rarian.freedesktop.org/
@@ -60,7 +60,7 @@ Rarian library ("librarian").
 
 %prep
 %setup -q
-%patch1 -p1 -b .categories
+%patch 1 -p1 -b .categories
 
 %build
 %configure --disable-skdb-update
@@ -117,6 +117,9 @@ fi
 %{_libdir}/pkgconfig/rarian.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.8.1-26
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.8.1-25
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

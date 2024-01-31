@@ -5,7 +5,7 @@ Distribution:   Mariner
 Summary:        SBLIM syslog instrumentation
 Name:           sblim-cmpi-syslog
 Version:        0.9.0
-Release:        19%{?dist}
+Release:        20%{?dist}
 License:        EPL
 URL:            http://sourceforge.net/projects/sblim/
 # The source for this package was pulled from upstream's vcs.  Use the
@@ -55,11 +55,11 @@ SBLIM Base Syslog Testcase Files for SBLIM Testsuite
 
 %prep
 %setup -q
-%patch0 -p1 -b .interop
-%patch1 -p1 -b .docdir
-%patch2 -p1 -b .prov-reg-sfcb-systemd
-%patch3 -p1 -b .format-security
-%patch4 -p1 -b .buffer-overflow-remove-tmpnam
+%patch 0 -p1 -b .interop
+%patch 1 -p1 -b .docdir
+%patch 2 -p1 -b .prov-reg-sfcb-systemd
+%patch 3 -p1 -b .format-security
+%patch 4 -p1 -b .buffer-overflow-remove-tmpnam
 
 %build
 %ifarch s390 s390x ppc ppc64
@@ -128,6 +128,9 @@ $RPM_BUILD_ROOT/%{_datadir}/sblim-testsuite/system/linux/messagelog.sh
 %postun -p /sbin/ldconfig
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.0-20
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Mateusz Malisz <mamalisz@microsoft.com> - 0.9.0-19
 - Update Source0
 - Add %%doc and %%license

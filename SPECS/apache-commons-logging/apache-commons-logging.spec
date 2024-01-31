@@ -19,7 +19,7 @@
 Summary:        Apache Commons Logging
 Name:           apache-%{short_name}
 Version:        1.2
-Release:        11%{?dist}
+Release:        12%{?dist}
 License:        ASL 2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -56,9 +56,9 @@ logging implementation.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
 
 sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt
 
@@ -123,6 +123,9 @@ install -pm 644 tmp.pom %{buildroot}/%{_mavenpomdir}/%{short_name}-adapters-%{ve
 %doc PROPOSAL.html RELEASE-NOTES.txt NOTICE.txt
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2-12
+- Updating the usage of the '%%patch' macro.
+
 * Fri Mar 17 2023 Mykhailo Bykhovtsev <mbykhovtsev@microsoft.com> - 1.2-11
 - Fixing maven provides
 

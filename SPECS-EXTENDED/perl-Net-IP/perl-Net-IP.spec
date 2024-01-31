@@ -2,7 +2,7 @@
 Summary:        Perl module for manipulation of IPv4 and IPv6 addresses
 Name:           perl-Net-IP
 Version:        1.26
-Release:        32%{?dist}
+Release:        33%{?dist}
 # Some ambiguity here, see http://rt.cpan.org/Ticket/Display.html?id=28689
 # HPND (MIT-like) for the IP.pm itself, and "like Perl itself" for all the other
 # scripts included.
@@ -50,10 +50,10 @@ handy IP "cheat sheet".
 %setup -q -n Net-IP-%{version}
 
 # Apply fix for zero networks (#197425, CPAN RT#20265, CPAN RT#60439)
-%patch0
+%patch 0
 
 # Fix shellbangs in shipped scripts
-%patch1
+%patch 1
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor
@@ -82,6 +82,9 @@ PERL5LIB=%{buildroot}%{perl_vendorlib} ./iptab
 %{_mandir}/man3/Net::IP.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.26-33
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 19 2023 Archana Choudhary <archana1@microsoft.com> - 1.26-32
 - Initial CBL-Mariner import from Fedora 39 (license: MIT).
 - License verified

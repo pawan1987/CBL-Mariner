@@ -1,7 +1,7 @@
 Summary:        The GNU shar utilities for packaging and unpackaging shell archives
 Name:           sharutils
 Version:        4.15.2
-Release:        21%{?dist}
+Release:        22%{?dist}
 # The main code:                GPLv3+
 # intl/dngettext.c:             LGPLv2+
 # lib (gnulib):                 GPLv3+
@@ -67,11 +67,11 @@ the shar files.
 
 %prep
 %setup -q
-%patch0 -p1 -b .format
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch 0 -p1 -b .format
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
 
 # convert TODO, THANKS to UTF-8
 for i in TODO THANKS; do
@@ -101,6 +101,9 @@ chmod 644 AUTHORS ChangeLog COPYING NEWS README THANKS TODO
 %{_mandir}/man5/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.15.2-22
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 4.15.2-21
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

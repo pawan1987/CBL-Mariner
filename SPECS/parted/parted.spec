@@ -1,7 +1,7 @@
 Summary:        GNU Parted manipulates partition tables
 Name:           parted
 Version:        3.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv3+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -21,7 +21,7 @@ command-line frontend, parted, which can also be used in scripts.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 %build
 #Add a header to allow building with glibc-2.28 or later
@@ -53,6 +53,9 @@ rm -rf %{buildroot}%{_infodir}/dir
 %{_datadir}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.4-3
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 3.4-2
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

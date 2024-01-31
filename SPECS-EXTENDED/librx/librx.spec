@@ -1,7 +1,7 @@
 Summary: POSIX regexp functions
 Name: librx
 Version: 1.5
-Release: 37%{?dist}
+Release: 38%{?dist}
 License: GPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -35,12 +35,12 @@ This package contains files needed for development with librx.
 
 %prep
 %setup -q -n rx-%{version}
-%patch0 -p1
-%patch1 -p1 -b .texipatch
+%patch 0 -p1
+%patch 1 -p1 -b .texipatch
 %ifarch x86_64 s390x ia64 %{power64} alpha sparc64 aarch64 %{mips64}
-%patch2 -p1 -b .64bit
+%patch 2 -p1 -b .64bit
 %endif
-%patch3 -p1 -b .libtoolmode
+%patch 3 -p1 -b .libtoolmode
 
 %build
 %configure
@@ -72,6 +72,9 @@ chmod -x ${RPM_BUILD_ROOT}%{_includedir}/rxposix.h
 %{_libdir}/*.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5-38
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5-37
 - Updating source URLs.
 - License verified.

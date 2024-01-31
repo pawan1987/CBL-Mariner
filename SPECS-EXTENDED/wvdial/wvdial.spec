@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: A heuristic autodialer for PPP connections
 Name: wvdial
 Version: 1.61
-Release: 25%{?dist}
+Release: 26%{?dist}
 License: LGPLv2+
 URL: http://alumnit.ca/wiki/?WvDial
 #Old location for <1.61 was http://alumnit.ca/download/wvdial-%%{version}.tar.gz
@@ -36,13 +36,13 @@ negotiate the PPP connection using any mechanism needed.
 
 %prep
 %setup -q
-%patch1 -p1 -b .remotename
-%patch2 -p1 -b .9nums
-%patch3 -p1 -b .compuserve
-%patch4 -p1 -b .manpages
-%patch5 -p1 -b .typo_pon_wvdial
-%patch6 -p1 -b .ftbfs_with_gcc_45
-%patch7 -p1 -b ._DEFAULT_SOURCE
+%patch 1 -p1 -b .remotename
+%patch 2 -p1 -b .9nums
+%patch 3 -p1 -b .compuserve
+%patch 4 -p1 -b .manpages
+%patch 5 -p1 -b .typo_pon_wvdial
+%patch 6 -p1 -b .ftbfs_with_gcc_45
+%patch 7 -p1 -b ._DEFAULT_SOURCE
 
 %build
 %configure
@@ -77,6 +77,9 @@ touch %{buildroot}%{_sysconfdir}/wvdial.conf
 %verify(not md5 size mtime) %config(noreplace) %{_sysconfdir}/wvdial.conf
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.61-26
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.61-25
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

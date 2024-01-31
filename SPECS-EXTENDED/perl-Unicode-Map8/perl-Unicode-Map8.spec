@@ -1,6 +1,6 @@
 Name:           perl-Unicode-Map8
 Version:        0.13
-Release:        35%{?dist}
+Release:        36%{?dist}
 Summary:        Mapping table between 8-bit chars and Unicode for Perl
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -48,11 +48,11 @@ tables in RFC 1345.  New maps can easily be installed.
 %setup -q -n Unicode-Map8-%{version}
 
 # Patches from openSUSE to fix test suite on x86_64
-%patch0 -p0
-%patch1 -p0
+%patch 0 -p0
+%patch 1 -p0
 
 # Re-code docs as UTF8
-%patch2
+%patch 2
 
 
 %build
@@ -81,6 +81,9 @@ make test
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.13-36
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.13-35
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

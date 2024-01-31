@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:       recode
 Version:    3.7.7
-Release:    2%{?dist}
+Release:    3%{?dist}
 Summary:    Conversion between character sets and surfaces
 # COPYING:              GPLv3 text
 # COPYING-LIB:          LGPLv3 text
@@ -89,7 +89,7 @@ This package provides the header files for a recode library.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 autoreconf -fi
 
 %build
@@ -132,6 +132,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_includedir}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.7.7-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.7.7-2
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

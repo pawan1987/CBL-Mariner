@@ -1,7 +1,7 @@
 Summary:        Use a Razor catalogue server to filter spam messages
 Name:           perl-Razor-Agent
 Version:        2.85
-Release:        37%{?dist}
+Release:        38%{?dist}
 License:        Artistic 2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -41,9 +41,9 @@ Agents on the network.
 
 %prep
 %setup -q -n razor-agents-%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2
+%patch 0 -p1
+%patch 1 -p1
+%patch 2
 
 %build
 export CFLAGS="%{optflags}"
@@ -82,6 +82,9 @@ make test
 %{_mandir}/man*/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.85-38
+- Updating the usage of the '%%patch' macro.
+
 * Tue Mar 07 2023 Muhammad Falak <mwani@microsoft.com> - 2.85-37
 - License verified
 

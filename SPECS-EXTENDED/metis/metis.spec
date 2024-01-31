@@ -8,7 +8,7 @@
 
 Name:    metis
 Version: 5.1.0
-Release: 25%{?dist}
+Release: 26%{?dist}
 Summary: Serial Graph Partitioning and Fill-reducing Matrix Ordering
 License: ASL 2.0 and BSD and LGPLv2+
 Vendor:         Microsoft Corporation
@@ -89,10 +89,10 @@ OpenMP version (64bit INTEGER).
 %setup -qc 
  
 pushd %{name}-%{version}
-%patch0 -p0
-%patch1 -p0
-%patch3 -p0
-%patch5 -p0
+%patch 0 -p0
+%patch 1 -p0
+%patch 3 -p0
+%patch 5 -p0
 
 ## Remove default compiler flag
 sed -e 's|-O3||g' -i GKlib/GKlibSystem.cmake
@@ -267,6 +267,9 @@ popd
 %endif
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.1.0-26
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.1.0-25
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

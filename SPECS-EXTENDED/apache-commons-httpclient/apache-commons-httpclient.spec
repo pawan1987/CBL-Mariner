@@ -21,7 +21,7 @@ Distribution:   Mariner
 %define short_name commons-httpclient
 Name:           apache-commons-httpclient
 Version:        3.1
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        Feature rich package for accessing resources via HTTP
 License:        Apache-2.0
 Group:          Development/Libraries/Java
@@ -105,17 +105,17 @@ Manual for %{name}
 mkdir lib # duh
 rm -rf docs/apidocs docs/*.patch docs/*.orig docs/*.rej
 
-%patch0
+%patch 0
 
 pushd src/conf
 sed -i 's/\r//' MANIFEST.MF
-%patch1
+%patch 1
 popd
 
-%patch2
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%patch 2
+%patch 3 -p1
+%patch 4 -p1
+%patch 5 -p1
 
 # Use javax classes, not com.sun ones
 # assume no filename contains spaces
@@ -206,6 +206,9 @@ ln -s %{_javadocdir}/%{name} dist/docs/apidocs
 %doc dist/docs/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.1-15
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.1-14
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

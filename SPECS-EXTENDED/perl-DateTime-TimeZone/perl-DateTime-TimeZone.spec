@@ -6,7 +6,7 @@
 
 Name:           perl-DateTime-TimeZone
 Version:        2.39
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Time zone object base class and factory
 # tzdata%%{tzversion}.tar.gz archive:   Public Domain
 # other files:                          GPL+ or Artistic
@@ -120,7 +120,7 @@ offset from GMT for a given time period.
 %setup -q -T -a 1 -c -n tzdata-%{tzversion}
 %endif
 %setup -q -T -b 0 -n DateTime-TimeZone-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %if !%{defined perl_bootstrap} && %{defined tzversion}
@@ -145,6 +145,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.39-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.39-2
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

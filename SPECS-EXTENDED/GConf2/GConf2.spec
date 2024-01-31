@@ -12,7 +12,7 @@ Distribution:   Mariner
 Summary: A process-transparent configuration system
 Name: GConf2
 Version: 3.2.6
-Release: 31%{?dist}
+Release: 32%{?dist}
 License: GPLv2+
 #VCS: git:git://git.gnome.org/gconf
 Source0: http://download.gnome.org/sources/GConf/3.2/GConf-%{version}.tar.xz
@@ -82,12 +82,12 @@ development using GConf.
 
 %prep
 %setup -q -n GConf-%{version}
-%patch0 -p1 -b .gettext
-%patch1 -p1 -b .drop-spew
-%patch2 -p1 -b .abi-break
+%patch 0 -p1 -b .gettext
+%patch 1 -p1 -b .drop-spew
+%patch 2 -p1 -b .abi-break
 
-%patch99 -p1 -b .workaround-crash
-%patch100 -p1 -b .pkill-hack
+%patch 99 -p1 -b .workaround-crash
+%patch 100 -p1 -b .pkill-hack
 
 autoreconf -i -f
 
@@ -183,6 +183,9 @@ fi
 %{_mandir}/man1/gsettings-schema-convert.1*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.2.6-32
+- Updating the usage of the '%%patch' macro.
+
 * Mon Mar 21 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.2.6-31
 - Adding missing "BuildRequires:  perl(File::Find)".
 

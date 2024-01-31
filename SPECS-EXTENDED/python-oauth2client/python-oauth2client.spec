@@ -8,7 +8,7 @@ Distribution:   Mariner
 
 Name:           python-%{srcname}
 Version:        4.1.3
-Release:        17%{?dist}
+Release:        18%{?dist}
 Summary:        %{sum}
 
 License:        ASL 2.0
@@ -44,9 +44,9 @@ This is a python client module for accessing resources protected by OAuth 2.0
 
 %prep
 %setup -q -n %{srcname}-%{version}
-%patch0 -p1 -b .doc
-%patch1 -p1 -b .doc2
-%patch2 -p1 -b .keyring
+%patch 0 -p1 -b .doc
+%patch 1 -p1 -b .doc2
+%patch 2 -p1 -b .keyring
 
 # Remove the version constraint on httplib2.  From reading upstream's git log,
 # it seems the only reason they require a new version is to force python3
@@ -74,6 +74,9 @@ rm oauth2client/contrib/keyring_storage.py tests/contrib/test_keyring_storage.py
 %{python3_sitelib}/%{srcname}*.egg-info
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.1.3-18
+- Updating the usage of the '%%patch' macro.
+
 * Mon Mar 06 2023 Muhammad Falak R Wani <mwani@microsoft.com> - 4.1.3-17
 - Initial CBL-Mariner import from Fedora 36 (license: MIT).
 - License Verified

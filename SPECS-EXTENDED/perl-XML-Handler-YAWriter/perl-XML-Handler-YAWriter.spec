@@ -1,6 +1,6 @@
 Name:           perl-XML-Handler-YAWriter
 Version:        0.23
-Release:        37%{?dist}
+Release:        38%{?dist}
 
 Summary:        Yet another Perl SAX XML Writer
 
@@ -32,7 +32,7 @@ for i in YAWriter.pm README; do {
 };
 done;
 
-%patch0 -p1
+%patch 0 -p1
 
 
 %build
@@ -62,6 +62,9 @@ make test
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.23-38
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.23-37
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

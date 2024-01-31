@@ -4,7 +4,7 @@
 Summary:        NVIDIA container runtime library
 Name:           libnvidia-container
 Version:        1.13.5
-Release:        4%{?dist}
+Release:        5%{?dist}
 License:        BSD AND ASL2.0 AND GPLv3+ AND LGPLv3+ AND MIT AND GPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -30,12 +30,12 @@ kernel subsystems and is designed to be agnostic of the container runtime.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 mkdir -p %{mod_probe_dir}
 tar -C %{mod_probe_dir} --strip-components=1 -xzf %{SOURCE1}
-%patch2 -p1 -d %{mod_probe_dir}
+%patch 2 -p1 -d %{mod_probe_dir}
 touch %{mod_probe_dir}/.download_stamp
 
 %build
@@ -132,6 +132,9 @@ This package contains command-line tools that facilitate using the library.
 %{_bindir}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.13.5-5
+- Updating the usage of the '%%patch' macro.
+
 * Mon Oct 16 2023 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 1.13.5-4
 - Bump release to rebuild with go 1.20.9
 

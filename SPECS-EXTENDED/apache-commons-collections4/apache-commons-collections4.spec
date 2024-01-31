@@ -23,7 +23,7 @@ Distribution:   Mariner
 %bcond_with tests
 Name:           apache-%{short_name}
 Version:        4.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Extension of the Java Collections Framework
 License:        Apache-2.0
 Group:          Development/Libraries/Java
@@ -54,9 +54,9 @@ This package provides %{summary}.
 
 %prep
 %setup -q -n commons-collections4-%{version}-src
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
 
 %pom_remove_parent
 
@@ -94,6 +94,9 @@ cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.1-3
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.1-2
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

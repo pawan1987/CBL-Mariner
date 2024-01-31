@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: A tool for printing multiple pages of text on each printed page
 Name: mpage
 Version: 2.5.7
-Release: 10%{?dist}
+Release: 11%{?dist}
 License: GPLv2+
 Url: http://www.mesa.nl/pub/mpage/
 Source: ftp://ftp.mesa.nl/pub/mpage/mpage-%{version}.tgz
@@ -20,7 +20,7 @@ pages.
 
 %prep
 %setup -q
-%patch0 -p1 -b .config
+%patch 0 -p1 -b .config
 
 %build
 make BINDIR=%{_bindir} LIBDIR=%{_datadir} MANDIR=%{_mandir}/man1
@@ -44,6 +44,9 @@ make PREFIX=$RPM_BUILD_ROOT/%{_prefix} BINDIR=$RPM_BUILD_ROOT/%{_bindir} \
 %{_datadir}/mpage
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.5.7-11
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.5.7-10
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

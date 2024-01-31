@@ -5,7 +5,7 @@ Distribution:   Mariner
 Summary: Driver for QPDL/SPL2 printers (Samsung and several Xerox printers)
 Name: splix
 Version: 2.0.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv2
 URL: http://splix.sourceforge.net/
 
@@ -50,8 +50,8 @@ pushd ppd
 make distclean
 popd
 
-%patch0 -p1 -b .deviceID
-%patch1 -p1 -b .ldflags
+%patch 0 -p1 -b .deviceID
+%patch 1 -p1 -b .ldflags
 
 %build
 %set_build_flags
@@ -72,6 +72,9 @@ make install DRV_ONLY=1 CUPSDRV=%{_datadir}/cups/drv/splix DESTDIR=%{buildroot}
 %{_datadir}/cups/drv/splix
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0.1-3
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Mateusz Malisz <mamalisz@microsoft.com> - 2.0.1-2
 - Update Source0
 - License verified.

@@ -1,7 +1,7 @@
 Summary:        FastCGI development kit
 Name:           fcgi
 Version:        2.4.0
-Release:        7%{?dist}
+Release:        8%{?dist}
 License:        OML
 # NOTE: below is an archive of FastCGI. The original project web page (http://www.fastcgi.com) is no longer online.
 URL:            https://fastcgi-archives.github.io
@@ -26,8 +26,8 @@ provides high performance without the limitations of server specific APIs.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 %build
 %configure \
@@ -57,6 +57,9 @@ make check
 %{_includedir}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.4.0-8
+- Updating the usage of the '%%patch' macro.
+
 * Sat May 09 2020 Nick Samson <nisamson@microsoft.com> - 2.4.0-7
 - Added %%license line automatically
 

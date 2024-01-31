@@ -4,7 +4,7 @@
 Summary: Utilities for monitoring process activities
 Name: psacct
 Version: 6.6.4
-Release: 8%{?dist}
+Release: 9%{?dist}
 License: GPLv3+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -43,9 +43,9 @@ commands.
 %prep
 %setup -q -n acct-%{version}
 
-%patch1 -p1 -b .subsubsec
-%patch2 -p1
-%patch3 -p1
+%patch 1 -p1 -b .subsubsec
+%patch 2 -p1
+%patch 3 -p1
 
 # fixing 'gets' undeclared
 sed -i 's|.*(gets,.*||g' lib/stdio.in.h
@@ -134,6 +134,9 @@ touch /var/account/pacct && chmod 0600 /var/account/pacct
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 6.6.4-9
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 6.6.4-8
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

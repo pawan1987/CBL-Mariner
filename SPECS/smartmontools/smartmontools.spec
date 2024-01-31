@@ -1,7 +1,7 @@
 Summary:	Tools for monitoring SMART capable hard disks
 Name:		smartmontools
 Version:	7.3
-Release:	1%{?dist}
+Release:	2%{?dist}
 License:	MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -31,7 +31,7 @@ failure.
 
 %prep
 %setup -q 
-%patch1 -p1 -b .defaultconf
+%patch 1 -p1 -b .defaultconf
 
 # update SOURCE5 on maintainer's machine prior commiting, there's no internet connection on builders
 curl %{UrlSource5} -o %{SOURCE5} ||:
@@ -83,6 +83,9 @@ mkdir -p $RPM_BUILD_ROOT%{_sharedstatedir}/%{name}
 %{_sharedstatedir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 7.3-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Feb 02 2023 Vince Perri <viperri@microsoft.com> - 7.3-1
 - Upgrade to 7.3
 - License verified.
@@ -497,4 +500,3 @@ mkdir -p $RPM_BUILD_ROOT%{_sharedstatedir}/%{name}
 
 * Sat Dec 18 2004 Dave Jones <davej@redhat.com>
 - Initial packaging, based upon kernel-utils.
-

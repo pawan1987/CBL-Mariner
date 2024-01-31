@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           latencytop
 Version:        0.5
-Release:        27%{?dist}
+Release:        28%{?dist}
 Summary:        System latency monitor (with GUI)
 
 License:        GPLv2
@@ -50,10 +50,10 @@ This package contains files needed by both the GUI and TUI builds of LatencyTOP.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p2
-%patch3 -p2
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p2
+%patch 3 -p2
 mv %{SOURCE1} ./LICENSE.txt
 
 %build
@@ -82,6 +82,9 @@ ln -s latencytop.8 %{buildroot}%{_mandir}/man8/latencytop-tui.8
 %{_mandir}/man8/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.5-28
+- Updating the usage of the '%%patch' macro.
+
 * Fri Dec 10 2021 Thomas Crain <thcrain@microsoft.com> - 0.5-27
 - License verified
 

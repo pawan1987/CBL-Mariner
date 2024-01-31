@@ -12,7 +12,7 @@ Distribution:   Mariner
 
 Name:           mariadb-connector-odbc
 Version:        3.1.11
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        The MariaDB Native Client library (ODBC driver)
 License:        LGPLv2+
 Source:         https://downloads.mariadb.org/f/connector-odbc-%{version}/%{name}-%{version}-ga-src.tar.gz
@@ -34,7 +34,7 @@ and it supports both Unicode and ANSI modes.
 
 %prep
 %setup -q -n %{name}-%{version}-ga-src
-%patch1 -p1
+%patch 1 -p1
 
 %build
 
@@ -76,6 +76,9 @@ FCFLAGS="$FCFLAGS   -O0 -g"; export FCFLAGS
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.1.11-4
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.1.11-3
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

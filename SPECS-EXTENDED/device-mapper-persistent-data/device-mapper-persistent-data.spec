@@ -7,7 +7,7 @@ Distribution:   Mariner
 Summary: Device-mapper Persistent Data Tools
 Name: device-mapper-persistent-data
 Version: 0.8.5
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: GPLv3+
 URL: https://github.com/jthornber/thin-provisioning-tools
 # Upstream source's hash is different from the Mariner one.
@@ -28,7 +28,7 @@ snapshot eras
 
 %prep
 %setup -q -n thin-provisioning-tools-%{version}
-%patch0 -p1 -b .avoid_strip
+%patch 0 -p1 -b .avoid_strip
 echo %{version}-%{release} > VERSION
 
 %build
@@ -84,6 +84,9 @@ make DESTDIR=%{buildroot} MANDIR=%{_mandir} install
 #% {_sbindir}/thin_show_duplicates
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.8.5-6
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.8.5-5
 - Updating source URLs.
 - License verified.

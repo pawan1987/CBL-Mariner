@@ -1,7 +1,7 @@
 Summary:  Library to create ISO 9660 disk images
 Name:     libisofs
 Version:  1.5.4
-Release:  1%{?dist}
+Release:  2%{?dist}
 # make_isohybrid_mbr.c is under LGPLv2+, the rest under GPLv2+
 License:  GPLv2+ and LGPLv2+
 Group:    System Environment/Libraries
@@ -37,7 +37,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1 -b .multilib
+%patch 0 -p1 -b .multilib
 
 libtoolize --force
 autoreconf --force --install
@@ -72,6 +72,9 @@ rm -rf $RPM_BUILD_ROOT%{_defaultdocdir}
 %{_libdir}/pkgconfig/%{name}*.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.4-2
+- Updating the usage of the '%%patch' macro.
+
 * Mon Mar 14 2022 Nicolas Guibourge <nicolasg@microsoft.com> - 1.5.4-1
 - Upgrade to 1.5.4.
 

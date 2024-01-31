@@ -4,7 +4,7 @@
 Summary:        Utilities from the general purpose cryptography library with TLS implementation
 Name:           openssl
 Version:        1.1.1k
-Release:        28%{?dist}
+Release:        29%{?dist}
 License:        OpenSSL
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -132,44 +132,44 @@ cp %{SOURCE2} crypto/ec/
 cp %{SOURCE3} test/
 cp %{SOURCE4} test/
 
-%patch0  -p1
-%patch2  -p1
-%patch3  -p1
-%patch4  -p1
-%patch5  -p1
-%patch6  -p1
-%patch7  -p1
-%patch8  -p1
-%patch9  -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
-%patch26 -p1
-%patch27 -p1
-%patch28 -p1
-%patch29 -p1
-%patch30 -p1
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-%patch35 -p1
-%patch36 -p1
-%patch37 -p1
-%patch38 -p1
+%patch 0  -p1
+%patch 2  -p1
+%patch 3  -p1
+%patch 4  -p1
+%patch 5  -p1
+%patch 6  -p1
+%patch 7  -p1
+%patch 8  -p1
+%patch 9  -p1
+%patch 10 -p1
+%patch 11 -p1
+%patch 12 -p1
+%patch 13 -p1
+%patch 14 -p1
+%patch 15 -p1
+%patch 16 -p1
+%patch 17 -p1
+%patch 18 -p1
+%patch 19 -p1
+%patch 20 -p1
+%patch 21 -p1
+%patch 22 -p1
+%patch 23 -p1
+%patch 24 -p1
+%patch 25 -p1
+%patch 26 -p1
+%patch 27 -p1
+%patch 28 -p1
+%patch 29 -p1
+%patch 30 -p1
+%patch 31 -p1
+%patch 32 -p1
+%patch 33 -p1
+%patch 34 -p1
+%patch 35 -p1
+%patch 36 -p1
+%patch 37 -p1
+%patch 38 -p1
 
 %build
 # Add -Wa,--noexecstack here so that libcrypto's assembler modules will be
@@ -359,6 +359,9 @@ rm -f %{buildroot}%{_sysconfdir}/pki/tls/ct_log_list.cnf.dist
 %postun libs -p /sbin/ldconfig
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.1k-29
+- Updating the usage of the '%%patch' macro.
+
 * Wed Dec 06 2023 Muhammad Falak <mwani@microsoft.com> - 1.1.1k-28
 - Introduce patch to correctly address exessively long DH keys
 

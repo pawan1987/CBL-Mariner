@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: Database Independent Abstraction Layer for C
 Name: libdbi
 Version: 0.9.0
-Release: 16%{?dist}
+Release: 17%{?dist}
 License: LGPLv2+
 URL: http://libdbi.sourceforge.net/
 
@@ -49,7 +49,7 @@ The libdbi-doc package contains guides for development of applications with libd
 %prep
 %setup -q -n %{name}-%{version}
 
-%patch1 -p1
+%patch 1 -p1
 
 %build
 %configure
@@ -91,6 +91,9 @@ rm -rf ${RPM_BUILD_ROOT}%{_docdir}/%{name}-%{version}
 %doc doc/driver-guide/
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.0-17
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.0-16
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

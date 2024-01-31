@@ -5,7 +5,7 @@ Distribution:   Mariner
 Summary: TCP port reservation utility
 Name: portreserve
 Version: 0.0.5
-Release: 24%{?dist}
+Release: 25%{?dist}
 License: GPLv2+
 URL: http://cyberelk.net/tim/portreserve/
 Source0: http://cyberelk.net/tim/data/portreserve/stable/%{name}-%{version}.tar.bz2
@@ -35,7 +35,7 @@ port (generally in the init script).
 %setup -q
 
 # Avoid a race during start-up if there are no configured ports (bug #1034139).
-%patch1 -p1 -b .pid-file
+%patch 1 -p1 -b .pid-file
 
 %build
 %configure --sbindir=/sbin
@@ -82,6 +82,9 @@ EOF
 %{_mandir}/*/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.0.5-25
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.0.5-24
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

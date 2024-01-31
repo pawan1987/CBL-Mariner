@@ -1,7 +1,7 @@
 Summary:      Qt5 - QtTool components
 Name:         qt5-qttools
 Version:      5.12.5
-Release:      6%{?dist}
+Release:      7%{?dist}
 Vendor:       Microsoft Corporation
 Distribution: Mariner
 
@@ -118,7 +118,7 @@ Requires: %{name}-common = %{version}-%{release}
 
 %prep
 %setup -q -n qttools-everywhere-src-%{version}
-%patch0 -p1 -b .qmake-qt5
+%patch 0 -p1 -b .qmake-qt5
 
 %build
 
@@ -391,6 +391,9 @@ fi
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.12.5-7
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 28 2022 Suresh Babu Chalamalasetty <schalam@microsoft.com> - 5.12.5-6
 - Update source download path
 - License verified.

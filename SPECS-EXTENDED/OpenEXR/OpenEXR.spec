@@ -5,7 +5,7 @@ Distribution:   Mariner
 Name:	 OpenEXR
 Summary: A high dynamic-range (HDR) image file format
 Version: 2.3.0
-Release: 6%{?dist}
+Release: 7%{?dist}
 
 License: BSD
 URL:	 http://www.openexr.com/
@@ -61,8 +61,8 @@ Summary: Documentation and examples for building app that use %{name}
 
 %prep
 %setup -q -n openexr-%{version}
-%patch0 -p2 -b .bigendian
-%patch1 -p2 -b .tests
+%patch 0 -p2 -b .bigendian
+%patch 1 -p2 -b .tests
 
 
 %build
@@ -115,6 +115,9 @@ make %{?_smp_mflags} check || { cat IlmImfTest/test-suite.log; /bin/true; }
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.0-7
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.0-6
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

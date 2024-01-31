@@ -9,7 +9,7 @@ Distribution:   Mariner
 Summary: Small Footprint CIM Client Library
 Name: sblim-sfcc
 Version: 2.2.8
-Release: 15%{?dist}
+Release: 16%{?dist}
 License: EPL-1.0
 URL: http://www.sblim.org
 Source0: http://downloads.sourceforge.net/project/sblim/%{name}/%{name}-%{version}.tar.bz2
@@ -33,7 +33,7 @@ Small Footprint CIM Client Library Header Files and Link Libraries
 %prep
 
 %setup -q
-%patch0 -p1 -b .docdir-license
+%patch 0 -p1 -b .docdir-license
 
 %build
 chmod a-x backend/cimxml/*.[ch]
@@ -65,6 +65,9 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/libcmpisfcc.so.1.0.0
 %{_libdir}/libcmpisfcc.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.2.8-16
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.2.8-15
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -185,4 +188,3 @@ chrpath --delete $RPM_BUILD_ROOT%{_libdir}/libcmpisfcc.so.1.0.0
 
 * Fri Feb 16 2007  <mihajlov@dyn-9-152-143-45.boeblingen.de.ibm.com> - 2.0.0-0
 - Initial Version
-

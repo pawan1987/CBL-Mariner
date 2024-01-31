@@ -1,6 +1,6 @@
 Name:           perl-Parse-PMFile
 Version:        0.43
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Parses .pm file as PAUSE does
 License:        GPL+ OR Artistic
 Group:          Development/Libraries
@@ -46,7 +46,7 @@ because of my modification.
 
 %prep
 %setup -q -n Parse-PMFile-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor NO_PACKLIST=1 NO_PERLLOCAL=1
@@ -66,6 +66,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.43-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Apr 14 2022 Mateusz Malisz <mateusz.malisz@microsoft.com> - 0.43-1
 - Updating to 0.43
 

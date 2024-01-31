@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           gavl
 Version:        1.4.0
-Release:        21%{?dist}
+Release:        22%{?dist}
 Summary:        A library for handling uncompressed audio and video data
 
 License:        GPLv3+
@@ -39,7 +39,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch1 -p1 -b .gdither
+%patch 1 -p1 -b .gdither
 
 #Disable buildtime cpu detection
 sed -i -i 's/LQT_TRY_CFLAGS/dnl LQT_TRY_CFLAGS/g' configure.ac
@@ -87,6 +87,9 @@ touch -r include/gavl/gavl.h $RPM_BUILD_ROOT%{_includedir}/gavl/gavl_version.h
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.0-22
+- Updating the usage of the '%%patch' macro.
+
 * Thu Mar 09 2023 Muhammad Falak R Wani <mwani@microsoft.com> - 1.4.0-21
 - Initial CBL-Mariner import from Fedora 36 (license: MIT)
 - License verified.

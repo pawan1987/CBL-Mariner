@@ -1,7 +1,7 @@
 Name: iptstate
 Summary: A top-like display of IP Tables state table entries
 Version: 2.2.7
-Release: 1%{?dist}
+Release: 2%{?dist}
 Source: https://github.com/jaymzh/iptstate/releases/download/v%{version}/iptstate-%{version}.tar.bz2
 Patch0: iptstate-2.1-man8.patch
 Vendor:         Microsoft Corporation
@@ -36,7 +36,7 @@ display the state table once.
 
 %prep
 %setup -q
-%patch0 -p1 -b .man8
+%patch 0 -p1 -b .man8
 
 %build
 make %{?_smp_mflags} CXXFLAGS="$RPM_OPT_FLAGS $RPM_LD_FLAGS"
@@ -51,6 +51,9 @@ make install PREFIX=%{buildroot}%{_prefix} INSTALL="install -p"
 %{_mandir}/man8/iptstate.*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.2.7-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jun 23 2022 Mandeep Plaha <mandeepplaha@microsoft.com> - 2.2.7-1
 - Upgrade version to 2.2.7 to fix build break.
 - License verified.

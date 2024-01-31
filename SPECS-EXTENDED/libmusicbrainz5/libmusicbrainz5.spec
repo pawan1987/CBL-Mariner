@@ -6,7 +6,7 @@ Distribution:   Mariner
 Summary: Library for accessing MusicBrainz servers
 Name: libmusicbrainz5
 Version: 5.1.0
-Release: 15%{?dist}
+Release: 16%{?dist}
 License: LGPLv2
 URL: http://www.musicbrainz.org/
 Source0: https://github.com/metabrainz/libmusicbrainz/releases/download/release-5.1.0/libmusicbrainz-%{version}.tar.gz
@@ -38,8 +38,8 @@ applications which will use %{name}.
 
 %prep
 %setup -q -n libmusicbrainz-%{version}
-%patch0 -p1 -b .doxygen
-%patch1 -p1 -b .silence-warnings
+%patch 0 -p1 -b .doxygen
+%patch 1 -p1 -b .silence-warnings
 
 # omit "Generated on ..." timestamps that induce multilib conflicts
 # this is *supposed* to be the doxygen default in fedora these days, but
@@ -76,6 +76,9 @@ rm -f docs/installdox
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.1.0-16
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.1.0-15
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -331,5 +334,3 @@ rm -f docs/installdox
 
 * Thu Aug 21 2003 Brent Fox <bfox@redhat.com> 
 - Initial build.
-
-

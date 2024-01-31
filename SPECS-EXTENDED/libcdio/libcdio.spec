@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name: libcdio
 Version: 2.0.0
-Release: 8%{?dist}
+Release: 9%{?dist}
 Summary: CD-ROM input and control library
 License: GPLv3+
 URL: http://www.gnu.org/software/libcdio/
@@ -39,7 +39,7 @@ This package contains header files and libraries for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 iconv -f ISO88591 -t utf-8 -o THANKS.utf8 THANKS && mv THANKS.utf8 THANKS
 
@@ -123,6 +123,9 @@ make check
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0.0-9
+- Updating the usage of the '%%patch' macro.
+
 * Tue Jun 21 2022 Andrew Phelps <anphel@microsoft.com> - 2.0.0-8
 - Add patch to fix build error with ncurses 6.3
 - License verified
@@ -346,4 +349,3 @@ make check
 
 * Mon Mar 29 2004 Marius L. Jøhndal <mariuslj at ifi.uio.no> - 0:0.68-0.fdr.1
 - Initial RPM release.
-

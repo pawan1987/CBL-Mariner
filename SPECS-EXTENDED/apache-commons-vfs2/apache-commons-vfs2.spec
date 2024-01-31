@@ -3,7 +3,7 @@
 Summary:        Commons Virtual File System
 Name:           apache-%{short_name}
 Version:        2.2
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        Apache-2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -80,8 +80,8 @@ cp %{SOURCE1} .
 cp %{SOURCE2} .
 cp %{SOURCE3} commons-vfs2/build.xml
 cp %{SOURCE4} commons-vfs2-examples/build.xml
-%patch0 -p1 -b .build.xml
-%patch1 -p1 -b .provider.xml
+%patch 0 -p1 -b .build.xml
+%patch 1 -p1 -b .provider.xml
 
 %pom_remove_plugin :apache-rat-plugin
 
@@ -184,6 +184,9 @@ rm commons-vfs2/src/test/java/org/apache/commons/vfs2/provider/http/test/HttpPro
 %config %{_sysconfdir}/ant.d/commons-vfs
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.2-4
+- Updating the usage of the '%%patch' macro.
+
 * Tue Nov 15 2022 Sumedh Sharma <sumsharma@microsoft.com> - 2.2-3
 - Disable hadoop/ftp/ssh fs layer builds.
 - Enable check section. Disable tests having dependency on hadoop/ftp/ssh vfs.

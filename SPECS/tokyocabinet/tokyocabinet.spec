@@ -1,7 +1,7 @@
 Summary:        A modern implementation of a DBM
 Name:           tokyocabinet
 Version:        1.4.48
-Release:        18%{?dist}
+Release:        19%{?dist}
 License:        LGPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -43,8 +43,8 @@ needed for developing with %{name}.
 
 %prep
 %setup -q
-%patch0  -b .fedora
-%patch1 -p1 -b .manhelp
+%patch 0  -b .fedora
+%patch 1 -p1 -b .manhelp
 
 %build
 autoconf
@@ -80,6 +80,9 @@ make check
 %doc doc/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.48-19
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 1.4.48-18
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

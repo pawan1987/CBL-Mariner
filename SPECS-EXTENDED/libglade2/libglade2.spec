@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: The libglade library for loading user interfaces
 Name: libglade2
 Version: 2.6.4
-Release: 24%{?dist}
+Release: 25%{?dist}
 License: LGPLv2+
 Source: http://download.gnome.org/sources/libglade/2.6/libglade-%{version}.tar.bz2
 URL: http://www.gnome.org
@@ -44,8 +44,8 @@ that you can use to develop libglade applications.
 %prep
 %setup -q -n libglade-%{version}
 
-%patch1 -p1 -b .nowarning
-%patch2 -p1 -b .secondary
+%patch 1 -p1 -b .nowarning
+%patch 2 -p1 -b .secondary
 
 %build
 %configure --disable-gtk-doc --disable-static
@@ -77,6 +77,9 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 %{_datadir}/gtk-doc/html/libglade
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6.4-25
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6.4-24
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

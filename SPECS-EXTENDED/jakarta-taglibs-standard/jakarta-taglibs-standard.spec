@@ -21,7 +21,7 @@ Distribution:   Mariner
 %define short_name      taglibs-standard
 Name:           jakarta-taglibs-standard
 Version:        1.1.1
-Release:        260%{?dist}
+Release:        261%{?dist}
 Summary:        Open Source Implementation of the JSP Standard Tag Library
 License:        ASL 2.0
 Group:          Development/Libraries/Java
@@ -58,11 +58,11 @@ This package contains the javadoc documentation for Jakarta Taglibs.
 
 %prep
 %setup -q -n %{name}-%{version}-src
-%patch0
-%patch1 -b .sav1
-%patch2 -b .sav2
-%patch3 -p1
-%patch4 -p1
+%patch 0
+%patch 1 -b .sav1
+%patch 2 -b .sav2
+%patch 3 -p1
+%patch 4 -p1
 
 cat > build.properties <<EOBP
 build.dir=build
@@ -102,6 +102,9 @@ cp -pr standard/dist/standard/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.1-261
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.1-260
 - Updating source URLs.
 - License verified.

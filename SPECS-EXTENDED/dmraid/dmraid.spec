@@ -9,7 +9,7 @@ Distribution:   Mariner
 Summary: Device-mapper RAID tool and library
 Name: dmraid
 Version: 1.0.0.rc16
-Release: 46%{?dist}
+Release: 47%{?dist}
 License: GPLv2+
 URL: http://people.redhat.com/heinzm/sw/dmraid
 
@@ -86,26 +86,26 @@ Device failure reporting has to be activated manually by activating the
 
 %prep
 %setup -q -n dmraid/%{version}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
+%patch 5 -p1
+%patch 6 -p1
+%patch 7 -p1
+%patch 8 -p1
 
-%patch9 -p1
+%patch 9 -p1
 # %%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
+%patch 11 -p1
+%patch 12 -p1
+%patch 13 -p1
+%patch 14 -p1
+%patch 15 -p1
+%patch 16 -p1
+%patch 17 -p1
+%patch 18 -p1
 
 %build
 %global _libdir /%{_lib}
@@ -188,6 +188,9 @@ rm -f %{buildroot}%{_libdir}/libdmraid.a
 %ghost /var/cache/logwatch/dmeventd/syslogpattern.txt
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.0.rc16-47
+- Updating the usage of the '%%patch' macro.
+
 * Tue Jan 10 2023 Osama Esmail <osamaesmail@microsoft.com> - 1.0.0.rc16-46
 - Replacing crontabs with cronie (removing crontabs rpm because of redundancy)
 - License verified

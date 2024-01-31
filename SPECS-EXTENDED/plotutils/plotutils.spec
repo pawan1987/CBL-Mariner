@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:      plotutils
 Version:   2.6
-Release:   25%{?dist}
+Release:   26%{?dist}
 Summary:   GNU vector and raster graphics utilities and libraries
 
 # libxmi is GPLv2+
@@ -46,9 +46,9 @@ applications
 
 %prep
 %setup -q
-%patch0 -p1 -b .png15
-%patch1 -p1 -b .aarch64
-%patch2 -p1 -b .format-security
+%patch 0 -p1 -b .png15
+%patch 1 -p1 -b .aarch64
+%patch 2 -p1 -b .format-security
 
 %build
 %configure --disable-static --enable-libplotter --enable-libxmi --enable-ps-fonts-in-pcl
@@ -95,6 +95,9 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6-26
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6-25
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

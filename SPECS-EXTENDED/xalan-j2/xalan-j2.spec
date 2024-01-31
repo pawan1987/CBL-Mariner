@@ -21,7 +21,7 @@ Distribution:   Mariner
 %define cvs_version 2_7_2
 Name:           xalan-j2
 Version:        2.7.2
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        Java XSLT processor
 License:        Apache-2.0
 Group:          Development/Libraries/Java
@@ -136,10 +136,10 @@ This package contains demonstration and sample files for Xalan.
 %setup -q -n xalan-j_%{cvs_version}
 patch -u %{SOURCE5} -i %{SOURCE6}
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
 # Remove all binary libs, except ones needed to build docs and N/A elsewhere.
 for j in $(find . -name "*.jar"); do
         mv $j $j.no
@@ -280,6 +280,9 @@ update-alternatives --install %{_javadir}/jaxp_transform_impl.jar \
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.7.2-11
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.7.2-10
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

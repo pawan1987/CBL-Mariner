@@ -8,7 +8,7 @@ Distribution:   Mariner
 
 Name:           perl-File-Find-Object-Rule
 Version:        0.0312
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Alternative interface to File::Find::Object
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/File-Find-Object-Rule
@@ -53,7 +53,7 @@ allows you to build rules that specify the desired files and directories.
 %setup -qn File-Find-Object-Rule-%{version}
 
 # Avoid use of /usr/bin/env
-%patch0
+%patch 0
 
 %build
 perl Build.PL --installdirs=vendor
@@ -77,6 +77,9 @@ perl Build.PL --installdirs=vendor
 %{_mandir}/man3/File::Find::Object::Rule::Procedural.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.0312-4
+- Updating the usage of the '%%patch' macro.
+
 * Tue Jul 26 2022 Muhammad Falak <mwani@microsoft.com> - 0.0312-3
 - Add an explicit BR on `perl(blib)` to enable ptest
 - License verified

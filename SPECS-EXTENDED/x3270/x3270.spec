@@ -6,7 +6,7 @@ Distribution:   Mariner
 Summary: An X Window System based IBM 3278/3279 terminal emulator
 Name: x3270
 Version: 3.6ga10
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: BSD
 URL: http://x3270.sourceforge.net/
 Source0: http://downloads.sourceforge.net/%{name}/suite3270-%{version}-src.tgz
@@ -60,8 +60,8 @@ Install the %{name}-text package if you need to access IBM hosts using an IBM
 
 %prep
 %setup -q -n suite3270-%{majorver}
-%patch0 -p1 -b .paths
-%patch1 -p1 -b .ibmhosts
+%patch 0 -p1 -b .paths
+%patch 1 -p1 -b .ibmhosts
 
 for d in c3270 pr3287 s3270 x3270; do
     for f in LICENSE README html; do
@@ -128,6 +128,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.6ga10-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.6ga10-2
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           jimtcl
 Version:        0.78
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        A small embeddable Tcl interpreter
 
 License:        BSD
@@ -30,7 +30,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch0
+%patch 0
 
 rm -rf sqlite3
 
@@ -71,6 +71,9 @@ popd
 %{_libdir}/pkgconfig/jimtcl.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.78-6
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.78-5
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -153,4 +156,3 @@ popd
 
 * Sun May 05 2013 Markus Mayer <lotharlutz@gmx.de> - 0.73-1
 - inital prm release
-

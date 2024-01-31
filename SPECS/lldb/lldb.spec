@@ -1,7 +1,7 @@
 Summary:        A next generation, high-performance debugger.
 Name:           lldb
 Version:        12.0.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        NCSA
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -44,7 +44,7 @@ The package contains the LLDB Python module.
 
 %prep
 %setup -q -n %{name}-%{version}.src
-%patch1 -p1
+%patch 1 -p1
 
 %build
 # Disable symbol generation
@@ -98,6 +98,9 @@ rm -f %{buildroot}%{python3_sitelib}/six.*
 %{python3_sitelib}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 12.0.1-3
+- Updating the usage of the '%%patch' macro.
+
 * Thu Dec 16 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 12.0.1-2
 - Removing the explicit %%clean stage.
 

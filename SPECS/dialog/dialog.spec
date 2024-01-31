@@ -3,7 +3,7 @@
 Summary:       A utility for creating TTY dialog boxes
 Name:          dialog
 Version:       1.3
-Release:       4%{?dist}
+Release:       5%{?dist}
 License:       LGPLv2+
 URL:           https://invisible-island.net/dialog/dialog.html
 Group:         Applications/System
@@ -40,9 +40,9 @@ dialog library.
 
 %prep
 %setup -q -n %{name}-%{version}-%{dialogsubversion}
-%patch1 -p1 -b .incdir
-%patch2 -p1 -b .multilib
-%patch3 -p1 -b .libs
+%patch 1 -p1 -b .incdir
+%patch 2 -p1 -b .multilib
+%patch 3 -p1 -b .libs
 
 %build
 %configure \
@@ -86,6 +86,9 @@ chmod +x %{buildroot}%{_libdir}/*
 %{_mandir}/man3/dialog.*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3-5
+- Updating the usage of the '%%patch' macro.
+
 * Tue Oct 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3-4
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

@@ -1,7 +1,7 @@
 Summary:        A simplified, portable interface to several low-level networking routines
 Name:           libdnet
 Version:        1.14
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -22,7 +22,7 @@ It contains the libraries and header files to create applications.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 ./configure --prefix=/usr "CFLAGS=-fPIC" \
@@ -53,6 +53,9 @@ make  %{?_smp_mflags} check
 %{_libdir}/libdnet.a
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.14-2
+- Updating the usage of the '%%patch' macro.
+
 * Wed Mar 16 2022 Max Brodeur-Urbas <maxbr@microsoft.com> - 1.14-1
 - Upgrading to v1.14
 

@@ -106,28 +106,28 @@ The module is most useful for su and sudo service stacks.
 %setup -q -a 3
 
 pushd pam_ssh_agent_auth-%{pam_ssh_agent_ver}
-%patch300 -p2 -b .psaa-build
-%patch301 -p2 -b .psaa-seteuid
-%patch302 -p2 -b .psaa-visibility
-%patch306 -p2 -b .psaa-compat
-%patch305 -p2 -b .psaa-agent
-%patch307 -p2 -b .psaa-deref
+%patch 300 -p2 -b .psaa-build
+%patch 301 -p2 -b .psaa-seteuid
+%patch 302 -p2 -b .psaa-visibility
+%patch 306 -p2 -b .psaa-compat
+%patch 305 -p2 -b .psaa-agent
+%patch 307 -p2 -b .psaa-deref
 # Remove duplicate headers and library files
 rm -f $(cat %{SOURCE4})
 autoreconf
 popd
-%patch308 -p2 -b .cve-2023-38408
-%patch309 -p1 -b .cve-2023-51384
-%patch310 -p1 -b .cve-2023-51385
-%patch311 -p1 -b .cve-2023-48795-0001
-%patch312 -p1 -b .cve-2023-48795-0002
-%patch313 -p1 -b .cve-2023-48795-0003
-%patch314 -p1 -b .cve-2023-48795-0004
-%patch315 -p1 -b .cve-2023-48795-0005
-%patch316 -p1 -b .cve-2023-48795-0006
-%patch317 -p1 -b .cve-2023-48795-0007
-%patch318 -p1 -b .cve-2023-48795-0008
-%patch319 -p1 -b .cve-2023-48795-0009
+%patch 308 -p2 -b .cve-2023-38408
+%patch 309 -p1 -b .cve-2023-51384
+%patch 310 -p1 -b .cve-2023-51385
+%patch 311 -p1 -b .cve-2023-48795-0001
+%patch 312 -p1 -b .cve-2023-48795-0002
+%patch 313 -p1 -b .cve-2023-48795-0003
+%patch 314 -p1 -b .cve-2023-48795-0004
+%patch 315 -p1 -b .cve-2023-48795-0005
+%patch 316 -p1 -b .cve-2023-48795-0006
+%patch 317 -p1 -b .cve-2023-48795-0007
+%patch 318 -p1 -b .cve-2023-48795-0008
+%patch 319 -p1 -b .cve-2023-48795-0009
 
 %build
 export CFLAGS="$CFLAGS -fpic"

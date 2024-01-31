@@ -21,7 +21,7 @@ Distribution:   Mariner
 %define section		free
 Name:           jdepend
 Version:        2.9.1
-Release:        96%{?dist}
+Release:        97%{?dist}
 Summary:        Java Design Quality Metrics
 License:        BSD-3-Clause
 Group:          Development/Libraries/Java
@@ -62,7 +62,7 @@ This package contains demonstration and sample files for JDepend.
 find . -name "*.jar" -exec rm -f {} \;
 # fix strange permissions
 find . -type d -exec chmod 755 {} \;
-%patch0 -b .target15
+%patch 0 -b .target15
 
 %build
 ant jar
@@ -98,6 +98,9 @@ cp -pr sample %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.9.1-97
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.9.1-96
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

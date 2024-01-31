@@ -5,7 +5,7 @@ Distribution:   Mariner
 
 Name: libcli
 Version: 1.9.7
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A shared library for a Cisco-like cli
 License: LGPLv2+
 URL: https://github.com/dparrish/libcli
@@ -34,7 +34,7 @@ These are the development files.
 %prep
 %setup -qn %{name}-%{commit0}
 
-%patch0 -p1
+%patch 0 -p1
 
 %build
 
@@ -60,6 +60,9 @@ ln -s %{_libdir}/libcli.so.1.9 %{buildroot}%{_libdir}/libcli.so
 %{_includedir}/*.h
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.9.7-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.9.7-1
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Converting the 'Release' tag to the '[number].[distribution]' format.

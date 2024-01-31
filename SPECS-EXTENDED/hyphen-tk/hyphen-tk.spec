@@ -6,7 +6,7 @@ Distribution:   Mariner
 Name: hyphen-tk
 Summary: Turkmen hyphenation rules
 Version: 0.%{upstreamid}
-Release: 18%{?dist}
+Release: 19%{?dist}
 Source: https://github.com/hyphenation/tex-hyphen/blob/%{upstream_commit}/hyph-utf8/tex/generic/hyph-utf8/patterns/tex/hyph-tk.tex
 URL: http://tug.org/tex-hyphen
 License: Public Domain
@@ -22,7 +22,7 @@ Turkmen hyphenation rules.
 %prep
 %setup -T -q -c -n hyphen-tk
 cp -p %{SOURCE0} .
-%patch0 -p0 -b .clean
+%patch 0 -p0 -b .clean
 
 %build
 substrings.pl hyph-tk.tex hyph_tk_TM.dic UTF-8
@@ -41,6 +41,9 @@ cp -p hyph_tk_TM.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/hyph_tk_TM.dic
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20110620-19
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20110620-18
 - Updating source URLs.
 - License verified.

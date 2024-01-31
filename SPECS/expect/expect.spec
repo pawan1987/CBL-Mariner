@@ -1,7 +1,7 @@
 Summary:        Expect is a tool for automating interactive applications
 Name:           expect
 Version:        5.45.4
-Release:        5%{?dist}
+Release:        6%{?dist}
 License:        Public Domain
 URL:            https://sourceforge.net/projects/expect
 Source0:        https://sourceforge.net/projects/%{name}/files/Expect/%{version}/%{name}%{version}.tar.gz
@@ -29,7 +29,7 @@ Headers and development libraries for expect
 
 %prep
 %setup -q -n %{name}%{version}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %configure
@@ -55,6 +55,9 @@ make %{?_smp_mflags} test
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.45.4-6
+- Updating the usage of the '%%patch' macro.
+
 * Tue Feb 08 2022 Thomas Crain <thcrain@microsoft.com> - 5.45.4-5
 - Remove unused `%%define sha1` lines
 - License verified (corrected from GPLv2+ to Public Domain)

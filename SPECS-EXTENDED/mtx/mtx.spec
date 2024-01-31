@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name: mtx
 Version: 1.3.12
-Release: 23%{?dist}
+Release: 24%{?dist}
 Summary: SCSI media changer control program
 License: GPLv2
 Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
@@ -29,8 +29,8 @@ tape at a time, you should install MTX.
 %prep
 %setup -q
 
-%patch0 -p2 -b .destdir
-%patch1 -p2 -b .argc
+%patch 0 -p2 -b .destdir
+%patch 1 -p2 -b .argc
 
 # remove exec permission
 chmod a-x contrib/config_sgen_solaris.sh contrib/mtx-changer
@@ -54,6 +54,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3.12-24
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3.12-23
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

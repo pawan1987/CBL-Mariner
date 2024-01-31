@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name: gnome-doc-utils
 Version: 0.20.10
-Release: 24%{?dist}
+Release: 25%{?dist}
 Summary: Documentation utilities for GNOME
 
 License: GPLv2+ and LGPLv2+
@@ -59,8 +59,8 @@ are used by the tools in gnome-doc-utils and by yelp.
 
 %prep
 %setup -q
-%patch1 -p1 -b .package
-%patch2 -p1 -b .python3
+%patch 1 -p1 -b .package
+%patch 2 -p1 -b .python3
 
 %build
 %configure --disable-scrollkeeper --enable-build-utils
@@ -92,6 +92,9 @@ sed -i -e '/^Requires:/d' %{buildroot}%{_datadir}/pkgconfig/xml2po.pc
 %{_datadir}/xml/mallard
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20.10-25
+- Updating the usage of the '%%patch' macro.
+
 * Wed Feb 16 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20.10-24
 - License verified.
 

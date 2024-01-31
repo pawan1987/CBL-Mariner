@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name:           libvisual
 Version:        0.4.0
-Release:        30%{?dist}
+Release:        31%{?dist}
 Summary:        Abstraction library for audio visualisation plugins
 License:        LGPLv2+
 URL:            http://libvisual.sf.net
@@ -41,9 +41,9 @@ This package contains the files needed to build an application with libvisual.
 
 %prep
 %setup -q
-%patch0 -p1 -b .altivec-detection
-%patch1 -p1 -b .inlinedefineconflict
-%patch2 -p1 -b .format-security
+%patch 0 -p1 -b .altivec-detection
+%patch 1 -p1 -b .inlinedefineconflict
+%patch 2 -p1 -b .format-security
 
 %build
 %ifarch i386
@@ -73,6 +73,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.4.0-31
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 01 2021 Muhammad Falak <mwani@microsft.com> - 0.4.0-30
 - Remove epoch
 

@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: A program for faxing using a Class 1, 2 or 2.0 fax modem
 Name: efax
 Version: 0.9a
-Release: 34%{?dist}
+Release: 35%{?dist}
 License: GPLv2+
 Url: http://www.cce.com/efax/
 Source: http://www.cce.com/efax/download/%{name}-%{version}-001114.tar.gz
@@ -39,19 +39,19 @@ Class 1, 2 or 2.0 fax modem.
 %prep
 %setup -q -n %{name}-%{version}-001114
 
-%patch0 -p1 -b .config
-%patch1 -p1 -b .numlines
-%patch2 -p1 -b .time
-%patch3 -p0 -b .manpage
-%patch5 -p1 -b .nullptr
-%patch6 -p1 -b .misc
-%patch7 -p1 -b .viewcmd
-%patch8 -p1 -b .quote
-%patch9 -p1 -b .msg-va_list
-%patch10 -p1 -b .crash
-%patch11 -p0 -b .pdf
-%patch12 -p1 -b .format-security
-%patch13 -p1 -b .multiple-definition
+%patch 0 -p1 -b .config
+%patch 1 -p1 -b .numlines
+%patch 2 -p1 -b .time
+%patch 3 -p0 -b .manpage
+%patch 5 -p1 -b .nullptr
+%patch 6 -p1 -b .misc
+%patch 7 -p1 -b .viewcmd
+%patch 8 -p1 -b .quote
+%patch 9 -p1 -b .msg-va_list
+%patch 10 -p1 -b .crash
+%patch 11 -p0 -b .pdf
+%patch 12 -p1 -b .format-security
+%patch 13 -p1 -b .multiple-definition
 
 %build
 make %{?_smp_mflags} RPM_OPT_FLAGS="-ansi $RPM_OPT_FLAGS -fno-strict-aliasing"
@@ -76,6 +76,9 @@ install -c -m 644 %{SOURCE1} %{buildroot}/etc/logrotate.d/efax
 %dir %{_localstatedir}/log/fax
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9a-35
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9a-34
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Converting the 'Release' tag to the '[number].[distribution]' format.

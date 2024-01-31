@@ -1,7 +1,7 @@
 Summary:        Implementation of the JPEG-2000 standard, Part 1
 Name:           jasper
 Version:        2.0.32
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        JasPer
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -57,20 +57,20 @@ Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 %prep
 %setup -q -n %{name}-version-%{version}
 
-%patch2 -p1 -b .rpath
+%patch 2 -p1 -b .rpath
 # Need to disable one test to be able to build it on ppc64 arch
 # At ppc64 this test just stuck (nothing happend - no exception or error)
 # %patch3 -p1 -b .freeglut
 
 %if "%{_arch}" == "ppc64"
-%patch100 -p1 -b .test-ppc64-disable
+%patch 100 -p1 -b .test-ppc64-disable
 %endif
 
 # Need to disable two tests to be able to build it on ppc64le arch
 # At ppc64le this tests just stuck (nothing happend - no exception or error)
 
 %if "%{_arch}" == "ppc64le"
-%patch101 -p1 -b .test-ppc64le-disable
+%patch 101 -p1 -b .test-ppc64le-disable
 %endif
 
 %build
@@ -113,6 +113,9 @@ make test -C builder
 %{_libdir}/libjasper.so.4*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0.32-4
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 2.0.32-3
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

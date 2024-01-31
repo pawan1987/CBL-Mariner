@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           jbigkit
 Version:        2.1
-Release:        19%{?dist}
+Release:        20%{?dist}
 Summary:        JBIG1 lossless image compression tools
 
 License:        GPLv2+
@@ -52,12 +52,12 @@ formats.
 
 %prep
 %setup -q -n jbigkit-2.1
-%patch0 -p1 -b .shlib
-%patch1 -p1 -b .warnings
+%patch 0 -p1 -b .shlib
+%patch 1 -p1 -b .warnings
 # jbigkit: Partial Fedora build flags injection (bug #1548546)
-%patch2 -p1 -b .ldflags
+%patch 2 -p1 -b .ldflags
 # covscan issues - backported from upstream
-%patch3 -p1 -b .covscan
+%patch 3 -p1 -b .covscan
 
 %build
 # get the correct redhat build flags
@@ -103,6 +103,9 @@ make test
 %{_includedir}/jbig*.h
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1-20
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1-19
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

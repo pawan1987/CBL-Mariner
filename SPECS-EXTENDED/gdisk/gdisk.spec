@@ -1,7 +1,7 @@
 Summary:        An fdisk-like partitioning tool for GPT disks
 Name:           gdisk
 Version:        1.0.9
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        GPLv2
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -22,7 +22,7 @@ tables, and the ability to convert MBR disks to GPT format.
 
 %prep
 %setup -q -n gptfdisk-%{version}
-%patch0 -p1 -b .orig
+%patch 0 -p1 -b .orig
 
 %build
 make CXXFLAGS="%{optflags} -D_FILE_OFFSET_BITS=64" LDFLAGS="%{build_ldflags}"
@@ -49,6 +49,9 @@ make test
 %{_mandir}/man8/fixparts.8*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.9-4
+- Updating the usage of the '%%patch' macro.
+
 * Wed Mar 08 2023 Suresh Thelkar <sthelkar@microsoft.com> - 1.0.9-3
 - Initial CBL-Mariner import from Fedora 36 (license: MIT)
 - License verified

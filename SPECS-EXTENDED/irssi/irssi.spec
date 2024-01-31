@@ -5,7 +5,7 @@ Distribution:   Mariner
 Summary:	Modular text mode IRC client with Perl scripting
 Name:		irssi
 Version:	1.2.2
-Release:	6%{?dist}
+Release:	7%{?dist}
 
 License:	GPLv2+
 URL:		http://irssi.org/
@@ -40,7 +40,7 @@ being maintained.
 
 %prep
 %setup -q
-%patch0 -p1 -b .ctrl-space-fix
+%patch 0 -p1 -b .ctrl-space-fix
 
 
 %build
@@ -89,6 +89,9 @@ chmod -R u+w $RPM_BUILD_ROOT%{perl_vendorarch}
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.2-7
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jul  8 2021 Muhammad Falak R Wani <mwani@microsoft.com> - 1.2.2-6
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Fix Patch directive `Patch -> Patch0`

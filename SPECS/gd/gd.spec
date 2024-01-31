@@ -20,7 +20,7 @@
 %define lname libgd3
 Name:           gd
 Version:        2.3.3
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A Drawing Library for Programs That Use PNG and JPEG Output
 License:        MIT
 Vendor:         Microsoft Corporation
@@ -80,9 +80,9 @@ the formats accepted for inline images by most browsers.
 
 %prep
 %setup -q -n %{prjname}-%{version}
-%patch1
-%patch2
-%patch3
+%patch 1
+%patch 2
+%patch 3
 chmod 644 COPYING
 
 %build
@@ -157,6 +157,9 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %{_libdir}/pkgconfig/gdlib.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.3.3-5
+- Updating the usage of the '%%patch' macro.
+
 * Wed May 17 2023 Olivia Crain <oliviacrain@microsoft.com> - 2.3.3-4
 - Bumping release to re-build with newer 'libtiff' libraries.
 

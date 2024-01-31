@@ -1,7 +1,7 @@
 Summary:        Library for applying dithering to PCM audio sources
 Name:           libgdither
 Version:        0.6
-Release:        27%{?dist}
+Release:        28%{?dist}
 License:        GPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -30,9 +30,9 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .default
-%patch1 -p1 -b .gavl_fix
-%patch2 -p1 -b .ldflags
+%patch 0 -p1 -b .default
+%patch 1 -p1 -b .gavl_fix
+%patch 2 -p1 -b .ldflags
 
 
 %build
@@ -69,6 +69,9 @@ make test CFLAGS="%{optflags} -Werror --std=c99 -I%{_builddir}/%{?buildsubdir}"
 %{_libdir}/pkgconfig/libgdither.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.6-28
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jan 05 2023 Suresh Thelkar <sthelkar@microsoft.com> - 0.6-27
 - Initial CBL-Mariner import from Fedora 36 (license: MIT)
 - License verified

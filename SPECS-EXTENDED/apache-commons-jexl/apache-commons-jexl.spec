@@ -4,7 +4,7 @@
 Summary:        Java Expression Language (JEXL)
 Name:           apache-%{short_name}
 Version:        2.1.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        Apache-2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -58,9 +58,9 @@ This package contains the API documentation for %{name}.
 cp %{SOURCE1} .
 cp %{SOURCE2} .
 cp %{SOURCE3} jexl2-compat/build.xml
-%patch0 -p1 -b .test
-%patch1 -p1 -b .javadoc
-%patch2 -p1
+%patch 0 -p1 -b .test
+%patch 1 -p1 -b .javadoc
+%patch 2 -p1
 
 # Java 1.6 contains bsf 3.0, so we don't need the dependency in the pom.xml file
 %pom_remove_dep org.apache.bsf:bsf-api
@@ -138,6 +138,9 @@ cp -pr jexl2-compat/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/jex
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1.1-4
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 14 2022 Sumedh Sharma <sumsharma@microsoft.com> - 2.1.1-3
 - Fix build errors
   * create 'Packages' directory under JDK_HOME

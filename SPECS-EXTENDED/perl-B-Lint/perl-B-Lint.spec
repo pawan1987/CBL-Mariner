@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           perl-B-Lint
 Version:        1.20
-Release:        18%{?dist}
+Release:        19%{?dist}
 Summary:        Perl lint
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/B-Lint
@@ -46,7 +46,7 @@ for C programs.
 
 %prep
 %setup -q -n B-Lint-%{version}
-%patch0 -p1
+%patch 0 -p1
 # Install into architecture-agnostic path, CPAN RT#83049
 sed -i '/PM *=>/,/}/d' Makefile.PL
 
@@ -68,6 +68,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20-19
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.20-18
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

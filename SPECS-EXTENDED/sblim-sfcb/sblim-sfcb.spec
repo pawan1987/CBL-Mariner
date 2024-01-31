@@ -10,7 +10,7 @@ Name: sblim-sfcb
 Summary: Small Footprint CIM Broker
 URL: http://sblim.wiki.sourceforge.net/
 Version: 1.4.9
-Release: 20%{?dist}
+Release: 21%{?dist}
 License: EPL-1.0
 Source0: http://downloads.sourceforge.net/sblim/%{name}-%{version}.tar.bz2
 Source1: sfcb.service
@@ -78,18 +78,18 @@ Programming Interface (CMPI).
 
 %prep
 %setup -q -T -b 0 -n %{name}-%{version}
-%patch0 -p1 -b .sfcbrepos-schema-location
-%patch1 -p1 -b .fix-provider-debugging
-%patch2 -p1 -b .maxMsgLen
-%patch3 -p1 -b .service
-%patch4 -p1 -b .multilib-man-cfg
-%patch5 -p1 -b .default-ecdh-curve-name
-%patch6 -p1 -b .fix-ftbfs
-%patch7 -p1 -b .fix-null-deref
-%patch8 -p1 -b .fix-null-content-type-crash
-%patch9 -p1 -b .fix-ppc-optimization-level
-%patch10 -p1 -b .docdir-license
-%patch11 -p1 -b .fix-multiple-definition
+%patch 0 -p1 -b .sfcbrepos-schema-location
+%patch 1 -p1 -b .fix-provider-debugging
+%patch 2 -p1 -b .maxMsgLen
+%patch 3 -p1 -b .service
+%patch 4 -p1 -b .multilib-man-cfg
+%patch 5 -p1 -b .default-ecdh-curve-name
+%patch 6 -p1 -b .fix-ftbfs
+%patch 7 -p1 -b .fix-null-deref
+%patch 8 -p1 -b .fix-null-content-type-crash
+%patch 9 -p1 -b .fix-ppc-optimization-level
+%patch 10 -p1 -b .docdir-license
+%patch 11 -p1 -b .fix-multiple-definition
 
 %build
 %configure --enable-debug --enable-uds --enable-ssl --enable-pam --enable-ipv6 \
@@ -148,6 +148,9 @@ fi;
 %files -f _pkg_list
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.9-21
+- Updating the usage of the '%%patch' macro.
+
 * Tue Mar 01 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.9-20
 - Explicitly mentioning a run-time dependency on "perl(LWP::UserAgent)".
 - License verified.

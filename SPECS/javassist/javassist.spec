@@ -18,7 +18,7 @@
 Summary:        Java Programming Assistant: bytecode manipulation
 Name:           javassist
 Version:        3.23.1
-Release:        7%{?dist}
+Release:        8%{?dist}
 License:        LGPL-2.1-or-later OR MPL-1.1
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -76,9 +76,9 @@ Tutorial for javassist.
 %prep
 %setup -q -n %{name}-%{tar_version}
 %if %{?pkg_vcmp:%pkg_vcmp java-devel < 9}%{!?pkg_vcmp:1}
-%patch0 -p1
+%patch 0 -p1
 %endif
-%patch1 -p1
+%patch 1 -p1
 for j in $(find . -name "*.jar"); do
         mv $j $j.no
 done
@@ -138,6 +138,9 @@ cp -p License.html %{buildroot}/%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}/tutorial
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.23.1-8
+- Updating the usage of the '%%patch' macro.
+
 * Fri Mar 17 2023 Mykhailo Bykhovtsev <mbykhovtsev@microsoft.com> - 3.23.1-7
 - Moved from extended to core
 - License verified

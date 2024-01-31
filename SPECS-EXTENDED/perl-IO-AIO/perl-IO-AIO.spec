@@ -5,7 +5,7 @@
 Summary:        Asynchronous Input/Output
 Name:           perl-IO-AIO
 Version:        %{upstream_version}%{extraversion}
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPL+ OR Artistic
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -74,7 +74,7 @@ If no paths are given, treescan will use the current directory.
 %setup -q -n IO-AIO-%{upstream_version}
 
 # Fix shellbang in treescan
-%patch0
+%patch 0
 
 %build
 PERL_CANARY_STABILITY_NOPROMPT=1 perl Makefile.PL \
@@ -102,6 +102,9 @@ make test
 %{_mandir}/man1/treescan.1*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.76-3
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jan 27 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.76-2
 - Initial CBL-Mariner import from Fedora 36 (license: MIT).
 - License verified.

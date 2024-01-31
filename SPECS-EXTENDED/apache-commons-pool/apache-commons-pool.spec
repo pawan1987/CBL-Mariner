@@ -3,7 +3,7 @@
 Summary:        Apache Commons Pool
 Name:           apache-commons-pool
 Version:        1.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        Apache-2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -48,8 +48,8 @@ Pool Package.
 %setup -q -n %{short_name}-%{version}-src
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
-%patch0
-%patch1 -p1
+%patch 0
+%patch 1 -p1
 
 dos2unix README.txt
 
@@ -98,6 +98,9 @@ ant -Djava.io.tmpdir=. test
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.6-2
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 14 2022 Sumedh Sharma <sumsharma@microsoft.com> - 1.6-1
 - Initial CBL-Mariner import from openSUSE Tumbleweed (license: same as "License" tag).
 - Enable check section

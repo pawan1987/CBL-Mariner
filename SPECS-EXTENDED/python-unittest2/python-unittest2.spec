@@ -4,7 +4,7 @@
 
 Name:           python-%{pypi_name}
 Version:        1.1.0
-Release:        25%{?dist}
+Release:        26%{?dist}
 Summary:        The new features in unittest backported to Python 2.4+
 
 License:        BSD
@@ -58,12 +58,12 @@ framework in Python 2.7 and onwards. It is tested to run on Python 2.6, 2.7,
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
-%patch0 -p0
-%patch2 -p0
+%patch 0 -p0
+%patch 2 -p0
 %if 0%{?bootstrap_traceback2}
-%patch1 -p0
+%patch 1 -p0
 %endif
-%patch3 -p0
+%patch 3 -p0
 
 
 %build
@@ -95,6 +95,9 @@ popd
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.0-26
+- Updating the usage of the '%%patch' macro.
+
 * Tue Mar 09 2021 Henry Li <lihl@microsoft.com> - 1.1.0-25
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Turn on bootstrap_track2 to circumvent cyclic dependency

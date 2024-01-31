@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           libbsd
 Version:        0.10.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Library providing BSD-compatible functions for portability
 URL:            http://libbsd.freedesktop.org/
 License:        BSD and ISC and Copyright only and Public Domain
@@ -39,8 +39,8 @@ configured using "pkg-config --libs libbsd-ctor".
 %prep
 %setup -q
 %if 0%{?rhel} && 0%{?rhel} < 7
-%patch1 -p1 -b .deprecated
-%patch2 -p1 -b .compat
+%patch 1 -p1 -b .deprecated
+%patch 2 -p1 -b .compat
 %endif
 
 %build
@@ -81,6 +81,9 @@ rm %{buildroot}%{_mandir}/man3/explicit_bzero.3bsd
 %{_libdir}/pkgconfig/%{name}-ctor.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.10.0-4
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.10.0-3
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

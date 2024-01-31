@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: Perl bindings for the Newt library
 Name: perl-Newt
 Version: 1.08
-Release: 56%{?dist}
+Release: 57%{?dist}
 URL: https://metacpan.org/pod/Newt
 Source: https://cpan.metacpan.org/authors/id/A/AM/AMEDINA/Newt-1.08.tar.gz
 Patch0: newt-perl-1.08-debian.patch
@@ -30,15 +30,15 @@ library, which provides a color text mode user interface.
 
 %prep
 %setup -q -n Newt-%{version}
-%patch0 -p1 -b .debian
-%patch1 -p1 -b .valist
-%patch2 -p1 -b .fix
-%patch3 -p1 -b .exes
-%patch4 -p1 -b .lang
-%patch5 -p1 -b .bz385751
-%patch6 -p1 -b .export
-%patch7 -p1 -b .doc
-%patch8 -p1 -b .formdestroy
+%patch 0 -p1 -b .debian
+%patch 1 -p1 -b .valist
+%patch 2 -p1 -b .fix
+%patch 3 -p1 -b .exes
+%patch 4 -p1 -b .lang
+%patch 5 -p1 -b .bz385751
+%patch 6 -p1 -b .export
+%patch 7 -p1 -b .doc
+%patch 8 -p1 -b .formdestroy
 rm -rf newtlib
 
 %build
@@ -61,6 +61,9 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 %{_mandir}/man3/Newt*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.08-57
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.08-56
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

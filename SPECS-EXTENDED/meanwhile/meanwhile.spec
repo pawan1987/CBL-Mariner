@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           meanwhile
 Version:        1.1.0
-Release:        30%{?dist}
+Release:        31%{?dist}
 Summary:        Lotus Sametime Community Client library
 License:        GPLv2+
 URL:            http://%{name}.sourceforge.net
@@ -54,11 +54,11 @@ Documentation for the %{name} library.
 
 %prep
 %setup -q
-%patch0 -p0 -b .crash
-%patch1 -p1 -b .fix-glib-headers
-%patch2 -p1 -b .file-transfer
-%patch3 -p1 -b .status-timestamp-workaround
-%patch4 -p1 -b .format-security-fix
+%patch 0 -p0 -b .crash
+%patch 1 -p1 -b .fix-glib-headers
+%patch 2 -p1 -b .file-transfer
+%patch 3 -p1 -b .status-timestamp-workaround
+%patch 4 -p1 -b .format-security-fix
 
 %build
 export CFLAGS="%{optflags} -fno-tree-vrp"
@@ -92,6 +92,9 @@ rm -rf %{buildroot}%{_datadir}/doc/%{name}-doc-%{version}/
 %doc docs/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.0-31
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 25 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.0-30
 - Updating source URLs.
 - License verified.

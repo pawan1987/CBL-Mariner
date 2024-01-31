@@ -4,7 +4,7 @@ Name: hyphen-ia
 Summary: Interlingua hyphenation rules
 %global upstreamid 20050628
 Version: 0.%{upstreamid}
-Release: 20%{?dist}
+Release: 21%{?dist}
 Source0: http://www.ctan.org/get/language/hyphenation/iahyphen.tex
 Source1: %{name}-LICENSE.txt
 URL: http://www.ctan.org/tex-archive/help/Catalogue/entries/iahyphen.html
@@ -21,7 +21,7 @@ Interlingua hyphenation rules.
 %prep
 %setup -T -q -c -n hyphen-ia
 cp -p %{SOURCE0} .
-%patch0 -p0 -b .clean
+%patch 0 -p0 -b .clean
 cp %{SOURCE1} ./LICENSE.txt
 
 %build
@@ -41,6 +41,9 @@ cp -p hyph_ia.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20050628-21
+- Updating the usage of the '%%patch' macro.
+
 * Tue Feb 15 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.20050628-20
 - License verified.
 

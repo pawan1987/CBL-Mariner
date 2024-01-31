@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: The GNU Scientific Library for numerical analysis
 Name: gsl
 Version: 2.6
-Release: 3%{?dist}
+Release: 4%{?dist}
 URL: http://www.gnu.org/software/gsl/
 License: GPLv3+
 Source: http://ftp.gnu.org/gnu/gsl/%{name}-%{version}.tar.gz
@@ -31,9 +31,9 @@ developing programs using the GSL (GNU Scientific Library).
 
 %prep
 %setup -q
-%patch0 -p1 -b .lib64
-%patch1 -p1 -b .tol
-%patch2 -p1 -b .test
+%patch 0 -p1 -b .lib64
+%patch 1 -p1 -b .tol
+%patch 2 -p1 -b .test
 
 iconv -f windows-1252 -t utf-8 THANKS  > THANKS.aux
 touch -r THANKS THANKS.aux
@@ -82,6 +82,9 @@ rm -r %{buildroot}%{_libdir}/*.a
 %{_includedir}/gsl/
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6-4
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6-3
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -274,4 +277,3 @@ rm -r %{buildroot}%{_libdir}/*.a
 - add pkgconfig dependency
 - separate static libraries to -static subpackage
 - fix gsl-config script - thanks Patrice Dumas
-

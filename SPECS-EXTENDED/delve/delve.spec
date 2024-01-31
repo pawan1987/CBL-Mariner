@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:                   delve
 Version:                1.5.0
-Release:                16%{?dist}
+Release:                17%{?dist}
 Summary:                A debugger for the Go programming language
 
 License:                MIT
@@ -33,7 +33,7 @@ much as possible.
 %prep
 %setup -q
 
-%patch0 -p1
+%patch 0 -p1
 rm -rf go.mod
 mv vendor %{_builddir}/src
 mkdir -p "%{_builddir}/src/github.com/go-delve/"
@@ -72,6 +72,9 @@ done
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.5.0-17
+- Updating the usage of the '%%patch' macro.
+
 * Mon Oct 16 2023 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 1.5.0-16
 - Bump release to rebuild with go 1.20.9
 

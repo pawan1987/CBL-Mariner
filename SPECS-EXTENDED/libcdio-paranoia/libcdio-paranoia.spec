@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name: libcdio-paranoia
 Version: 10.2+2.0.0
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: CD paranoia on top of libcdio
 License: GPLv3+
 URL: http://www.gnu.org/software/libcdio/
@@ -32,7 +32,7 @@ This package contains header files and libraries for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 # fix pkgconfig files
 sed -i -e 's,-I${includedir},-I${includedir}/cdio,g' libcdio_paranoia.pc.in
@@ -84,6 +84,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 10.2+2.0.0-6
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 10.2+2.0.0-5
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

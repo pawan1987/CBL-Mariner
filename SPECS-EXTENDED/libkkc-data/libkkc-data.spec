@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name:		libkkc-data
 Version:	0.2.7
-Release:	18%{?dist}
+Release:	19%{?dist}
 Summary:	Language model data for libkkc
 
 License:	GPLv3+
@@ -23,7 +23,7 @@ at run time.
 
 %prep
 %setup -q
-%patch0 -p4 -b .orig
+%patch 0 -p4 -b .orig
 
 
 %build
@@ -42,6 +42,9 @@ make %{?_smp_mflags}
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.2.7-19
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 01 2021 Muhammad Falak <mwani@microsft.com> - 0.2.7-18
 - Remove epoch
 
@@ -101,4 +104,3 @@ make %{?_smp_mflags}
 
 * Tue Sep 17 2013 Daiki Ueno <dueno@redhat.com> - 0.2.7-1
 - initial packaging for Fedora, splitting from libkkc
-

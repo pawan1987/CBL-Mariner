@@ -3,7 +3,7 @@
 Summary:        Generic USB CCID smart card reader driver
 Name:           pcsc-lite-ccid
 Version:        1.4.33
-Release:        4%{?dist}
+Release:        5%{?dist}
 License:        LGPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -32,7 +32,7 @@ PC/SC Lite daemon.
 
 %prep
 %setup -q -n ccid-%{version}
-%patch0 -p1 -b .omnikey
+%patch 0 -p1 -b .omnikey
 
 %build
 %configure --enable-twinserial
@@ -56,6 +56,9 @@ cp -p src/openct/LICENSE LICENSE.openct
 %config(noreplace) %{_sysconfdir}/reader.conf.d/libccidtwin
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.33-5
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 1.4.33-4
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

@@ -1,7 +1,7 @@
 Summary:        TCP/IP stack auditing and much more
 Name:           hping3
 Version:        0.0.20051105
-Release:        41%{?dist}
+Release:        42%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -31,13 +31,13 @@ Since version 3, hping implements scripting capabilties
 %prep
 
 %setup -q -n hping3-20051105
-%patch0  -b .include
-%patch1  -b .bytesex
-%patch2 -p1 -b .getifnamedebug
-%patch3  -b .cflags
-%patch4  -b .man
-%patch5 -p1
-%patch6 -p1 -b .common
+%patch 0  -b .include
+%patch 1  -b .bytesex
+%patch 2 -p1 -b .getifnamedebug
+%patch 3  -b .cflags
+%patch 4  -b .man
+%patch 5 -p1
+%patch 6 -p1 -b .common
 
 %build
 %configure --force-libpcap
@@ -65,6 +65,9 @@ ln -sf hping3 %{buildroot}%{_sbindir}/hping2
 %{_mandir}/man8/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.0.20051105-42
+- Updating the usage of the '%%patch' macro.
+
 * Thu Sep 28 2023 Ameet Porwal <ameetporwal@microsoft.com> - 0.0.20051105-41
 - Initial CBL-Mariner import from Fedora 38 (license: MIT).
 - License verified

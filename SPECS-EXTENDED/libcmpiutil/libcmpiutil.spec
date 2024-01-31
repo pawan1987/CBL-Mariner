@@ -2,7 +2,7 @@
 Summary:        CMPI Utility Library
 Name:           libcmpiutil
 Version:        0.5.7
-Release:        20%{?dist}
+Release:        21%{?dist}
 License:        LGPL-2.0-or-later
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -41,7 +41,7 @@ instance properties to standardizing method dispatch and argument checking.
 %setup -q
 chmod -x *.c *.y *.h *.l
 
-%patch0
+%patch 0
 
 %build
 # FIXME: Package has c11 inline compatibility issues.
@@ -71,6 +71,9 @@ rm -f %{buildroot}%{_libdir}/*.a
 %doc doc/SubmittingPatches
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.5.7-21
+- Updating the usage of the '%%patch' macro.
+
 * Tue Jan 17 2023 Suresh Thelkar <sthelkar@microsoft.com> - 0.5.7-20
 - Initial CBL-Mariner import from Fedora 36 (license: MIT)
 - Build against sblim-cmpi-devel and instead of tog-pegasus-devel

@@ -1,6 +1,6 @@
 Name:           perl-Module-Package
 Version:        0.30
-Release:        24%{?dist}
+Release:        25%{?dist}
 Summary:        Postmodern Perl Module Packaging
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -35,7 +35,7 @@ Module::Install does, but just a bit better.
 
 %prep
 %setup -q -n Module-Package-%{version}
-%patch0 -p1
+%patch 0 -p1
 # XXX: Do not unbundle ./inc/ because of bootstrap
 
 %build
@@ -58,6 +58,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.30-25
+- Updating the usage of the '%%patch' macro.
+
 * Wed Jan 19 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.30-24
 - License verified.
 

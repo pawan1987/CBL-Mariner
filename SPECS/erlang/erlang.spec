@@ -2,7 +2,7 @@
 Summary:        erlang
 Name:           erlang
 Version:        25.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        Apache-2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -20,7 +20,7 @@ erlang programming language
 
 %prep
 %setup -q -n otp-OTP-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 export ERL_TOP=`pwd`
@@ -48,6 +48,9 @@ make
 %{_libdir}/erlang/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 25.2-3
+- Updating the usage of the '%%patch' macro.
+
 * Wed Jan 17 2024 Harshit Gupta <guptaharshit@microsoft.com> - 25.2-2
 - Include patch to fix CVE-2023-48795
 

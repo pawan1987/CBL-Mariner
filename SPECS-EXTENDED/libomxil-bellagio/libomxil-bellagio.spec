@@ -1,7 +1,7 @@
 Summary:        OpenMAX Integration Layer
 Name:           libomxil-bellagio
 Version:        0.9.3
-Release:        29%{?dist}
+Release:        30%{?dist}
 License:        LGPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -50,15 +50,15 @@ The %{name}-test package contains binaries for testing %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .fix_werror
-%patch1 -p1 -b .unused
-%patch2 -p1 -b .nodoc
-%patch3 -p1 -b .dynl
-%patch4 -p1 -b .pb
-%patch5 -p1 -b .sf
-%patch6  -b .orig
-%patch7 -p1 -b .memcpy
-%patch8  -b .register
+%patch 0 -p1 -b .fix_werror
+%patch 1 -p1 -b .unused
+%patch 2 -p1 -b .nodoc
+%patch 3 -p1 -b .dynl
+%patch 4 -p1 -b .pb
+%patch 5 -p1 -b .sf
+%patch 6  -b .orig
+%patch 7 -p1 -b .memcpy
+%patch 8  -b .register
 sed -i -e 's/ -Werror//' configure.ac
 autoreconf -vif
 
@@ -120,6 +120,9 @@ rm -rf %{buildroot}%{_docdir}/%{name}
 %{_bindir}/omxvolcontroltest
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.3-30
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jan 05 2023 Suresh Thelkar <sthelkar@microsoft.com> - 0.9.3-29
 - Initial CBL-Mariner import from Fedora 36 (license: MIT)
 - License verified

@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:		icon-naming-utils
 Version:	0.8.90
-Release:	23%{?dist}
+Release:	24%{?dist}
 Summary: 	A script to handle icon names in desktop icon themes
 
 License:	GPLv2
@@ -22,7 +22,7 @@ the new Icon Naming Specification names, for desktop icon themes.
 
 %prep
 %setup -q
-%patch0 -p1 -b .paths
+%patch 0 -p1 -b .paths
 
 
 %build
@@ -47,6 +47,9 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/pkgconfig/icon-naming-utils-uninstalled.pc
 %{_datadir}/pkgconfig/icon-naming-utils.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.8.90-24
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.8.90-23
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

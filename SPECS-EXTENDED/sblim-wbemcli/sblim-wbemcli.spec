@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           sblim-wbemcli
 Version:        1.6.3
-Release:        18%{?dist}
+Release:        19%{?dist}
 Summary:        SBLIM WBEM Command Line Interface
 
 License:        EPL-1.0
@@ -28,11 +28,11 @@ scripts.
 %prep
 %setup -q
 autoreconf --install --force
-%patch0 -p1 -b .gcc43
-%patch1 -p1 -b .https-segfaults
-%patch2 -p1 -b .ssl-proto-option
-%patch3 -p1 -b .fix-exit-status
-%patch4 -p1 -b .covscan-fixes
+%patch 0 -p1 -b .gcc43
+%patch 1 -p1 -b .https-segfaults
+%patch 2 -p1 -b .ssl-proto-option
+%patch 3 -p1 -b .fix-exit-status
+%patch 4 -p1 -b .covscan-fixes
 
 %build
 %configure CACERT=/etc/pki/Pegasus/client.pem
@@ -49,6 +49,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.6.3-19
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.6.3-18
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name: libipt
 Version: 2.0.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Intel Processor Trace Decoder Library
 License: BSD
 URL: https://github.com/intel/libipt
@@ -37,7 +37,7 @@ develop programs that use the Intel Processor Trace (Intel PT) Decoder Library.
 
 %prep
 %setup -q -n libipt-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -71,6 +71,9 @@ ctest -V %{?_smp_mflags}
 %endif
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0.5-2
+- Updating the usage of the '%%patch' macro.
+
 * Fri Mar 04 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.0.5-1
 - Updating to version 2.0.5 using Fedora 36 spec (license: MIT) for guidance.
 - License verified.

@@ -1,7 +1,7 @@
 Summary:        Universally Unique Identifier library
 Name:           uuid
 Version:        1.6.2
-Release:        50%{?dist}
+Release:        51%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -71,13 +71,13 @@ DCE development headers and libraries for OSSP uuid.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1 -b .php54
-%patch3 -p1 -b .hwaddr
-%patch4 -p1 -b .nostrip
-%patch5 -p1 -b .manfix
-%patch6 -p1 -b .aarch64
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1 -b .php54
+%patch 3 -p1 -b .hwaddr
+%patch 4 -p1 -b .nostrip
+%patch 5 -p1 -b .manfix
+%patch 6 -p1 -b .aarch64
 
 %build
 # Build the library.
@@ -147,6 +147,9 @@ make check
 %{_libdir}/libossp-uuid_dce.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.6.2-51
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 30 2020 Nicolas Ontiveros <niontive@microsoft.com> - 1.6.2-50
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - Replace ldconfig_scriptlets with post/postun ldconfig calls

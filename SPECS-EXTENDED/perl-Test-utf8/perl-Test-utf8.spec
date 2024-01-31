@@ -1,6 +1,6 @@
 Name:           perl-Test-utf8
 Version:        1.02
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Handy utf8 tests
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -45,8 +45,8 @@ strings in Perl.
 
 %prep
 %setup -q -n Test-utf8-%{version}
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 # Remove bundled modules
 rm -rf ./inc/*
 sed -i -e '/^inc\//d' MANIFEST
@@ -71,6 +71,9 @@ make test
 %{_mandir}/man3/Test::utf8.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.02-4
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jan 13 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.02-3
 - License verified.
 

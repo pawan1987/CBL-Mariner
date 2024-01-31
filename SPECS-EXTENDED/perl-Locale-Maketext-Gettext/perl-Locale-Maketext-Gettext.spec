@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           perl-Locale-Maketext-Gettext
 Version:        1.30
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Joins the gettext and Maketext frameworks
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Locale-Maketext-Gettext
@@ -43,7 +43,7 @@ problems, too.
 
 %prep
 %setup -q -n Locale-Maketext-Gettext-%{version}
-%patch0 -p 1
+%patch 0 -p 1
 
 %build
 %{__perl} Build.PL installdirs=vendor
@@ -66,6 +66,9 @@ rm -f debugsources.list debugfiles.list debuglinks.list
 %{_mandir}/man1/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.30-4
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.30-3
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

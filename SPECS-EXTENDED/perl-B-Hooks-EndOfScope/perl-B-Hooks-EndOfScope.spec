@@ -9,7 +9,7 @@
 
 Name:		perl-B-Hooks-EndOfScope
 Version:	0.24
-Release:	10%{?dist}
+Release:	11%{?dist}
 License:	GPL+ or Artistic
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -99,7 +99,7 @@ surrounding scope.
 %setup -q -n B-Hooks-EndOfScope-%{version}
 
 # Remove shellbangs from tests to placate rpmlint
-%patch0
+%patch 0
 
 # British-English spelling LICENCE upsets US spell checker
 echo LICENCE >> xt/author/pod-spell.t
@@ -131,6 +131,9 @@ make test TEST_FILES="$(echo $(find xt/ -name '*.t'))"
 %{_mandir}/man3/B::Hooks::EndOfScope::XS.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.24-11
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.24-10
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

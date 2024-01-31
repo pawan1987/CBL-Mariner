@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name:		libtnc
 Version:	1.25
-Release:	26%{?dist}
+Release:	27%{?dist}
 Summary:	Library implementation of the Trusted Network Connect (TNC) specification
 License:	GPLv2
 Source0:	https://sourceforge.net/projects/%{name}/files/%{name}/%{version}/%{name}-%{version}.tar.gz
@@ -45,8 +45,8 @@ pushd Interface-TNC
 tar xf Interface-TNC-1.0.tar.gz
 popd
 
-%patch0 -p1 -b .bootstrap
-%patch1 -p1 -b .syserror
+%patch 0 -p1 -b .bootstrap
+%patch 1 -p1 -b .syserror
 
 %build
 CFLAGS="%{optflags} -fPIC -DPIC"
@@ -101,6 +101,9 @@ popd
 %{_mandir}/man3/Interface::TNC*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.25-27
+- Updating the usage of the '%%patch' macro.
+
 * Fri Mar 04 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.25-26
 - Fixing building with GCC 11 using Fedora 36 spec (license: MIT) for guidance.
 - License verified.

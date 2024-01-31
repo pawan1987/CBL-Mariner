@@ -10,7 +10,7 @@
 
 Name:           rpmlint
 Version:        1.11
-Release:        8%{?dist}
+Release:        9%{?dist}
 Summary:        Tool for checking common errors in RPM packages
 License:        GPL-2.0-or-later
 Vendor:         Microsoft Corporation
@@ -62,8 +62,8 @@ and source packages as well as spec files can be checked.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-%patch199 -p1
-%patch212 -p1
+%patch 199 -p1
+%patch 212 -p1
 
 
 # Remove binary write mode
@@ -119,6 +119,9 @@ make check PYTHON=%{python} PYTEST=%{pytest} FLAKE8=%{flake8}
 %{_mandir}/man1/rpmlint.1*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.11-9
+- Updating the usage of the '%%patch' macro.
+
 * Wed Feb 01 2023 Henry Li <lihl@microsoft.com> - 1.11-8
 - Remove AGPL-related licenses from rpmlint.config
 - License Verified

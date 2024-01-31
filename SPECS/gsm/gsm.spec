@@ -5,7 +5,7 @@
 Summary:        Shared libraries for GSM speech compressor
 Name:           gsm
 Version:        %{ver_major}.%{ver_minor}.%{ver_patch}
-Release:        4%{?dist}
+Release:        5%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -58,8 +58,8 @@ full-rate speech transcoding, prI-ETS 300 036, which uses RPE/LTP
 
 %prep
 %setup -q -n gsm-%{ver_major}.%{ver_minor}-pl%{ver_patch}
-%patch0 -p1 -b .mk
-%patch1 -p1 -b .warn
+%patch 0 -p1 -b .mk
+%patch 1 -p1 -b .warn
 
 %build
 export LDFLAGS="%{?__global_ldflags}"
@@ -107,6 +107,9 @@ make addtst
 %{_libdir}/libgsm.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.19-5
+- Updating the usage of the '%%patch' macro.
+
 * Tue Jan 19 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0.19-4
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 - License verified.

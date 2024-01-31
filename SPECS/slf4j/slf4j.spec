@@ -18,7 +18,7 @@
 Summary:        Simple Logging Facade for Java
 Name:           slf4j
 Version:        1.7.30
-Release:        5%{?dist}
+Release:        6%{?dist}
 License:        MIT
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -114,8 +114,8 @@ Log4j implemented over SLF4J.
 
 %prep
 %setup -q -n %{name}-v_%{version} -a2
-%patch1 -p1
-%patch2 -p1
+%patch 1 -p1
+%patch 2 -p1
 find . -name "*.jar" | xargs rm
 cp -p %{SOURCE1} APACHE-LICENSE
 
@@ -234,6 +234,9 @@ rm -rf target/site
 %{_docdir}/%{name}-%{version}/site
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.7.30-6
+- Updating the usage of the '%%patch' macro.
+
 * Fri Mar 17 2023 Mykhailo Bykhovtsev <mbykhovtsev@microsoft.com> - 1.7.30-5
 - Fixing maven provides
 

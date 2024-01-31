@@ -2,7 +2,7 @@
 Summary:        The Squid proxy caching server
 Name:           squid
 Version:        5.7
-Release:        5%{?dist}
+Release:        6%{?dist}
 Epoch:          7
 License:        GPLv2
 Vendor:         Microsoft Corporation
@@ -93,14 +93,14 @@ lookup program (dnsserver), a program for retrieving FTP data
 # Upstream patches
 
 # Backported patches
-%patch101 -p1 -b .ip-bind-address-no-port
+%patch 101 -p1 -b .ip-bind-address-no-port
 
 # Local patches
-%patch201 -p1 -b .config
-%patch202 -p1 -b .location
-%patch203 -p1 -b .perlpath
-%patch204  -b .include-guards
-%patch205 -p1 -R -b .symlink-lang-err
+%patch 201 -p1 -b .config
+%patch 202 -p1 -b .location
+%patch 203 -p1 -b .perlpath
+%patch 204  -b .include-guards
+%patch 205 -p1 -R -b .symlink-lang-err
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1679526
 # Patch in the vendor documentation and used different location for documentation
@@ -325,6 +325,9 @@ fi
 %{_sbindir}/usermod -a -G wbpriv squid >/dev/null 2>&1 || \
     chgrp squid %{_var}/cache/samba/winbindd_privileged >/dev/null 2>&1 || :
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 7:5.7-6
+- Updating the usage of the '%%patch' macro.
+
 * Thu Feb 09 2023 Sindhu Karri <lakarri@microsoft.com> - 7:5.7-5
 - Initial CBL-Mariner import from Fedora 38 (license: MIT).
 - Making binaries paths compatible with CBL-Mariner's paths

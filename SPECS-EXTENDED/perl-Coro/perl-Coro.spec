@@ -13,7 +13,7 @@
 Summary:        The only real threads in perl
 Name:           perl-Coro
 Version:        6.570
-Release:        5%{?dist}
+Release:        6%{?dist}
 # Coro/libcoro:    GPLv2 or BSD
 # Rest of package: GPL+ or Artistic
 License:        (GPL+ OR Artistic) AND (GPLv2 OR BSD)
@@ -96,9 +96,9 @@ programming much safer and easier than using other thread models.
 
 %ifnarch %{ix86} x86_64 %{arm}
 # use ucontext backend on non-x86 (setjmp didn't work on s390(x))
-%patch0 -p1 -b .ucontext-default
+%patch 0 -p1 -b .ucontext-default
 %endif
-%patch1 -p1
+%patch 1 -p1
 
 # Unbundle libecb
 rm Coro/ecb.h
@@ -137,6 +137,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -delete
 %{_mandir}/man3/Coro*.3pm*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 6.570-6
+- Updating the usage of the '%%patch' macro.
+
 * Thu Jan 27 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 6.570-5
 - Initial CBL-Mariner import from Fedora 36 (license: MIT).
 - License verified.

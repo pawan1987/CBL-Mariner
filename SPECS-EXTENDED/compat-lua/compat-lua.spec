@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           compat-lua
 Version:        5.1.5
-Release:        17%{?dist}
+Release:        18%{?dist}
 Summary:        Powerful light-weight programming language (compat version)
 License:        MIT
 URL:            http://www.lua.org/
@@ -43,10 +43,10 @@ This package contains development files for compat-lua-libs.
 
 %prep
 %setup -q -n lua-%{version}
-%patch0 -p1 -E -z .autoxxx
-%patch1 -p0 -z .lunatic
-%patch2 -p1 -z .idsize
-%patch3 -p1
+%patch 0 -p1 -E -z .autoxxx
+%patch 1 -p0 -z .lunatic
+%patch 2 -p1 -z .idsize
+%patch 3 -p1
 # fix perms on auto files
 chmod u+x autogen.sh config.guess config.sub configure depcomp install-sh missing
 # Avoid make doing auto-reconf itself, killing our rpath removal in the process
@@ -105,6 +105,9 @@ mv $RPM_BUILD_ROOT%{_libdir}/pkgconfig/lua.pc \
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.1.5-18
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 5.1.5-17
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

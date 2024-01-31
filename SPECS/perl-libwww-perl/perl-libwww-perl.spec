@@ -5,7 +5,7 @@
 
 Name:           perl-libwww-perl
 Version:        6.49
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A Perl interface to the World-Wide Web
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -144,7 +144,7 @@ use and even classes that help you implement simple HTTP servers.
 
 %prep
 %setup -q -n libwww-perl-%{version} 
-%patch0 -p1
+%patch 0 -p1
 %if !%{with perl_libwww_perl_enables_internet_test}
 rm t/leak/no_leak.t t/redirect.t
 perl -i -ne 'print $_ unless m{^(?:t/leak/no_leak\.t|t/redirect\.t)}' MANIFEST
@@ -174,6 +174,9 @@ make test
 %{_mandir}/man3/*.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 6.49-4
+- Updating the usage of the '%%patch' macro.
+
 * Tue Jul 26 2022 Henry Li <lihl@microsoft.com> - 6.49-3
 - License Verified
 

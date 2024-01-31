@@ -1,7 +1,7 @@
 Summary:        Simple programming interface for Ogg files and streams
 Name:           liboggz
 Version:        1.1.1
-Release:        20%{?dist}
+Release:        21%{?dist}
 License:        BSD
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -49,7 +49,7 @@ liboggz.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .multilib
+%patch 0 -p1 -b .multilib
 
 %build
 %configure --disable-static
@@ -99,6 +99,9 @@ rm -rf __docs_staging/latex
 %doc __docs_staging/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.1-21
+- Updating the usage of the '%%patch' macro.
+
 * Mon Jan 02 2023 Muhammad Falak <mwani@microsoft.com> - 1.1.1-20
 - License verified
 

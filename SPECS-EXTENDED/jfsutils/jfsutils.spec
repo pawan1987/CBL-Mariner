@@ -5,7 +5,7 @@ Distribution:   Mariner
 Summary: Utilities for managing the JFS filesystem
 Name: jfsutils
 Version: 1.1.15
-Release: 18%{?dist}
+Release: 19%{?dist}
 Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Patch0: jfsutils-1.1.15_stdint.patch
 Patch1: jfsutils_format-security_ftbs.patch
@@ -30,9 +30,9 @@ into a file;  xpeek - shell-type JFS file system editor.
 %prep
 %setup -q
 find . -type f -name *.[ch] -exec chmod -x {} \;
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 2 -p1
 
 %build
 %configure 
@@ -48,6 +48,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %doc AUTHORS COPYING NEWS ChangeLog
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.15-19
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.1.15-18
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

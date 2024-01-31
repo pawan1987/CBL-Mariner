@@ -22,7 +22,7 @@ Distribution:   Mariner
 
 Name:           junitperf
 Version:        1.9.1
-Release:        27%{?dist}
+Release:        28%{?dist}
 Summary:        JUnit extension for performance and scalability testing
 License:        BSD
 Group:          Development/Libraries/Java
@@ -71,7 +71,7 @@ JUnit tests.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 # remove all binary libs
 find . -name "*.jar" | xargs -t rm
 
@@ -111,6 +111,9 @@ cp -pr samples $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.9.1-28
+- Updating the usage of the '%%patch' macro.
+
 * Thu Dec 16 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.9.1-27
 - Removing the explicit %%clean stage.
 - License verified.

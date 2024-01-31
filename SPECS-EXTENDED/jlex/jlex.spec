@@ -21,7 +21,7 @@ Distribution:   Mariner
 %define section		free
 Name:           jlex
 Version:        1.2.6
-Release:        285%{?dist}
+Release:        286%{?dist}
 Summary:        A Lexical Analyzer Generator for Java
 License:        MIT
 Group:          Development/Libraries/Java
@@ -47,7 +47,7 @@ JLex is a lexical analyzer generator for Java.
 %prep
 %setup -q -c -T
 cp %{SOURCE0} .
-%patch0
+%patch 0
 cp %{SOURCE1} build.xml
 
 %build
@@ -65,6 +65,9 @@ install -m 644 dist/lib/%{name}.jar %{buildroot}%{_javadir}/%{name}-%{version}.j
 %{_javadir}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.6-286
+- Updating the usage of the '%%patch' macro.
+
 * Tue Apr 12 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.6-285
 - Adding missing BR on 'javapackages-tools'.
 

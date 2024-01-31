@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name:           sblim-testsuite
 Version:        1.3.0
-Release:        23%{?dist}
+Release:        24%{?dist}
 Summary:        SBLIM testsuite
 
 License:        EPL
@@ -27,9 +27,9 @@ SBLIM automated testsuite scripts.
 
 %prep
 %setup -q
-%patch0 -p1 -b .perl-errors
-%patch1 -p1 -b .docdir
-%patch2 -p1 -b .unescaped-left-brace-warning-fix
+%patch 0 -p1 -b .perl-errors
+%patch 1 -p1 -b .docdir
+%patch 2 -p1 -b .unescaped-left-brace-warning-fix
 
 %build
 %configure
@@ -44,6 +44,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_localstatedir}/lib/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3.0-24
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3.0-23
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

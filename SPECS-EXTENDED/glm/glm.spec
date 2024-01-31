@@ -3,7 +3,7 @@
 
 Name:           glm
 Version:        0.9.9.6
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        C++ mathematics library for graphics programming
 
 License:        MIT
@@ -84,8 +84,8 @@ sed -i 's/\r//' glm/detail/setup.hpp
 sed -i 's/\r//' glm/simd/platform.h
 sed -i 's/\r//' test/core/core_setup_message.cpp
 
-%patch0 -p1
-%patch1 -p1
+%patch 0 -p1
+%patch 1 -p1
 
 %build
 mkdir build
@@ -139,6 +139,9 @@ rmdir $RPM_BUILD_ROOT%{_libdir}
 %doc doc/api/
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.9.6-6
+- Updating the usage of the '%%patch' macro.
+
 * Wed Apr 20 2022 Muhammad Falak <mwani@microsoft.com> - 0.9.9.6-5
 - Re-enable `test-gtc_packing` for all archs
 - Skip broken tests based of arch

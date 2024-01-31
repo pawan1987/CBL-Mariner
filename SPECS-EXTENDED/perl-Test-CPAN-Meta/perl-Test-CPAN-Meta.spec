@@ -7,7 +7,7 @@
 
 Name:           perl-Test-CPAN-Meta
 Version:        0.25
-Release:        21%{?dist}
+Release:        22%{?dist}
 Summary:        Validation of the META.yml file in a CPAN distribution
 License:        Artistic 2.0
 Vendor:         Microsoft Corporation
@@ -52,7 +52,7 @@ Module::Install.
 %setup -q -n Test-CPAN-Meta-%{version}
 
 # Re-code documentation as UTF-8
-%patch0
+%patch 0
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor
@@ -74,6 +74,9 @@ make test AUTOMATED_TESTING=1
 %{_mandir}/man3/Test::CPAN::Meta::Version.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.25-22
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.25-21
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

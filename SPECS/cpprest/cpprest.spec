@@ -3,7 +3,7 @@
 
 Name:           cpprest
 Version:        2.10.18
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        C++ REST library
 Group:          Applications/File
 License:        MIT
@@ -46,9 +46,9 @@ Development files.
 
 %prep
 %setup -n cpprestsdk-%{version}
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
 # Remove bundled sources of websocketpp
 rm -r Release/libs
 # Remove file ThirdPartyNotices.txt, which is associated to websocketpp
@@ -90,6 +90,9 @@ cd Release/build.release/Binaries
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.10.18-2
+- Updating the usage of the '%%patch' macro.
+
 * Wed Jan 19 2022 Nicolas Guibourge <nicolasg@microsoft.com> - 2.10.18-1
 - Upgrade to 2.10.18
 

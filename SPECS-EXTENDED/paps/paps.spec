@@ -2,7 +2,7 @@ Vendor:         Microsoft Corporation
 Distribution:   Mariner
 Name:           paps
 Version:        0.6.8
-Release:        46%{?dist}
+Release:        47%{?dist}
 
 License:        LGPLv2+
 URL:            http://paps.sourceforge.net/
@@ -67,24 +67,24 @@ applications using paps API.
 
 %prep
 %setup -q
-%patch0 -p1 -b .shared
-%patch1 -p1 -b .wordwrap
-%patch2 -p1 -b .langinfo
-%patch3 -p1 -b .lcnumeric
-%patch4 -p1 -b .exitcode
-%patch5 -p1 -b .manpage
-%patch50 -p1 -b .cups
-%patch51 -p1 -b .cpilpi
-%patch52 -p1 -b .dsc
-%patch53 -p1 -b .autoconf262
-%patch54 -p1 -b .fixcpi
-%patch55 -p1 -b .loop
-%patch56 -p1 -b .tab
-%patch57 -p1 -b .weak-symbol
-%patch58 -p1 -b .fsf
-%patch59 -p1 -b .ft-header
-%patch60 -p1 -b .a3
-%patch61 -p1 -b .paper-size
+%patch 0 -p1 -b .shared
+%patch 1 -p1 -b .wordwrap
+%patch 2 -p1 -b .langinfo
+%patch 3 -p1 -b .lcnumeric
+%patch 4 -p1 -b .exitcode
+%patch 5 -p1 -b .manpage
+%patch 50 -p1 -b .cups
+%patch 51 -p1 -b .cpilpi
+%patch 52 -p1 -b .dsc
+%patch 53 -p1 -b .autoconf262
+%patch 54 -p1 -b .fixcpi
+%patch 55 -p1 -b .loop
+%patch 56 -p1 -b .tab
+%patch 57 -p1 -b .weak-symbol
+%patch 58 -p1 -b .fsf
+%patch 59 -p1 -b .ft-header
+%patch 60 -p1 -b .a3
+%patch 61 -p1 -b .paper-size
 libtoolize -f -c
 autoreconf -f -i
 
@@ -131,6 +131,9 @@ install -p -m0644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/fonts/conf.d/
 %{_libdir}/libpaps.so
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.6.8-47
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.6.8-46
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -421,4 +424,3 @@ install -p -m0644 %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/fonts/conf.d/
 
 * Tue Oct 18 2005 Akira TAGOH <tagoh@redhat.com> - 0.3-1
 - Initial package.
-

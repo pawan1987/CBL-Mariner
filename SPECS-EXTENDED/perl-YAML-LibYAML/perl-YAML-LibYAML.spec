@@ -7,7 +7,7 @@
 
 Name:           perl-YAML-LibYAML
 Version:        0.81
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Perl YAML Serialization using XS and libyaml
 License:        GPL+ or Artistic
 Vendor:         Microsoft Corporation
@@ -83,7 +83,7 @@ bound to Python and was later bound to Ruby.
 # Unbundled libyaml, the source files are the same as in libyaml-0.2.2
 # It was determined by comparing commits in upstream repo:
 # https://github.com/yaml/libyaml/
-%patch0 -p1 -b .orig
+%patch 0 -p1 -b .orig
 for file in api.c dumper.c emitter.c loader.c parser.c reader.c scanner.c \
     writer.c yaml.h yaml_private.h; do
     rm LibYAML/$file
@@ -112,6 +112,9 @@ make test
 %{_mandir}/man3/YAML::XS::LibYAML.3*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.81-4
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 01 2021 Muhammad Falak <mwani@microsft.com> - 0.81-3
 - Remove epoch
 

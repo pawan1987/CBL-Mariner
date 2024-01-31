@@ -8,7 +8,7 @@ Distribution:   Mariner
 
 Name:    pybind11
 Version: 2.6.2
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: Seamless operability between C++11 and Python
 License: BSD
 URL:	 https://github.com/pybind/pybind11
@@ -67,7 +67,7 @@ This package contains the Python 3 files.
 
 %prep
 %setup -q
-%patch1 -p1 -b .hpath
+%patch 1 -p1 -b .hpath
 
 %build
 pys=""
@@ -100,6 +100,9 @@ PYBIND11_USE_CMAKE=true %py3_install "--install-purelib" "%{python3_sitearch}"
 %{python3_sitearch}/%{name}-%{version}-py%{python3_version}.egg-info
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6.2-4
+- Updating the usage of the '%%patch' macro.
+
 * Thu Aug 31 2023 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.6.2-3
 - Disabling missing test dependency.
 - License verified.

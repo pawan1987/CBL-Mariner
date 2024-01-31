@@ -23,7 +23,7 @@ Distribution:   Mariner
 Summary: An utility for manipulating storage encryption keys and passphrases
 Name: volume_key
 Version: 0.3.12
-Release: 8%{?dist}
+Release: 9%{?dist}
 # lib/{SECerrs,SSLerrs}.h are both licensed under MPLv1.1, GPLv2 and LGPLv2
 License: GPLv2 and (MPLv1.1 or GPLv2 or LGPLv2)
 URL: https://pagure.io/%{name}/
@@ -106,7 +106,7 @@ Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %configure %{?with_pythons}
@@ -157,6 +157,9 @@ exit 1; \
 %endif
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.3.12-9
+- Updating the usage of the '%%patch' macro.
+
 * Mon Mar 16 2021 Henry Li <lihl@microsoft.com> - 0.3.12-8
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Disable python2 build and enable python3 build

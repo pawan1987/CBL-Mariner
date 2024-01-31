@@ -1,6 +1,6 @@
 Name: docbook-utils
 Version: 0.6.14
-Release: 50%{?dist}
+Release: 51%{?dist}
 
 Summary: Shell scripts for managing DocBook documents
 Vendor:         Microsoft Corporation
@@ -49,15 +49,15 @@ for comparing SGML files.
 
 %prep
 %setup -q
-%patch0 -p1 -b .spaces
-%patch1 -p1 -b .2ndspaces
-%patch2 -p1 -b .w3mtxtconvert
-%patch3 -p1 -b .grepnocolors
-%patch4 -p1 -b .sgmlinclude
-%patch5 -p1 -b .rtfman
-%patch6 -p1 -b .papersize
-%patch7 -p1 -b .finalecho
-%patch8 -p1 -b .newgrep
+%patch 0 -p1 -b .spaces
+%patch 1 -p1 -b .2ndspaces
+%patch 2 -p1 -b .w3mtxtconvert
+%patch 3 -p1 -b .grepnocolors
+%patch 4 -p1 -b .sgmlinclude
+%patch 5 -p1 -b .rtfman
+%patch 6 -p1 -b .papersize
+%patch 7 -p1 -b .finalecho
+%patch 8 -p1 -b .newgrep
 
 %build
 ./configure --prefix=%{_prefix} --mandir=%{_mandir} --libdir=%{_libdir}
@@ -113,6 +113,9 @@ rm -rf %{buildroot}%{_mandir}/*/docbook2ps.*
 %{_mandir}/*/*-spec.*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.6.14-51
+- Updating the usage of the '%%patch' macro.
+
 * Wed Jan 20 2021 Joe Schmitt <joschmit@microsoft.com> - 0.6.14-50
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Remove pdf utils

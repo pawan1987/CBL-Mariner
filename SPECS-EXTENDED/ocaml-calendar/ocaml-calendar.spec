@@ -6,7 +6,7 @@ Distribution:   Mariner
 
 Name:           ocaml-calendar
 Version:        2.04
-Release:        29%{?dist}
+Release:        30%{?dist}
 Summary:        Objective Caml library for managing dates and times
 License:        LGPLv2
 
@@ -42,7 +42,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n calendar-%{version}
-%patch1 -p1
+%patch 1 -p1
 
 
 %build
@@ -79,6 +79,9 @@ make install
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.04-30
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.04-29
 - Switching to using full number for the 'Release' tag.
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
@@ -317,4 +320,3 @@ make install
 
 * Fri May 18 2007 Richard W.M. Jones <rjones@redhat.com> - 1.10-1
 - Initial RPM release.
-

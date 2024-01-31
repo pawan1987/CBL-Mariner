@@ -2,7 +2,7 @@
 
 Name:          dbus-c++
 Version:       0.9.0
-Release:       23%{?dist}
+Release:       24%{?dist}
 Summary:       Native C++ bindings for D-Bus
 
 License:       LGPLv2+
@@ -63,11 +63,11 @@ developing applications that use %{name}.
 %setup -q -n lib%{name}-%{version}
 sed -i 's/\r//' AUTHORS
 sed -i 's/libtoolize --force --copy/libtoolize -if --copy/' bootstrap
-%patch1 -p1 -b .gcc47
-%patch2 -p1 -b .linkfix
-%patch3 -p1 -b .collision
-%patch4 -p1 -b .threading
-%patch5 -p1 -b .writechar
+%patch 1 -p1 -b .gcc47
+%patch 2 -p1 -b .linkfix
+%patch 3 -p1 -b .collision
+%patch 4 -p1 -b .threading
+%patch 5 -p1 -b .writechar
 
 %build
 autoreconf -vfi
@@ -109,6 +109,9 @@ find $RPM_BUILD_ROOT -name '*.la' -print -delete
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.0-24
+- Updating the usage of the '%%patch' macro.
+
 * Tue Jan 12 2021 Joe Schmitt <joschmit@microsoft.com> - 0.9.0-23
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Disable ecore support

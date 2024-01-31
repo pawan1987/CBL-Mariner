@@ -2,7 +2,7 @@
 Summary:        Boost
 Name:           boost
 Version:        1.76.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 License:        Boost
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -39,9 +39,9 @@ The boost-static package contains boost static libraries.
 %prep
 %setup -q -n %{name}_%{underscore_version}
 pushd libs/beast/test/extern/zlib-1.2.11
-%patch0 -p1
+%patch 0 -p1
 popd
-%patch1 -p1
+%patch 1 -p1
 
 %build
 ./bootstrap.sh --prefix=%{buildroot}%{_prefix}
@@ -68,6 +68,9 @@ rm -rf %{buildroot}%{_libdir}/cmake
 %{_libdir}/libboost_*.a
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.76.0-5
+- Updating the usage of the '%%patch' macro.
+
 * Wed Oct 25 2023 Rohit Rawat <rohitrawat@microsoft.com> - 1.76.0-4
 - Patch CVE-2023-45853 for zlib
 

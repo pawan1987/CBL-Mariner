@@ -4,7 +4,7 @@
 
 Name:           chrony
 Version:        4.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        An NTP client/server
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -58,8 +58,8 @@ service to other computers in the network.
 %prep
 
 %setup -q -n %{name}-%{version} -a 10
-%patch2 -p1 -b .service-helper
-%patch3 -p1
+%patch 2 -p1 -b .service-helper
+%patch 3 -p1
 
 # review changes in packaged configuration files and scripts
 md5sum -c <<-EOF | (! grep -v 'OK$')
@@ -197,6 +197,9 @@ systemctl start chronyd.service
 %dir %attr(-,chrony,chrony) %{_localstatedir}/log/chrony
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.1-4
+- Updating the usage of the '%%patch' macro.
+
 * Mon Oct 30 2023 Andy Zaugg <azaugg@linkedin.com> - 4.1-3
 - Removed references to NetworkManager
 

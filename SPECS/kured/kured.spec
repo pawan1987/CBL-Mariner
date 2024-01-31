@@ -25,7 +25,7 @@
 Summary:        Kubernetes daemonset to perform safe automatic node reboots
 Name:           kured
 Version:        1.14.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        Apache-2.0
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -77,7 +77,7 @@ kured container in a kubernetes cluster.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 %build
 # create vendor folder from the vendor tarball and set vendor mode
@@ -122,6 +122,9 @@ sed -i -e 's|image: .*|image: registry.opensuse.org/kubic/kured:%{version}|g' %{
 %{_datarootdir}/k8s-yaml/kured/kured.yaml
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.14.2-2
+- Updating the usage of the '%%patch' macro.
+
 * Tue Jan 16 2024 Mandeep Plaha <mandeepplaha@microsoft.com> - 1.14.2-1
 - Upgrade to 1.14.2 for vendored go CVE-2023-39325
 

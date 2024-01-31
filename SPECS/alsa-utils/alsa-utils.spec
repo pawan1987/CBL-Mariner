@@ -1,7 +1,7 @@
 Summary:        ALSA Utilities.
 Name:           alsa-utils
 Version:        1.2.6
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv2+
 URL:            https://alsa-project.org
 Group:          Applications/Internet
@@ -19,7 +19,7 @@ for controlling your sound card.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 %build
 %configure --disable-alsaconf --disable-xmlto
@@ -45,6 +45,9 @@ alsactl -L store
 %{_localstatedir}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.6-3
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 1.2.6-2
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

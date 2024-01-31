@@ -5,7 +5,7 @@
 Summary:        Checks if the documentation of a module is comprehensive
 Name:           perl-Pod-Coverage
 Version:        0.23
-Release:        22%{?dist}
+Release:        23%{?dist}
 License:        GPL+ OR Artistic
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -54,7 +54,7 @@ module is comprehensive.
 
 %prep
 %setup -q -n Pod-Coverage-%{version}
-%patch0 -p1
+%patch 0 -p1
 
 cp %{SOURCE1} .
 
@@ -81,6 +81,9 @@ make test
 %{_mandir}/man3/Pod::Coverage::Overloader.3pm*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.23-23
+- Updating the usage of the '%%patch' macro.
+
 * Wed Mar 30 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.23-22
 - License verified.
 

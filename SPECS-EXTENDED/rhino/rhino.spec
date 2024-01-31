@@ -22,7 +22,7 @@ Distribution:   Mariner
 %define scm_version 1_7_7_1
 Name:           rhino
 Version:        1.7.7.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        JavaScript for Java
 License:        MPL-2.0
 Group:          Development/Libraries/Java
@@ -57,8 +57,8 @@ Examples for %{name}
 
 %prep
 %setup -q -n %{name}-Rhino%{scm_version}_RELEASE
-%patch0 -b .build
-%patch1 -b .fixManifest
+%patch 0 -b .build
+%patch 1 -b .fixManifest
 cp %{SOURCE1} pom.xml
 %pom_remove_parent
 
@@ -126,6 +126,9 @@ find %{buildroot}%{_datadir}/%{name} -name '*.build' -delete
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.7.7.1-3
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.7.7.1-2
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

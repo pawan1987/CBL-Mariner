@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary:	Command line tool that displays bandwidth usage on an interface
 Name:		iftop
 Version:	1.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 License:	GPLv2+
 URL:		http://www.ex-parrot.com/~pdw/%{name}/
 Source:		http://www.ex-parrot.com/~pdw/%{name}/download/%{name}-%{version}pre4.tar.gz
@@ -20,10 +20,10 @@ so slow?".
 
 %prep
 %setup -q -n %{name}-%{version}pre4
-%patch0 -p1 -b .ncursesw
+%patch 0 -p1 -b .ncursesw
 touch -c -r configure.ac{.ncursesw,}
-%patch1 -p1 -b .git20181003
-%patch2 -p1 -b .gcc10
+%patch 1 -p1 -b .git20181003
+%patch 2 -p1 -b .gcc10
 
 %build
 %configure
@@ -39,6 +39,9 @@ touch -c -r configure.ac{.ncursesw,}
 %{_mandir}/man8/%{name}.*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0-2
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.0-1
 - Converting the 'Release' tag to the '[number].[distribution]' format.
 

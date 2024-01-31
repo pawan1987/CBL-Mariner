@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: Database-specific drivers for libdbi
 Name: libdbi-drivers
 Version: 0.9.0
-Release: 16%{?dist}
+Release: 17%{?dist}
 License: LGPLv2+
 URL: http://libdbi-drivers.sourceforge.net/
 
@@ -57,7 +57,7 @@ does not require recompilation or rewriting source code.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch1 -p1
+%patch 1 -p1
 autoconf
 # mariadb provides headers in a subfolder <mysql/mysql.h>
 sed -i -r 's|<(mysql\.h)>|<mysql/\1>|' drivers/mysql/dbd_mysql.c
@@ -111,6 +111,9 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_libdir}/dbd/libdbdsqlite3.*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.0-17
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.9.0-16
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

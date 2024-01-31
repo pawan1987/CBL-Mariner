@@ -1,6 +1,6 @@
 Name:           libdatrie
 Version:        0.2.9
-Release:        12%{?dist}
+Release:        13%{?dist}
 Summary:        Implementation of Double-Array structure for representing trie
 License:        LGPLv2+
 Vendor:         Microsoft Corporation
@@ -30,7 +30,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch0 -p1 -b .docs
+%patch 0 -p1 -b .docs
 
 %build
 autoreconf -f -i -v
@@ -64,6 +64,9 @@ LD_LIBRARY_PATH=../datrie/.libs %make_build check
 %{_mandir}/man1/trietool*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.2.9-13
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 02 2020 Joe Schmitt <joschmit@microsoft.com> - 0.2.9-12
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 - Remove doxygen dependency.

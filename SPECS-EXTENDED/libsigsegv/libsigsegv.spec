@@ -4,7 +4,7 @@ Distribution:   Mariner
 Summary: Library for handling page faults in user mode
 Name:    libsigsegv
 Version: 2.11
-Release: 11%{?dist}
+Release: 12%{?dist}
 
 License: GPLv2+
 URL:     https://www.gnu.org/software/libsigsegv/
@@ -39,7 +39,7 @@ Requires: %{name}-devel%{?_isa} = %{version}-%{release}
 
 %prep
 %setup -q
-%patch0 -p1
+%patch 0 -p1
 
 
 %build
@@ -93,6 +93,9 @@ make check
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.11-12
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.11-11
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -243,4 +246,3 @@ make check
 
 * Thu Oct 02 2003 Rex Dieter <rexdieter at sf.net> 0:2.0-0.fdr.1
 - first try.
-

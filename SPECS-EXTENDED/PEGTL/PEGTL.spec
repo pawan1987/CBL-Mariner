@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name:           PEGTL
 Version:        2.8.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Parsing Expression Grammar Template Library
 License:        MIT
 URL:            https://github.com/taocpp/%{name}/
@@ -33,7 +33,7 @@ applications that use %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 
-%patch0 -p1 -b .compiler
+%patch 0 -p1 -b .compiler
 
 %check
 make
@@ -51,6 +51,9 @@ popd
 %{_includedir}/tao/pegtl
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.8.3-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.8.3-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 

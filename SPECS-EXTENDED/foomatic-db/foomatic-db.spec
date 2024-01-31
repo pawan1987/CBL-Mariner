@@ -3,7 +3,7 @@
 Summary:        Database of printers and printer drivers
 Name:           foomatic-db
 Version:        %{dbver_rel}
-Release:        70%{?dist}
+Release:        71%{?dist}
 License:        GPL-2.0-or-later
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -109,10 +109,10 @@ popd
 # HP DeskJet 720C (bug #797099)
 # Kyocera FS-1118MFP (bug #782377)
 # Brother HL-2040 (bug #999040)
-%patch1 -p1
+%patch 1 -p1
 
 # These can't be generated at all (bug #866476)
-%patch2 -p1
+%patch 2 -p1
 
 # Use sed instead of perl in the PPDs (bug #512739).
 find db/source/PPD -type f -name '*.ppd' -exec sed -i 's,perl -p,sed,g' {} +
@@ -164,6 +164,9 @@ ln -sf ../../foomatic/db/source/PPD %{buildroot}%{_datadir}/cups/model/foomatic-
 %{_datadir}/cups/model/foomatic-db-ppds
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.0-71
+- Updating the usage of the '%%patch' macro.
+
 * Thu Feb 02 2023 Muhammad Falak <mwani@microsoft.com> - 4.0-70
 - License verified
 

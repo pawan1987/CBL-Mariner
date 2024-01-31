@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name:           sblim-cmpi-network
 Version:        1.4.0
-Release:        26%{?dist}
+Release:        27%{?dist}
 Summary:        SBLIM Network Instrumentation
 
 License:        EPL
@@ -43,10 +43,10 @@ SBLIM Base Network Testcase Files for SBLIM Testsuite
 
 %prep
 %setup -q
-%patch0 -p1 -b .network-devices-arbitrary-names-support
-%patch1 -p1 -b .docdir
-%patch2 -p1 -b .pegasus-interop
-%patch3 -p1 -b .prov-reg-sfcb-systemd
+%patch 0 -p1 -b .network-devices-arbitrary-names-support
+%patch 1 -p1 -b .docdir
+%patch 2 -p1 -b .pegasus-interop
+%patch 3 -p1 -b .prov-reg-sfcb-systemd
 
 %build
 %ifarch s390 s390x ppc ppc64
@@ -101,6 +101,9 @@ echo "%{_libdir}/cmpi" > $RPM_BUILD_ROOT/%{_sysconfdir}/ld.so.conf.d/%{name}-%{_
 %postun -p /sbin/ldconfig
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.0-27
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.0-26
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

@@ -1,7 +1,7 @@
 Summary:        Very secure and very small FTP daemon.
 Name:           vsftpd
 Version:        3.0.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2 with exceptions
 URL:            https://security.appspot.com/vsftpd.html
 Group:          System Environment/Daemons
@@ -17,7 +17,7 @@ Requires:       libcap pam openssl libnsl2
 Very secure and very small FTP daemon.
 %prep
 %setup -q
-%patch0
+%patch 0
 
 %build
 sed -i 's/#undef VSF_BUILD_SSL/#define VSF_BUILD_SSL/g' builddefs.h
@@ -85,6 +85,9 @@ fi
 %{_datadir}/*
 
 %changelog
+*   Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.0.5-2
+-   Updating the usage of the '%%patch' macro.
+
 *   Wed Apr 13 2022 Henry Beberman <henry.beberman@microsoft.com> - 3.0.5-1
 -   Upgrade to version 3.0.5 to fix CVE-2021-3618
 *   Sat May 09 2020 Nick Samson <nisamson@microsoft.com> - 3.0.3-10

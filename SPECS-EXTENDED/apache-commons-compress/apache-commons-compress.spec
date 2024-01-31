@@ -22,7 +22,7 @@ Distribution:   Mariner
 %global short_name      commons-%{base_name}
 Name:           apache-%{short_name}
 Version:        1.19
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Java API for working with compressed files and archivers
 License:        Apache-2.0
 Group:          Development/Libraries/Java
@@ -63,18 +63,18 @@ This package provides %{summary}.
 cp %{SOURCE2} build.xml
 
 # Unavailable Google Brotli library (org.brotli.dec)
-%patch0 -p1
+%patch 0 -p1
 %pom_remove_dep org.brotli:dec
 rm -r src/{main,test}/java/org/apache/commons/compress/compressors/brotli
 
 # Unavailable ZSTD JNI library
-%patch1 -p1
+%patch 1 -p1
 %pom_remove_dep :zstd-jni
 rm -r src/{main,test}/java/org/apache/commons/compress/compressors/zstandard
 rm src/test/java/org/apache/commons/compress/compressors/DetectCompressorTestCase.java
 
 # Restore Java 8 compatibility
-%patch2 -p1
+%patch 2 -p1
 
 # remove osgi tests, we don't have deps for them
 %pom_remove_dep org.ops4j.pax.exam:::test
@@ -121,6 +121,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc NOTICE.txt
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.19-4
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 14 2022 Sumedh Sharma <sumsharma@microsoft.com> - 1.19-3
 - Add Requires on xz instead of mvn(org.tukaani:xz) to fix package install failure
 - License verified

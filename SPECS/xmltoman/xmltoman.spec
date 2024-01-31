@@ -1,7 +1,7 @@
 Summary:        Scripts for converting XML to roff or HTML
 Name:           xmltoman
 Version:        0.4
-Release:        23%{?dist}
+Release:        24%{?dist}
 License:        GPLv2+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -20,7 +20,7 @@ for doing rougly the same job is provided.
 
 %prep
 %setup -q
-%patch0 -p1 -b .timestamps
+%patch 0 -p1 -b .timestamps
 
 %build
 %make_build PREFIX=%{_prefix}
@@ -39,6 +39,9 @@ cp -p *.1 %{buildroot}%{_mandir}/man1
 %doc README
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.4-24
+- Updating the usage of the '%%patch' macro.
+
 * Wed Dec 08 2021 Thomas Crain <thcrain@microsoft.com> - 0.4-23
 - License verified
 - Lint spec

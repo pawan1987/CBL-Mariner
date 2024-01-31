@@ -18,7 +18,7 @@
 Summary:        Lexical Analyzer Generator for Java
 Name:           jflex
 Version:        1.4.3
-Release:        31%{?dist}
+Release:        32%{?dist}
 License:        GPL-2.0+
 Group:          Development/Libraries/Java
 Vendor:         Microsoft Corporation
@@ -92,12 +92,12 @@ pushd src
 %{ant} realclean
 %{ant} -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 jflex
 popd
-%patch0 -p1
+%patch 0 -p1
 
 # You must use Re jflex.spec and have a java-cup and jflex installed
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
 
 %build
 cd jflex
@@ -137,6 +137,9 @@ install -p -m 0755 %{SOURCE1} %{buildroot}%{_bindir}/jflex
 %doc jflex/examples jflex/doc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.4.3-32
+- Updating the usage of the '%%patch' macro.
+
 * Thu Mar 24 2022 Cameron Baird <cameronbaird@microsoft.com> - 1.4.3-31
 - Remove condition macros for with/without, bootstrap; redundant with separate spec
 - Switch source to one that is actively published on github

@@ -21,7 +21,7 @@ Distribution:   Mariner
 %define originalname PullParser
 Name:           xpp2
 Version:        2.1.10
-Release:        29%{?dist}
+Release:        30%{?dist}
 Summary:        XML Pull Parser
 License:        Apache-1.1
 Group:          Development/Libraries/Java
@@ -77,8 +77,8 @@ active development concentrates on its successor XPP3/MXP1
 %setup -q -n %{originalname}%{version}
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
-%patch0 -b .sav
-%patch1 -p1
+%patch 0 -b .sav
+%patch 1 -p1
 
 %build
 export OPT_JAR_LIST="ant/ant-junit junit"
@@ -143,6 +143,9 @@ cp -pr src/java/samples/* %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1.10-30
+- Updating the usage of the '%%patch' macro.
+
 * Thu Oct 14 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.1.10-29
 - Initial CBL-Mariner import from openSUSE Tumbleweed (license: same as "License" tag).
 - Converting the 'Release' tag to the '[number].[distribution]' format.

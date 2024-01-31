@@ -21,7 +21,7 @@
 Summary:        Library of matchers for building test expressions
 Name:           hamcrest
 Version:        1.3
-Release:        16%{?dist}
+Release:        17%{?dist}
 License:        BSD-3-Clause
 Group:          Development/Libraries/Java
 Vendor:         Microsoft Corporation
@@ -106,14 +106,14 @@ rm -fr hamcrest-integration/src/main/java/org/hamcrest/integration/EasyMock2Adap
 rm -fr hamcrest-integration/src/main/java/org/hamcrest/EasyMock2Matchers.java
 %endif
 
-%patch0 -p1
-%patch1 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
+%patch 0 -p1
+%patch 1 -p1
+%patch 3 -p1
+%patch 4 -p1
+%patch 5 -p1
+%patch 6 -p1
+%patch 7 -p1
+%patch 8 -p1
 
 sed -i 's/\r//' LICENSE.txt
 
@@ -188,6 +188,9 @@ cp -pr %{name}-examples %{buildroot}%{_datadir}/%{name}/
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.3-17
+- Updating the usage of the '%%patch' macro.
+
 * Mon Apr 3 2023 Mykhailo Bykhovtsev <mbykhovtsev@microsoft.com> - 1.3-16
 - Added provides for maven artifacts for core subpackage
 

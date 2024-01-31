@@ -4,7 +4,7 @@ Distribution:   Mariner
 
 Name:           sblim-cmpi-sysfs
 Version:        1.2.0
-Release:        24%{?dist}
+Release:        25%{?dist}
 Summary:        SBLIM sysfs instrumentation
 
 License:        EPL
@@ -41,11 +41,11 @@ SBLIM Base Params Testcase Files for SBLIM Testsuite
 
 %prep
 %setup -q
-%patch0 -p1 -b .provider-segfault
-%patch1 -p1 -b .sysfs-links
-%patch2 -p1 -b .docdir
-%patch3 -p1 -b .pegasus-interop
-%patch4 -p1 -b .prov-reg-sfcb-systemd
+%patch 0 -p1 -b .provider-segfault
+%patch 1 -p1 -b .sysfs-links
+%patch 2 -p1 -b .docdir
+%patch 3 -p1 -b .pegasus-interop
+%patch 4 -p1 -b .prov-reg-sfcb-systemd
 sed -ri 's,-type d -maxdepth 1 -mindepth 1,-maxdepth 1 -mindepth 1 -type d,g' \
         ./test/system/linux/*.{sh,system}
 
@@ -108,6 +108,9 @@ mv $RPM_BUILD_ROOT/%{_libdir}/libLinux_SysfsDeviceUtil.so $RPM_BUILD_ROOT/%{prov
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.0-25
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2.0-24
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

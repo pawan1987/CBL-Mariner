@@ -7,7 +7,7 @@
 
 Name:           python-pymongo
 Version:        3.10.1
-Release:        5%{?dist}
+Release:        6%{?dist}
 # All code is ASL 2.0 except bson/time64*.{c,h} which is MIT
 License:        ASL 2.0 and MIT
 Summary:        Python driver for MongoDB
@@ -67,7 +67,7 @@ contains the python3 version of this module.
 
 %prep
 %setup -q -n mongo-python-driver-%{version}
-%patch01 -p1 -b .ssl
+%patch 01 -p1 -b .ssl
 
 # Remove the bundled ssl.match_hostname library as it was vulnerable to CVE-2013-7440
 # and CVE-2013-2099, and isn't needed anyway since Fedora >= 22 has the needed module in the Python
@@ -112,6 +112,9 @@ chmod 755 %{buildroot}%{python3_sitearch}/pymongo/*.so
 %{python3_sitearch}/gridfs
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 3.10.1-6
+- Updating the usage of the '%%patch' macro.
+
 * Mon Oct 19 2020 Steve Laughman <steve.laughman@microsoft.com> - 3.10.1-5
 - Initial CBL-Mariner import from Fedora 33 (license: MIT)
 

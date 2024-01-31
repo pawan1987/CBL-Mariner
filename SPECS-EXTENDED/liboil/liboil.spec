@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: Library of Optimized Inner Loops, CPU optimized functions
 Name: liboil
 Version: 0.3.16
-Release: 22%{?dist}
+Release: 23%{?dist}
 # See COPYING which details everything, various BSD licenses apply
 License: BSD
 URL: http://liboil.freedesktop.org/
@@ -39,7 +39,7 @@ extended instructions provided by modern CPUs (Altivec, MMX, SSE, etc.).
 
 %prep
 %setup -q
-%patch4 -p0 -b .disable-ppc64-opts
+%patch 4 -p0 -b .disable-ppc64-opts
 
 %build
 %configure
@@ -71,6 +71,9 @@ rm -f %{buildroot}%{_libdir}/*.a
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.3.16-23
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.3.16-22
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 
@@ -285,4 +288,3 @@ rm -f %{buildroot}%{_libdir}/*.a
 
 * Thu Nov  4 2004 Matthias Saou <http://freshrpms.net/> 0.2.0-1
 - Initial RPM release.
-

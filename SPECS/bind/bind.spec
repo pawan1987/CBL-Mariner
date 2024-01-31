@@ -10,7 +10,7 @@
 Summary:        Domain Name System software
 Name:           bind
 Version:        9.16.44
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        ISC
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -228,12 +228,12 @@ Summary:        BIND utilities
 %prep
 %setup -q
 
-%patch9 -p1 -b .config-pkcs11
+%patch 9 -p1 -b .config-pkcs11
 cp -r bin/named{,-pkcs11}
 cp -r bin/dnssec{,-pkcs11}
 cp -r lib/dns{,-pkcs11}
 cp -r lib/ns{,-pkcs11}
-%patch10 -p1 -b .dist_pkcs11
+%patch 10 -p1 -b .dist_pkcs11
 
 libtoolize -c -f; aclocal -I libtool.m4 --force; autoconf -f
 
@@ -613,6 +613,9 @@ fi;
 %{_mandir}/man8/named-nzd2nzf.8*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 9.16.44-2
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 27 2023 CBL-Mariner Servicing Account <cblmargh@microsoft.com> - 9.16.44-1
 - Auto-upgrade to 9.16.44 - Fix CVE-2023-3341
 

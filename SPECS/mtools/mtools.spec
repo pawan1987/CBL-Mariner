@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: Programs for accessing MS-DOS disks without mounting the disks
 Name: mtools
 Version: 4.0.43
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: GPLv3+
 Source0: ftp://ftp.gnu.org/gnu/mtools/mtools-%{version}.tar.gz
 Url: https://www.gnu.org/software/mtools/
@@ -25,7 +25,7 @@ Mtools should be installed if you need to use MS-DOS disks
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .conf
+%patch 0 -p1 -b .conf
 
 %build
 autoreconf -fiv
@@ -57,6 +57,9 @@ ln -s mtools.5.gz %{buildroot}%{_mandir}/man5/mtools.conf.5.gz
 %{_infodir}/mtools.info*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 4.0.43-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Jun 02 2023 Vince Perri <viperri@microsoft.com> 4.0.43-2
 - License verified.
 - Initial CBL-Mariner import from Fedora 39 (license: MIT).

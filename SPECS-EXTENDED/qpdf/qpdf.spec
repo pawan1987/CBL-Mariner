@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: Command-line tools and library for transforming PDF files
 Name:    qpdf
 Version: 10.1.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 # MIT: e.g. libqpdf/sha2.c
 # upstream uses ASL 2.0 now, but he allowed other to distribute qpdf under
 # old license (see README)
@@ -97,11 +97,11 @@ QPDF Manual
 %setup -q
 
 # fix 'complete manual location' note in man pages
-%patch0 -p1 -b .doc
+%patch 0 -p1 -b .doc
 %ifarch aarch64
-%patch2 -p1 -b .erase-tests-with-generated-object-stream
+%patch 2 -p1 -b .erase-tests-with-generated-object-stream
 %endif
-%patch3 -p1 -b .relax
+%patch 3 -p1 -b .relax
 
 %build
 # work-around check-rpaths errors
@@ -150,6 +150,9 @@ make check
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 10.1.0-3
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 10.1.0-2
 - Initial CBL-Mariner import from Fedora 33 (license: MIT).
 

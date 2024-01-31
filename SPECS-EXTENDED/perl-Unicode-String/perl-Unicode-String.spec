@@ -1,6 +1,6 @@
 Name:           perl-Unicode-String
 Version:        2.10
-Release:        14%{?dist}
+Release:        15%{?dist}
 
 Summary:        Perl modules to handle various Unicode issues
 
@@ -40,7 +40,7 @@ Requires:       perl(MIME::Base64)
 # Recode documentation as UTF-8
 # Can't just use iconv because README includes an example of
 # character code conversion that would be wrong if simply recoded
-%patch0 -p1
+%patch 0 -p1
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__perl} Makefile.PL INSTALLDIRS=vendor
@@ -69,6 +69,9 @@ make test
 
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.10-15
+- Updating the usage of the '%%patch' macro.
+
 * Fri Oct 15 2021 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.10-14
 - Initial CBL-Mariner import from Fedora 32 (license: MIT).
 

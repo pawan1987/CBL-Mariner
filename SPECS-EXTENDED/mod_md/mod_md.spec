@@ -5,7 +5,7 @@ Distribution:   Mariner
 
 Name:           mod_md
 Version:        2.2.7
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Certificate provisioning using ACME for the Apache HTTP Server
 License:        ASL 2.0
 URL:            https://icing.github.io/mod_md/
@@ -25,8 +25,8 @@ domains and their virtual hosts automatically, including at renewal.
 
 %prep
 %setup -q
-%patch2 -p1 -b .warnfix
-%patch3 -p1 -b .tol_missing_res
+%patch 2 -p1 -b .warnfix
+%patch 3 -p1 -b .tol_missing_res
 
 %build
 %configure
@@ -60,6 +60,9 @@ echo "LoadModule md_module modules/mod_md.so" > %{buildroot}%{_httpd_modconfdir}
 %{_mandir}/man1/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.2.7-5
+- Updating the usage of the '%%patch' macro.
+
 * Mon Nov 01 2021 Muhammad Falak <mwani@microsft.com> - 2.2.7-4
 - Remove epoch
 

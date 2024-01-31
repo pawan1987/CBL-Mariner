@@ -33,7 +33,7 @@
 Summary:        PHP scripting language for creating dynamic web sites
 Name:           php
 Version:        8.1.22
-Release:        2%{?dist}
+Release:        3%{?dist}
 # All files licensed under PHP version 3.01, except
 # Zend is licensed under Zend
 # TSRM is licensed under BSD
@@ -699,25 +699,25 @@ in pure PHP.
 %prep
 %setup -q
 
-%patch1 -p1 -b .mpmcheck
-%patch5 -p1 -b .includedir
-%patch6 -p1 -b .embed
-%patch8 -p1 -b .libdb
+%patch 1 -p1 -b .mpmcheck
+%patch 5 -p1 -b .includedir
+%patch 6 -p1 -b .embed
+%patch 8 -p1 -b .libdb
 
-%patch41 -p1 -b .syslib
-%patch42 -p1 -b .systzdata
-%patch43 -p1 -b .headers
+%patch 41 -p1 -b .syslib
+%patch 42 -p1 -b .systzdata
+%patch 43 -p1 -b .headers
 
-%patch45 -p1 -b .ldap_r
+%patch 45 -p1 -b .ldap_r
 
-%patch47 -p1 -b .phpinfo
+%patch 47 -p1 -b .phpinfo
 
 # upstream patches
 
 # security patches
 
 # Fixes for tests
-%patch300 -p1 -b .datetests
+%patch 300 -p1 -b .datetests
 
 
 # Prevent %%doc confusion over LICENSE files
@@ -1515,6 +1515,9 @@ systemctl try-restart php-fpm.service >/dev/null 2>&1 || :
 %dir %{_datadir}/php/preload
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 8.1.22-3
+- Updating the usage of the '%%patch' macro.
+
 * Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 8.1.22-2
 - Recompile with stack-protection fixed gcc version (CVE-2023-4039)
 

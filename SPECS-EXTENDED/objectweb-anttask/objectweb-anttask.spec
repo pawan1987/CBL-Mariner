@@ -20,7 +20,7 @@ Distribution:   Mariner
 
 Name:           objectweb-anttask
 Version:        1.2
-Release:        266%{?dist}
+Release:        267%{?dist}
 Summary:        ObjectWeb Ant task
 License:        LGPLv2+
 Group:          Development/Languages/Java
@@ -42,8 +42,8 @@ ObjectWeb Ant task
 
 %prep
 %setup -q -c -n %{name}
-%patch1
-%patch2 -p1
+%patch 1
+%patch 2 -p1
 find . -name "*.class" -exec rm {} \;
 find . -name "*.jar" -exec rm {} \;
 
@@ -69,6 +69,9 @@ popd
 %{_javadir}/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 1.2-267
+- Updating the usage of the '%%patch' macro.
+
 * Tue Apr 26 2022 Mandeep Plaha <mandeepplaha@microsoft.com> - 1.2-266
 - Updated source URL.
 

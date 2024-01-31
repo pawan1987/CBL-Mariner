@@ -3,7 +3,7 @@ Distribution:   Mariner
 Summary: Czech man pages from the Linux Documentation Project
 Name: man-pages-cs
 Version: 0.18.20090209
-Release: 31%{?dist}
+Release: 32%{?dist}
 # GPLv3 .. coreutils/
 # BSD and MIT and Public Domain  .. openssh/
 License: BSD and GPLv2 and GPLv3 and MIT and Public Domain
@@ -34,19 +34,19 @@ Czech.
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
+%patch 5 -p1
+%patch 6 -p1
+%patch 7 -p1
+%patch 8 -p1
+%patch 9 -p1
+%patch 10 -p1
+%patch 11 -p1
+%patch 12 -p1
+%patch 13 -p1
 
 %build
 # coreutils directory contains newer version
@@ -79,6 +79,9 @@ make install DESTDIR=$RPM_BUILD_ROOT MANDIR=%{_mandir}/cs
 %{_mandir}/cs/man*/*
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.18.20090209-32
+- Updating the usage of the '%%patch' macro.
+
 * Wed Jan 12 2022 Pawel Winogrodzki <pawelwi@microsoft.com> - 0.18.20090209-31
 - License verified.
 

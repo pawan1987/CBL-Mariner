@@ -1,7 +1,7 @@
 Summary:        File System in Userspace (FUSE) utilities
 Name:           fuse
 Version:        2.9.7
-Release:        10%{?dist}
+Release:        11%{?dist}
 License:        GPL+
 Vendor:         Microsoft Corporation
 Distribution:   Mariner
@@ -32,14 +32,14 @@ It contains the libraries and header files to create fuse applications.
 %prep
 %setup -q
 %ifarch aarch64
-%patch0 -p1
+%patch 0 -p1
 %endif
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%patch 1 -p1
+%patch 2 -p1
+%patch 3 -p1
+%patch 4 -p1
+%patch 5 -p1
+%patch 6 -p1
 
 %build
 # fuse-gcc11.patch modifies configure.ac, so regenerate it.
@@ -76,6 +76,9 @@ find %{buildroot} -type f -name "*.la" -delete -print
 %{_libdir}/pkgconfig/fuse.pc
 
 %changelog
+* Tue Jan 30 2024 Pawel Winogrodzki <pawelwi@microsoft.com> - 2.9.7-11
+- Updating the usage of the '%%patch' macro.
+
 * Fri Nov 12 2021 Nicolas Guibourge <nicolasg@microsoft.com> - 2.9.7-10
 - Fix gcc 11 build issue
 
