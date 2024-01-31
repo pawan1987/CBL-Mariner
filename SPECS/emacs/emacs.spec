@@ -1,5 +1,7 @@
 %global _hardened_build 1
 
+%bcond lucid 0
+
 # This file is encoded in UTF-8.  -*- coding: utf-8 -*-
 Summary:       GNU Emacs text editor
 Name:          emacs
@@ -78,8 +80,10 @@ BuildRequires: webkit2gtk4.1-devel
 
 BuildRequires: gnupg2
 
+%if %{with lucid}
 # For lucid
 BuildRequires: Xaw3d-devel
+%endif
 
 # for Patch3
 BuildRequires: pkgconfig(systemd)
@@ -115,6 +119,7 @@ without leaving the editor.
 
 This package provides an emacs binary with support for X windows.
 
+%if %{with lucid}
 %package lucid
 Summary:       GNU Emacs text editor with LUCID toolkit X support
 Requires:      libgccjit
@@ -131,6 +136,7 @@ without leaving the editor.
 
 This package provides an emacs binary with support for X windows
 using LUCID toolkit.
+%endif
 
 %package nox
 Summary:       GNU Emacs text editor without X support
@@ -239,6 +245,7 @@ ln -s ../../%{name}/%{version}/etc/NEWS doc
 export CFLAGS="-DMAIL_USE_LOCKF %{build_cflags}"
 %set_build_flags
 
+%if %{with lucid}
 # Build Lucid binary
 mkdir build-lucid && cd build-lucid
 ln -s ../configure .
@@ -253,6 +260,7 @@ LDFLAGS=-Wl,-z,relro;  export LDFLAGS;
 %{setarch} %make_build bootstrap
 %{setarch} %make_build
 cd ..
+%endif
 
 # Build binary without X support
 mkdir build-nox && cd build-nox
@@ -279,7 +287,10 @@ LDFLAGS=-Wl,-z,relro;  export LDFLAGS;
 cd ..
 
 # Remove versioned file so that we end up with .1 suffix and only one DOC file
-rm build-{gtk,lucid,nox}/src/emacs-%{version}.*
+%if %{with lucid}
+rm build-lucid/src/emacs-%{version}.*
+%endif
+rm build-{gtk,nox}/src/emacs-%{version}.*
 
 # Create pkgconfig file
 cat > emacs.pc << EOF
@@ -314,8 +325,10 @@ touch %{buildroot}%{_bindir}/emacs
 gunzip %{buildroot}%{_datadir}/emacs/%{version}/lisp/jka-compr.el.gz
 gunzip %{buildroot}%{_datadir}/emacs/%{version}/lisp/jka-cmpr-hook.el.gz
 
+%if %{with lucid}
 # Install the emacs with LUCID toolkit
 install -p -m 0755 build-lucid/src/emacs %{buildroot}%{_bindir}/emacs-%{version}-lucid
+%endif
 
 # Install the emacs without X
 install -p -m 0755 build-nox/src/emacs %{buildroot}%{_bindir}/emacs-%{version}-nox
@@ -404,34 +417,44 @@ rm %{buildroot}%{_datadir}/icons/hicolor/scalable/mimetypes/emacs-document23.svg
 gtk_pdmp="emacs-$(./build-gtk/src/emacs --fingerprint 2>&1 | sed 's/.* //').pdmp"
 install -p -m 0644 build-gtk/src/emacs.pdmp %{buildroot}%{emacs_libexecdir}/${gtk_pdmp}
 
+%if %{with lucid}
 lucid_pdmp="emacs-$(./build-lucid/src/emacs --fingerprint 2>&1 | sed 's/.* //').pdmp"
 install -p -m 0644 build-lucid/src/emacs.pdmp %{buildroot}%{emacs_libexecdir}/${lucid_pdmp}
+%endif
 
 nox_pdmp="emacs-$(./build-nox/src/emacs --fingerprint 2>&1 | sed 's/.* //').pdmp"
 install -p -m 0644 build-nox/src/emacs.pdmp %{buildroot}%{emacs_libexecdir}/${nox_pdmp}
 
 # Install native compiled Lisp of all builds
 gtk_comp_native_ver=$(ls -1 build-gtk/native-lisp)
+%if %{with lucid}
 lucid_comp_native_ver=$(ls -1 build-lucid/native-lisp)
+%endif
 nox_comp_native_ver=$(ls -1 build-nox/native-lisp)
 cp -ar build-gtk/native-lisp/${gtk_comp_native_ver} %{buildroot}%{native_lisp}
+%if %{with lucid}
 cp -ar build-lucid/native-lisp/${lucid_comp_native_ver} %{buildroot}%{native_lisp}
+%endif
 cp -ar build-nox/native-lisp/${nox_comp_native_ver} %{buildroot}%{native_lisp}
 
 (TOPDIR=${PWD}
  cd %{buildroot}
  find .%{native_lisp}/${gtk_comp_native_ver} \( -type f -name '*eln' -fprintf $TOPDIR/gtk-eln-filelist "%%%%attr(755,-,-) %%p\n" \) -o \( -type d -fprintf $TOPDIR/gtk-dirs "%%%%dir %%p\n" \)
 )
+%if %{with lucid}
 (TOPDIR=${PWD}
  cd %{buildroot}
  find .%{native_lisp}/${lucid_comp_native_ver} \( -type f -name '*eln' -fprintf $TOPDIR/lucid-eln-filelist "%%%%attr(755,-,-) %%p\n" \) -o \( -type d -fprintf $TOPDIR/lucid-dirs "%%%%dir %%p\n" \)
 )
+%endif
 (TOPDIR=${PWD}
  cd %{buildroot}
  find .%{native_lisp}/${nox_comp_native_ver} \( -type f -name '*eln' -fprintf $TOPDIR/nox-eln-filelist "%%%%attr(755,-,-) %%p\n" \) -o \( -type d -fprintf $TOPDIR/nox-dirs "%%%%dir %%p\n" \)
 )
 echo %{emacs_libexecdir}/${gtk_pdmp} >> gtk-eln-filelist
+%if %{with lucid}
 echo %{emacs_libexecdir}/${lucid_pdmp} >> lucid-eln-filelist
+%endif
 echo %{emacs_libexecdir}/${nox_pdmp} >> nox-eln-filelist
 
 # remove leading . from filelists
@@ -455,6 +478,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/*.desktop
 %posttrans
 %{_sbindir}/alternatives --install %{_bindir}/emacs emacs %{_bindir}/emacs-%{version} 80 || :
 
+%if %{with lucid}
 %preun lucid
 %{_sbindir}/alternatives --remove emacs %{_bindir}/emacs-%{version}-lucid || :
 %{_sbindir}/alternatives --remove emacs-lucid %{_bindir}/emacs-%{version}-lucid || :
@@ -462,6 +486,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/*.desktop
 %posttrans lucid
 %{_sbindir}/alternatives --install %{_bindir}/emacs emacs %{_bindir}/emacs-%{version}-lucid 70 || :
 %{_sbindir}/alternatives --install %{_bindir}/emacs-lucid emacs-lucid %{_bindir}/emacs-%{version}-lucid 60 || :
+%endif
 
 %preun nox
 %{_sbindir}/alternatives --remove emacs %{_bindir}/emacs-%{version}-nox || :
@@ -489,10 +514,12 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/*.desktop
 %{_datadir}/icons/hicolor/scalable/apps/emacs.ico
 %{_datadir}/icons/hicolor/scalable/mimetypes/emacs-document.svg
 
+%if %{with lucid}
 %files lucid -f lucid-eln-filelist -f lucid-dirs
 %{_bindir}/emacs-%{version}-lucid
 %attr(0755,-,-) %ghost %{_bindir}/emacs
 %attr(0755,-,-) %ghost %{_bindir}/emacs-lucid
+%endif
 
 %files nox -f nox-eln-filelist -f nox-dirs
 %{_bindir}/emacs-%{version}-nox
