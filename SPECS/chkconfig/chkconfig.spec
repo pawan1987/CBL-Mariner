@@ -1,27 +1,18 @@
-Summary:        A system tool for maintaining the %{_sysconfdir}/rc*.d hierarchy
-Name:           chkconfig
-Version:        1.25
-Release:        1%{?dist}
-License:        GPLv2
+Summary: A system tool for maintaining the /etc/rc*.d hierarchy
+Name: chkconfig
+Version: 1.26
+Release: 2%{?dist}
+License: GPL-2.0-only
 Vendor:         Microsoft Corporation
-Distribution:   Mariner
-Group:          System Environment/Base
-URL:            https://github.com/fedora-sysv/chkconfig
-Source0:        https://github.com/fedora-sysv/chkconfig/archive/refs/tags/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-BuildRequires:  gettext
-BuildRequires:  libselinux-devel
-BuildRequires:  newt-devel
-BuildRequires:  pkg-config
-BuildRequires:  popt-devel
-Requires:       libselinux
-Requires:       libsepol
-Requires:       newt
-Requires:       popt
-Requires:       slang
-Conflicts:      initscripts <= 5.30-1
-Provides:       alternatives = %{version}-%{release}
-Provides:       update-alternatives = %{version}-%{release}
-Provides:       /sbin/chkconfig
+Distribution:   Microsoft Azure Linux
+URL: https://github.com/fedora-sysv/chkconfig
+Source: https://github.com/fedora-sysv/chkconfig/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+
+BuildRequires: gcc gettext libselinux-devel make newt-devel popt-devel systemd-devel
+
+Conflicts: initscripts <= 5.30-1
+
+Provides: /sbin/chkconfig
 
 %description
 Chkconfig is a basic system utility.  It updates and queries runlevel
@@ -30,9 +21,8 @@ symbolic links in /etc/rc.d, to relieve system administrators of some
 of the drudgery of manually editing the symbolic links.
 
 %package -n ntsysv
-Summary:        A tool to set the stop/start of system services in a runlevel
-Group:          System Environment/Base
-Requires:       chkconfig
+Summary: A tool to set the stop/start of system services in a runlevel
+Requires: chkconfig = %{version}-%{release}
 
 %description -n ntsysv
 Ntsysv provides a simple interface for setting which system services
@@ -41,44 +31,41 @@ manipulating the numerous symbolic links in /etc/rc.d). Unless you
 specify a runlevel or runlevels on the command line (see the man
 page), ntsysv configures the current runlevel (5 if you're using X).
 
-%package  lang
-Summary:  Additional language files for chkconfig
-Group:    System Environment/Base
-Requires: %{name} = %{version}-%{release}
+%package -n alternatives
+Summary: A tool to maintain symbolic links determining default commands
 
-%description lang
-These are the additional language files of chkconfig
+%description -n alternatives
+alternatives creates, removes, maintains and displays information about the
+symbolic links comprising the alternatives system. It is possible for several
+programs fulfilling the same or similar functions to be installed on a single
+system at the same time.
 
 %prep
 %setup -q
 
 %build
-make RPM_OPT_FLAGS="%{optflags}" LDFLAGS="$RPM_LD_FLAGS" %{?_smp_mflags}
+%make_build RPM_OPT_FLAGS="$RPM_OPT_FLAGS" LDFLAGS="$RPM_LD_FLAGS"
 
 %check
 # Mask the check section as it depends on beakerlib which is currently not
-# provided by CBL-Mariner
-
+# provided by Azure Linux
 # make check
 
 %install
-make DESTDIR=%{buildroot} \
-     MANDIR=%{_mandir} \
-     SBINDIR=%{_sbindir} \
-     SYSTEMDUTILDIR=%{_libdir}/systemd \
-     install
+rm -rf $RPM_BUILD_ROOT
+%make_install MANDIR=%{_mandir} SBINDIR=%{_sbindir}
 
-mkdir -p %{buildroot}%{_sysconfdir}/rc.d/init.d
-ln -s rc.d/init.d %{buildroot}%{_sysconfdir}/init.d
+mkdir -p $RPM_BUILD_ROOT/etc/rc.d/init.d
+ln -s rc.d/init.d $RPM_BUILD_ROOT/etc/init.d
 for n in 0 1 2 3 4 5 6; do
-    mkdir -p %{buildroot}%{_sysconfdir}/rc.d/rc${n}.d
-    ln -s rc.d/rc${n}.d %{buildroot}%{_sysconfdir}/rc${n}.d
+    mkdir -p $RPM_BUILD_ROOT/etc/rc.d/rc${n}.d
+    ln -s rc.d/rc${n}.d $RPM_BUILD_ROOT/etc/rc${n}.d
 done
-mkdir -p %{buildroot}%{_sysconfdir}/chkconfig.d
+mkdir -p $RPM_BUILD_ROOT/etc/chkconfig.d
 
 %find_lang %{name}
 
-%files
+%files -f %{name}.lang
 %defattr(-,root,root)
 %{!?_licensedir:%global license %%doc}
 %license COPYING
@@ -90,73 +77,208 @@ mkdir -p %{buildroot}%{_sysconfdir}/chkconfig.d
 %{_sysconfdir}/rc[0-6].d
 %{_sysconfdir}/rc.d/rc[0-6].d
 %{_mandir}/*/chkconfig*
-%{_libdir}/systemd/systemd-sysv-install
-
-%dir %{_sysconfdir}/alternatives
-%{_sbindir}/update-alternatives
-%{_sbindir}/alternatives
-%{_mandir}/*/update-alternatives*
-%{_mandir}/*/alternatives*
-%dir %{_sharedstatedir}/alternatives
+%{_prefix}/lib/systemd/systemd-sysv-install
 
 %files -n ntsysv
 %defattr(-,root,root)
 %{_sbindir}/ntsysv
 %{_mandir}/*/ntsysv.8*
 
-%files -f %{name}.lang lang
-%defattr(-,root,root)
+%files -n alternatives
+%license COPYING
+%dir /etc/alternatives
+%{_sbindir}/update-alternatives
+%{_sbindir}/alternatives
+%{_mandir}/*/update-alternatives*
+%{_mandir}/*/alternatives*
+%dir /var/lib/alternatives
 
 %changelog
-* Tue Nov 21 2023 Andrew Phelps <anphel@microsoft.com> - 1.25-1
-- Upgrade to version 1.25
+* Wed Jan 31 11:49:49 EST 2024 Dan Streetman <ddstreet@ieee.org> - 1.26-2
+- Update to version from Fedora 39/rawhide.
+- Next line is present only to avoid tooling failures, and does not indicate the actual package license.
+- Initial CBL-Mariner import from Fedora 39 (license: MIT).
+- license verified
 
-* Wed Sep 20 2023 Jon Slobodzian <joslobo@microsoft.com> - 1.20-4
-- Recompile with stack-protection fixed gcc version (CVE-2023-4039)
+* Wed Jan 17 2024 Jan Macku <jamacku@redhat.com> - 1.26-1
+- fix(test): dot't call `basename` with empty string
+- spec: sort BuildRequires alphabetically
+- fix(test): remove dangling `rlPhase` fn call
+- ci: run tests using Packit and Testing Farm
+- build: update `.pot` file
+- ci: fix typo in test workflow
+- test: add support for running using tmt
+- Translated using Weblate (Czech)
+- Translated using Weblate (Punjabi)
+- build(deps): bump actions/upload-artifact from 3 to 4
+- build(deps): bump github/codeql-action from 2 to 3
+- leveldb: fix systemdActive()
+- build(deps): bump redhat-plumbers-in-action/differential-shellcheck
+- Translated using Weblate (Hungarian)
+- build(deps): bump actions/checkout from 3 to 4
 
-* Wed Apr 13 2022 Suresh Babu Chalamalasetty <schalam@microsoft.com> - 1.20-3
-- Create lang sub package for locales
+* Wed Aug 02 2023 Jan Macku <jamacku@redhat.com> - 1.25-1
+- alternatives: fix possible buffer overrun
+- Translated using Weblate (Korean)
+- Translated using Weblate (Chinese (Simplified) (zh_CN))
 
-* Thu Jan 20 2022 Muhammad Falak <mwani@microsoft.com> - 1.20-2
-- Mask `check` section which depends on `beakerlib`
+* Thu May 04 2023 Jan Macku <jamacku@redhat.com> - 1.24-1
+- ci: fix `NEXT_VERSION` in Makefile
+- revert: releng: Enable Packit to handle Fedora updates
+- revert: releng: Convert to rpmautospec
 
-* Tue Jan 11 2022 Nicolas Guibourge <nicolasg@microsoft.com> - 1.20-1
-- Upgrade to 1.20.
+* Thu May 04 2023 Jan Macku <jamacku@redhat.com> - 1.23-1
+- Translated using Weblate (Korean)
+- Translated using Weblate (English (United Kingdom))
+- alternatives: --keep-foreign incorrectly handles non-existent files
+- alternatives: isLink should return 0 in case of lstat error
+- Translated using Weblate (Swedish)
+- Translated using Weblate (Korean)
+- Translated using Weblate (Georgian)
+- Translated using Weblate (Finnish)
+- Translated using Weblate (Ukrainian)
+- Translated using Weblate (Polish)
+- Update translation files
+- Translated using Weblate (German)
+- doc: update translations
+- spec: remote changelog
 
-* Fri Feb 05 2021 Joe Schmitt <joschmit@microsoft.com> - 1.11-3
-- Replace incorrect %%{_lib} usage with %%{_libdir}
+* Thu Mar 23 2023 Jan Macku <jamacku@redhat.com> - 1.22-1
+- migrate to SPDX license
+- Translated using Weblate (English (United Kingdom))
+- Translated using Weblate (Japanese)
+- ci: Add locale linter
+- ci: update workflows
+- test: fix ShellCheck error[SC2070]
+- Bump redhat-plumbers-in-action/differential-shellcheck from 3 to 4 (#94)
+- releng: Packit remove extra job trigger
+- releng: Enable Packit to handle Fedora updates
+- releng: Convert to rpmautospec
 
-* Tue Nov 17 2020 Joe Schmitt <joschmit@microsoft.com> - 1.11-2
-- Provide alternatives and update-alternatives.
-- Remove sha1 define.
+* Wed Oct 05 2022 Jan Macku <jamacku@redhat.com> - 1.21-1
+- ci: Add CodeQL to replace LGTM
+- alternatives: replace master/slave with leader/follower
+- chkconfig: use correct cmp function
+- Bump redhat-plumbers-in-action/differential-shellcheck from 2 to 3
+- ci: Add Shell linter - Differential ShellCheck
+- ci: Use more inclusive terminology in workflows
+- ci: Update workflows, packit and dependabot
+- Translated using Weblate (Friulian)
+- Translated using Weblate (Swedish)
+- Translated using Weblate (Estonian)
+- Translated using Weblate (Georgian)
+- Translated using Weblate (Polish)
+- Translated using Weblate (Korean)
+- Translated using Weblate (Czech)
+- Translations update from Fedora Weblate (#77)
+- Translations update from Fedora Weblate (#75)
+- Translations update from Fedora Weblate (#74)
+- Translations update from Fedora Weblate (#73)
+- Translated using Weblate (Ukrainian)
+- Update translation files
+- Family mentioned for --set in both man and help
+- Translated using Weblate (French)
+- build-sys: Ensure `systemd-sysv-install` symlink does not have `//`
+- Translated using Weblate (German)
+- Add LGTM badges to README
+- Merge remote-tracking branch 'weblate/master'
+- Translated using Weblate (Indonesian)
+- Translated using Weblate (Finnish)
+- Translated using Weblate (Korean)
+- Translated using Weblate (Ukrainian)
+- Translated using Weblate (Turkish)
+- Translated using Weblate (Polish)
+- Translated using Weblate (Norwegian Nynorsk)
+- Update translation files
+- Translated using Weblate (Finnish)
+- Translated using Weblate (Czech)
+- Translated using Weblate (Swedish)
+- Translated using Weblate (Italian)
+- Translated using Weblate (Spanish)
+- Translated using Weblate (Chinese (Simplified))
 
-* Wed Mar 18 2020 Emre Girgin <mrgirgin@microsoft.com> 1.11-1
-- Initial CBL-Mariner import from Photon (license: Apache2).
-- Upgrade to 1.11. License verified.
+* Wed Jul 28 2021 Jan Macku <jamacku@redhat.com> - 1.20-1
+- spec: Replace not working awk command with sed (#62)
 
-* Fri Apr 07 2017 Anish Swaminathan <anishs@vmware.com> 1.9-1
-- Upgrade to 1.9
+* Fri Jul 23 2021 Jan Macku <jamacku@redhat.com> - 1.19-1
+- spec: Add Provides /sbin/chkconfig in order to stay backwards compatible (#60)
 
-* Mon Oct 31 2016 Anish Swaminathan <anishs@vmware.com> 1.5-7
-- Chkconfig patch to fix interaction with systemd
+* Fri Jul 23 2021 Jan Macku <jamacku@redhat.com> - 1.18-1
+- spec: /sbin/chkconfig -> /usr/sbin/chkconfig (#59)
 
-* Tue Sep 13 2016 Anish Swaminathan <anishs@vmware.com> 1.5-6
-- Chkconfig patch to return runlevel 3 on Photon OS
+* Thu Jul 22 2021 Jan Macku <jamacku@redhat.com> - 1.17-1
+- alternatives: tweak manpage to match the real 'remove' behavior (#58)
 
-* Tue May 24 2016 Priyesh Padmavilasom <ppadmavilasom@vmware.com> 1.5-5
-- GA - Bump release of all rpms
+* Thu Jul 15 2021 Jan Macku <jamacku@redhat.com> - 1.16-1
+- alternatives: add --keep-foreign (#57)
+- Translations update from Weblate
+- ci: Onboard chkconfig to Packit
+- zanata: remove zanata related stuff
+- Use make macros
+- alternatives: use one function for path cleaning
+- CI: specify more closely when to run CI
+- Add basic CI and README
+- spec: sync specfile with Fedora
 
-* Mon Dec 07 2015 Mahmoud Bassiouny <mbassiouny@vmware.com>
-- Ability for chkconfig to ignore priorities.
+* Thu Jan 21 2021 Jan Macku <jamacku@redhat.com> - 1.15-1
+- spec: sync specfile with Fedora
+- makefile: Use rpmdev-bumpspec's legacy date option
+- Add feature to generate specfile entry, commit and archive
 
-* Tue Dec 01 2015 Mahmoud Bassiouny <mbassiouny@vmware.com>
-- Allowing chkconfing to print service on/off status on the current runlevel.
+* Tue Jul 21 2020 Tom Stellard <tstellar@redhat.com> - 1.14-2
+- Use make macros
+- https://fedoraproject.org/wiki/Changes/UseMakeBuildInstallMacro
 
-* Fri Nov 20 2015 Sharath George <sharathg@vmware.com>
-- Adding shortopt for add and delete.
+* Fri Jul 17 2020 Jan Macku <jamacku@redhat.com> - 1.14-1
+- Fix spelling of SELinux
+- Remove hardcoded systemd path
 
-* Tue Oct 27 2015 Mahmoud Bassiouny <mbassiouny@vmware.com>
-- Initial build for PhotonOS.  First version
+* Tue Apr 14 2020 Jan Macku <jamacku@redhat.com> - 1.13-1
+- fix typo in translations and fix bogus dates in changelog
+
+* Mon Apr 06 2020 Jan Macku <jamacku@redhat.com> - 1.12-1
+- alternatives setService(): Add missing error mesg - (#1820089)
+- po: update translations
+- rebase
+
+* Thu Mar 14 2019 Peter Robinson <pbrobinson@fedoraproject.org> 1.11-4
+- Split out alternatives into it's own package
+
+* Mon Oct 08 2018 Lukas Nykryn <lnykryn@redhat.com> - 1.11-2
+- add Provides: alternatives
+
+* Mon Sep 10 2018 Lukas Nykryn <lnykryn@redhat.com> - 1.11-1
+- Add tests for --add/remove-slave and use beakerlib
+- alternatives: add-slave and remove-slave
+- leveldb: don't crash on long names
+- alternatives: prettier --list output
+
+* Fri Apr 21 2017 Lukáš Nykrýn <lnykryn@redhat.com> - 1.10-1
+- Introduce --remove-all option
+- po: update translations
+
+* Fri Feb 24 2017 Lukáš Nykrýn <lnykryn@redhat.com> - 1.9-1
+- move sources to github
+
+* Wed Jun 29 2016 Lukáš Nykrýn <lnykryn@redhat.com> - 1.8-1
+- alternatives: introduce --keep-missing
+- alternatives: allow family in --set and display it in --config
+- chkconfig: use isXinetdEnabled instead of isOn
+- leveldb: trim leading whitespaces from systemctl
+- leveldb: suppress error messages when selinux is turned off
+- alternatives: always recreate symlinks when the alternative is updated
+- test-alternatives: basic tests for slave links
+- chkconfig: resetpriorities should work on all runlevels
+
+* Tue Nov 24 2015 Lukáš Nykrýn <lnykryn@redhat.com> - 1.7-1
+- leveldb: fix segfault when selinux policy is not present
+- alternatives: add family option
+
+* Fri Oct 02 2015 Lukáš Nykrýn <lnykryn@redhat.com> - 1.6-1
+- systemd-sysv-install: don't play ping-pong with systemctl
+- ntsysv: add description to systemd services
+- ntsysv: skip templates
+- Makefile: fix typo
 
 * Mon Jun 01 2015 Lukáš Nykrýn <lnykryn@redhat.com> - 1.5-1
 - add systemd-sysv-install alias

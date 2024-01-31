@@ -1667,8 +1667,8 @@
         "type": "other",
         "other": {
           "name": "chkconfig",
-          "version": "1.25",
-          "downloadUrl": "https://github.com/fedora-sysv/chkconfig/archive/refs/tags/1.25.tar.gz"
+          "version": "1.26",
+          "downloadUrl": "https://github.com/fedora-sysv/chkconfig/archive/refs/tags/1.26.tar.gz"
         }
       }
     },

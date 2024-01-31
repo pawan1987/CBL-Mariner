@@ -27,9 +27,10 @@ ccache-4.8.3-1.azl3.aarch64.rpm
 ccache-debuginfo-4.8.3-1.azl3.aarch64.rpm
 check-0.15.2-1.azl3.aarch64.rpm
 check-debuginfo-0.15.2-1.azl3.aarch64.rpm
-chkconfig-1.25-1.azl3.aarch64.rpm
-chkconfig-debuginfo-1.25-1.azl3.aarch64.rpm
-chkconfig-lang-1.25-1.azl3.aarch64.rpm
+alternatives-1.26-1.azl3.aarch64.rpm
+chkconfig-1.26-1.azl3.aarch64.rpm
+chkconfig-debuginfo-1.26-1.azl3.aarch64.rpm
+chkconfig-lang-1.26-1.azl3.aarch64.rpm
 cmake-3.21.4-10.azl3.aarch64.rpm
 cmake-debuginfo-3.21.4-10.azl3.aarch64.rpm
 coreutils-9.4-1.azl3.aarch64.rpm
@@ -274,7 +275,7 @@ ninja-build-debuginfo-1.11.1-1.azl3.aarch64.rpm
 npth-1.6-4.azl3.aarch64.rpm
 npth-debuginfo-1.6-4.azl3.aarch64.rpm
 npth-devel-1.6-4.azl3.aarch64.rpm
-ntsysv-1.25-1.azl3.aarch64.rpm
+ntsysv-1.26-1.azl3.aarch64.rpm
 openssl-3.1.4-1.azl3.aarch64.rpm
 openssl-debuginfo-3.1.4-1.azl3.aarch64.rpm
 openssl-devel-3.1.4-1.azl3.aarch64.rpm
