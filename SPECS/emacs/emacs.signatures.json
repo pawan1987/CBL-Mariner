@@ -1,5 +1,16 @@
 {
-  "Signatures": {
-    "emacs-29.1.tar.xz": "d2f881a5cc231e2f5a03e86f4584b0438f83edd7598a09d24a21bd8d003e2e01"
-  }
+ "Signatures": {
+  "0001-configure-Remove-obsolete-check-for-b-i486-linuxaout.patch": "2c2ecaa1579db2f95c9c1d0cae2375d4f3c48d3b22c0558eccf7e493cb07eb7f",
+  "17E90D521672C04631B1183EE78DAE0F3115E06B": "04013107c353c54fa534c34dcfd2a6a45cd797418e84e604d5fb99f65e4271b5",
+  "default.el": "b5497d5f1d3cd989602b67c73e5a6b04816256a6c84bde211ca4720c6ff74e05",
+  "dotemacs.el": "509792f6fd28d55f210c19c9872813a229e50475075c88ad35c6be08d99e3d08",
+  "emacs-29.2.tar.xz": "7d3d2448988720bf4bf57ad77a5a08bf22df26160f90507a841ba986be2670dc",
+  "emacs-29.2.tar.xz.sig": "925c3a106ee1606369a6721603564e4d811a468d4fc8fcdeb0151de819821622",
+  "emacs-libdir-vs-systemd.patch": "ead0519efb2efdad8d138eca92b9ec6e8cfeae9d5eafd902176e2c822a08cf70",
+  "emacs-spellchecker.patch": "113d8cd2975a2fcf1dc1523e8318112e85a0f67e92156938d50144fa4c5424c3",
+  "emacs-system-crypto-policies.patch": "d648f049905ea95b6e6150241f1a60f90d96271a9ef3e9cdf04c9a5411595fcc",
+  "emacs-terminal.desktop": "d731c9329f6148c6e4aabb362e27aed2290b3d349c43bc3bb389d048a4dba316",
+  "emacs-terminal.sh": "2e2fe240719179db235a22c78613dc011f13a580cfc0a457fcb6fd3c8f09762b",
+  "site-start.el": "b706dd48ea8d87485d9e308f337ee7b6fc785fbb4483a1a89d15d75493b36cfc",
+ }
 }
