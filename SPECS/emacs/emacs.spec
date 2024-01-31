@@ -1,6 +1,7 @@
 %global _hardened_build 1
 
 %bcond lucid 0
+%bcond terminal 0
 
 # This file is encoded in UTF-8.  -*- coding: utf-8 -*-
 Summary:       GNU Emacs text editor
@@ -17,9 +18,11 @@ Source2:       https://keys.openpgp.org/vks/v1/by-fingerprint/17E90D521672C04631
 Source4:       dotemacs.el
 Source5:       site-start.el
 Source6:       default.el
+%if %{with terminal}
 # Emacs Terminal Mode, #551949, #617355
 Source7:       emacs-terminal.desktop
 Source8:       emacs-terminal.sh
+%endif
 # rhbz#713600
 Patch1:        emacs-spellchecker.patch
 Patch2:        emacs-system-crypto-policies.patch
@@ -189,6 +192,7 @@ without leaving the editor.
 This package contains all the common files needed by emacs, emacs-lucid
 or emacs-nox.
 
+%if %{with terminal}
 %package terminal
 Summary:       A desktop menu item for GNU Emacs terminal.
 Requires:      emacs = %{epoch}:%{version}-%{release}
@@ -200,6 +204,7 @@ emacs-terminal if you need a terminal with Malayalam support.
 
 Please note that emacs-terminal is a temporary package and it will be
 removed when another terminal becomes capable of handling Malayalam.
+%endif
 
 %package filesystem
 Summary:       Emacs filesystem layout
@@ -366,8 +371,10 @@ install -p -m 0644 emacs.pc %{buildroot}/%{pkgconfig}
 mkdir -p %{buildroot}%{_rpmconfigdir}/macros.d
 install -p -m 0644 macros.emacs %{buildroot}%{_rpmconfigdir}/macros.d/
 
+%if %{with terminal}
 # Installing emacs-terminal binary
 install -p -m 755 %SOURCE8 %{buildroot}%{_bindir}/emacs-terminal
+%endif
 
 # After everything is installed, remove info dir
 rm -f %{buildroot}%{_infodir}/dir
@@ -552,9 +559,11 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/*.desktop
 %attr(0644,root,root) %config %{site_lisp}/site-start.el
 %{pkgconfig}/emacs.pc
 
+%if %{with terminal}
 %files terminal
 %{_bindir}/emacs-terminal
 %{_datadir}/applications/emacs-terminal.desktop
+%endif
 
 %files filesystem
 %dir %{_datadir}/emacs
